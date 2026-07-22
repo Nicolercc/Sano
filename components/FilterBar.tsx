@@ -5,6 +5,7 @@ import type { ConfidenceLevel, RestaurantFilters, Trajectory } from "@/lib/types
 type FilterBarProps = {
   filters: RestaurantFilters;
   cuisines: string[];
+  resultCount: number;
   onChange: (filters: RestaurantFilters) => void;
 };
 
@@ -32,29 +33,31 @@ function label(value: string) {
 export default function FilterBar({
   filters,
   cuisines,
+  resultCount,
   onChange
 }: FilterBarProps) {
   return (
-    <section className="grid gap-3 rounded-lg border border-ink/10 bg-white p-3 shadow-sm md:grid-cols-[1.4fr_1fr_1fr_1fr_auto]">
-      <label className="flex flex-col gap-1 text-xs font-semibold uppercase tracking-wide text-ink/55">
-        Search
+    <section className="flex flex-wrap items-center gap-2 rounded-lg border border-ink/10 bg-white/65 p-2.5 shadow-sm backdrop-blur">
+      <label className="min-w-0 flex-1 basis-full sm:basis-64">
+        <span className="sr-only">Search</span>
         <input
           value={filters.query}
           onChange={(event) =>
             onChange({ ...filters, query: event.target.value })
           }
           placeholder="Name, cuisine, or neighborhood"
-          className="min-h-11 rounded-md border border-ink/10 bg-oat px-3 text-sm font-medium normal-case text-ink outline-none transition focus:border-moss"
+          className="min-h-9 w-full rounded-md border border-ink/10 bg-white px-3 text-sm font-medium text-ink outline-none transition placeholder:text-ink/40 focus:border-moss"
         />
       </label>
-      <label className="flex flex-col gap-1 text-xs font-semibold uppercase tracking-wide text-ink/55">
-        Cuisine
+
+      <label className="min-w-[9rem] flex-1 sm:flex-none">
+        <span className="sr-only">Cuisine</span>
         <select
           value={filters.cuisine}
           onChange={(event) =>
             onChange({ ...filters, cuisine: event.target.value })
           }
-          className="min-h-11 rounded-md border border-ink/10 bg-oat px-3 text-sm font-medium normal-case text-ink outline-none transition focus:border-moss"
+          className="min-h-9 w-full rounded-md border border-ink/10 bg-white px-2.5 text-sm font-medium text-ink outline-none transition focus:border-moss"
         >
           <option value="all">All cuisines</option>
           {cuisines.map((cuisine) => (
@@ -64,8 +67,9 @@ export default function FilterBar({
           ))}
         </select>
       </label>
-      <label className="flex flex-col gap-1 text-xs font-semibold uppercase tracking-wide text-ink/55">
-        Trajectory
+
+      <label className="min-w-[9rem] flex-1 sm:flex-none">
+        <span className="sr-only">Trajectory</span>
         <select
           value={filters.trajectory}
           onChange={(event) =>
@@ -74,17 +78,21 @@ export default function FilterBar({
               trajectory: event.target.value as RestaurantFilters["trajectory"]
             })
           }
-          className="min-h-11 rounded-md border border-ink/10 bg-oat px-3 text-sm font-medium normal-case text-ink outline-none transition focus:border-moss"
+          className="min-h-9 w-full rounded-md border border-ink/10 bg-white px-2.5 text-sm font-medium text-ink outline-none transition focus:border-moss"
         >
-          {trajectoryOptions.map((option) => (
-            <option key={option} value={option}>
-              {label(option)}
-            </option>
-          ))}
+          <option value="all">All trajectories</option>
+          {trajectoryOptions
+            .filter((option) => option !== "all")
+            .map((option) => (
+              <option key={option} value={option}>
+                {label(option)}
+              </option>
+            ))}
         </select>
       </label>
-      <label className="flex flex-col gap-1 text-xs font-semibold uppercase tracking-wide text-ink/55">
-        Confidence
+
+      <label className="min-w-[9rem] flex-1 sm:flex-none">
+        <span className="sr-only">Confidence</span>
         <select
           value={filters.confidence}
           onChange={(event) =>
@@ -93,26 +101,34 @@ export default function FilterBar({
               confidence: event.target.value as RestaurantFilters["confidence"]
             })
           }
-          className="min-h-11 rounded-md border border-ink/10 bg-oat px-3 text-sm font-medium normal-case text-ink outline-none transition focus:border-moss"
+          className="min-h-9 w-full rounded-md border border-ink/10 bg-white px-2.5 text-sm font-medium text-ink outline-none transition focus:border-moss"
         >
-          {confidenceOptions.map((option) => (
-            <option key={option} value={option}>
-              {label(option)}
-            </option>
-          ))}
+          <option value="all">All confidence</option>
+          {confidenceOptions
+            .filter((option) => option !== "all")
+            .map((option) => (
+              <option key={option} value={option}>
+                {label(option)}
+              </option>
+            ))}
         </select>
       </label>
-      <label className="flex min-h-11 items-center gap-2 rounded-md border border-ink/10 bg-oat px-3 text-sm font-semibold text-ink md:mt-5">
+
+      <label className="inline-flex min-h-9 flex-1 items-center gap-2 rounded-md border border-ink/10 bg-white px-3 text-sm font-semibold text-ink sm:flex-none">
         <input
           type="checkbox"
           checked={filters.recentCriticalOnly}
           onChange={(event) =>
             onChange({ ...filters, recentCriticalOnly: event.target.checked })
           }
-          className="h-4 w-4 accent-moss"
+          className="h-4 w-4 shrink-0 accent-moss"
         />
-        Recent criticals
+        <span className="whitespace-nowrap">Recent criticals</span>
       </label>
+
+      <span className="ml-auto hidden whitespace-nowrap px-2 text-xs font-semibold text-ink/50 sm:inline">
+        {resultCount} {resultCount === 1 ? "match" : "matches"}
+      </span>
     </section>
   );
 }

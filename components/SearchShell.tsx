@@ -68,64 +68,76 @@ export default function SearchShell({ restaurants }: SearchShellProps) {
     null;
 
   return (
-    <main className="min-h-screen bg-oat">
-      <div className="mx-auto flex w-full max-w-7xl flex-col gap-5 px-4 py-5 sm:px-6 lg:px-8">
-        <nav className="flex flex-wrap items-center justify-between gap-3">
+    <main className="min-h-screen bg-oat text-ink">
+      <div className="mx-auto flex w-full max-w-7xl flex-col gap-5 px-4 py-6 sm:px-6 lg:px-8 lg:py-10">
+        <nav className="flex flex-wrap items-start justify-between gap-4">
           <div>
-            <Link href="/" className="text-3xl font-black tracking-normal text-ink">
+            <Link
+              href="/"
+              className="font-serif text-[2.45rem] font-black leading-none tracking-normal text-ink sm:text-5xl"
+            >
               Sano
             </Link>
-            <p className="text-sm text-ink/65">
-              Compare restaurants by rating, grade, and inspection-history context.
+            <p className="mt-2 max-w-xl text-sm leading-6 text-ink/65">
+              A restaurant&apos;s inspection history, read alongside its popularity.
             </p>
           </div>
           <Link
             href="/methodology"
-            className="rounded-md border border-ink/10 bg-white px-4 py-2 text-sm font-semibold text-ink shadow-sm transition hover:border-moss/40"
+            className="inline-flex min-h-10 items-center rounded-md border border-ink/15 bg-white/70 px-4 text-sm font-semibold text-ink shadow-sm transition hover:border-moss/40 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-moss"
           >
             Methodology
           </Link>
         </nav>
 
-        <FilterBar filters={filters} cuisines={cuisines} onChange={setFilters} />
+        <FilterBar
+          filters={filters}
+          cuisines={cuisines}
+          resultCount={filteredRestaurants.length}
+          onChange={setFilters}
+        />
 
-        <section className="grid gap-5 lg:grid-cols-[minmax(0,1fr)_420px]">
-          <div className="flex flex-col gap-3">
-            <div className="flex items-center justify-between">
+        <MapResults
+          restaurants={filteredRestaurants}
+          selectedRestaurant={selectedInResults}
+          onSelect={setSelectedRestaurant}
+        />
+
+        <section className="flex flex-col gap-4">
+          <div className="flex flex-wrap items-end justify-between gap-3">
+            <div>
               <h1 className="text-xl font-bold text-ink">
                 Restaurants near your search
               </h1>
-              <span className="text-sm font-semibold text-ink/55">
-                {filteredRestaurants.length} matches
-              </span>
+              <p className="mt-1 text-sm text-ink/55">
+                Inspection history context shown next to public grades and ratings.
+              </p>
             </div>
-
-            {filteredRestaurants.length ? (
-              <div className="grid gap-3 md:grid-cols-2 xl:grid-cols-3">
-                {filteredRestaurants.map((restaurant) => (
-                  <RestaurantCard
-                    key={restaurant.id}
-                    restaurant={restaurant}
-                    selected={selectedInResults?.id === restaurant.id}
-                    onSelect={setSelectedRestaurant}
-                  />
-                ))}
-              </div>
-            ) : (
-              <div className="rounded-lg border border-ink/10 bg-white p-8 text-center shadow-sm">
-                <p className="font-bold text-ink">No restaurants match those filters.</p>
-                <p className="mt-2 text-sm text-ink/60">
-                  Try a broader cuisine, trajectory, or confidence setting.
-                </p>
-              </div>
-            )}
+            <span className="text-sm font-semibold text-ink/55">
+              {filteredRestaurants.length}{" "}
+              {filteredRestaurants.length === 1 ? "match" : "matches"}
+            </span>
           </div>
 
-          <MapResults
-            restaurants={filteredRestaurants}
-            selectedRestaurant={selectedInResults}
-            onSelect={setSelectedRestaurant}
-          />
+          {filteredRestaurants.length ? (
+            <div className="flex flex-col gap-3">
+              {filteredRestaurants.map((restaurant) => (
+                <RestaurantCard
+                  key={restaurant.id}
+                  restaurant={restaurant}
+                  selected={selectedInResults?.id === restaurant.id}
+                  onSelect={setSelectedRestaurant}
+                />
+              ))}
+            </div>
+          ) : (
+            <div className="rounded-lg border border-ink/10 bg-white p-8 text-center shadow-sm">
+              <p className="font-bold text-ink">No restaurants match those filters.</p>
+              <p className="mt-2 text-sm text-ink/60">
+                Try a broader cuisine, trajectory, or confidence setting.
+              </p>
+            </div>
+          )}
         </section>
       </div>
     </main>
