@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:wght@500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    body { margin: 0; background: #f8f5ef; color: #17201b; font-family: 'Inter', sans-serif; }
+    * { box-sizing: border-box; }
+    a { color: #486b55; }
+    a:hover { color: #17201b; }
+    input, select { font: inherit; }
+  </style>
+</helmet>
+
+<div style="min-height: 100vh; padding: 40px 56px 80px;">
+
+  <div style="display:flex; align-items:flex-start; justify-content:space-between; gap:24px; margin-bottom:28px;">
+    <div>
+      <div style="font-family:'Source Serif 4',serif; font-weight:800; font-size:34px; letter-spacing:-0.01em;">Sano</div>
+      <div style="margin-top:4px; font-size:14px; color:rgba(23,32,27,0.6);">A restaurant's inspection history, read alongside its popularity.</div>
+    </div>
+    <a href="#" style="flex-shrink:0; min-height:40px; display:inline-flex; align-items:center; padding:0 18px; border:1px solid rgba(23,32,27,0.18); border-radius:8px; font-size:13px; font-weight:600; color:#17201b; text-decoration:none;">Methodology</a>
+  </div>
+
+  <div style="display:flex; flex-wrap:wrap; align-items:center; gap:10px; padding:10px 12px; background:rgba(255,255,255,0.6); border:1px solid rgba(23,32,27,0.1); border-radius:10px; margin-bottom:20px;">
+    <input value="{{ query }}" onChange="{{ onQueryChange }}" placeholder="Name, cuisine, or neighborhood" style="flex:1 1 220px; min-height:36px; border:1px solid rgba(23,32,27,0.12); border-radius:7px; background:#fff; padding:0 12px; font-size:13px; color:#17201b; outline:none;" />
+    <select value="{{ cuisine }}" onChange="{{ onCuisineChange }}" style="min-height:36px; border:1px solid rgba(23,32,27,0.12); border-radius:7px; background:#fff; padding:0 10px; font-size:13px; color:#17201b;">
+      <option value="all">All cuisines</option>
+      <sc-for list="{{ cuisines }}" as="c" hint-placeholder-count="6">
+        <option value="{{ c }}">{{ c }}</option>
+      </sc-for>
+    </select>
+    <select value="{{ trajectory }}" onChange="{{ onTrajectoryChange }}" style="min-height:36px; border:1px solid rgba(23,32,27,0.12); border-radius:7px; background:#fff; padding:0 10px; font-size:13px; color:#17201b;">
+      <option value="all">All trajectories</option>
+      <option value="improving">Improving</option>
+      <option value="stable">Stable</option>
+      <option value="volatile">Volatile</option>
+      <option value="declining">Declining</option>
+    </select>
+    <select value="{{ confidence }}" onChange="{{ onConfidenceChange }}" style="min-height:36px; border:1px solid rgba(23,32,27,0.12); border-radius:7px; background:#fff; padding:0 10px; font-size:13px; color:#17201b;">
+      <option value="all">All confidence</option>
+      <option value="high">High</option>
+      <option value="medium">Medium</option>
+      <option value="limited">Limited</option>
+    </select>
+    <label style="display:flex; align-items:center; gap:6px; min-height:36px; padding:0 10px; border:1px solid rgba(23,32,27,0.12); border-radius:7px; background:#fff; font-size:13px; font-weight:500;">
+      <input type="checkbox" checked="{{ recentCriticalOnly }}" onChange="{{ onRecentCriticalChange }}" style="accent-color:#486b55;" />
+      Recent criticals
+    </label>
+    <div style="margin-left:auto; display:flex; align-items:center; gap:10px;">
+      <span style="font-size:12px; color:rgba(23,32,27,0.5);">{{ resultCountLabel }}</span>
+      <label style="display:flex; align-items:center; gap:6px; font-size:12px; color:rgba(23,32,27,0.55);">
+        <input type="checkbox" checked="{{ showTimeline }}" onChange="{{ onToggleTimeline }}" style="accent-color:#486b55;" /> timelines
+      </label>
+    </div>
+  </div>
+
+  <sc-if value="{{ mapVisible }}" hint-placeholder-val="{{ true }}">
+    <div style="position:relative; height:130px; border-radius:10px; overflow:hidden; border:1px solid rgba(23,32,27,0.1); background:#e7efe8; margin-bottom:24px;">
+      <svg viewBox="0 0 800 130" preserveAspectRatio="none" style="position:absolute; inset:0; width:100%; height:100%;">
+        <path d="M40 118 C120 90 160 40 260 30 C380 18 480 20 620 40 C560 70 550 95 600 118" fill="none" stroke="#486b55" stroke-opacity="0.18" stroke-width="16" stroke-linecap="round"></path>
+      </svg>
+      <sc-for list="{{ mapPins }}" as="pin" hint-placeholder-count="8">
+        <button type="button" onClick="{{ pin.onSelect }}" title="{{ pin.name }}" style="position:absolute; transform:translate(-50%,-50%); width:26px; height:26px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:11px; font-weight:700; color:#fff; border:2px solid #fff; cursor:pointer; left:{{ pin.left }}; top:{{ pin.top }}; background:{{ pin.bg }};">{{ pin.grade }}</button>
+      </sc-for>
+      <div style="position:absolute; right:16px; bottom:12px; background:#fff; border:1px solid rgba(23,32,27,0.1); border-radius:8px; padding:8px 12px;">
+        <div style="font-size:12px; font-weight:700;">{{ selectedRestaurant.name }}</div>
+        <div style="font-size:11px; color:rgba(23,32,27,0.55);">{{ selectedRestaurant.address }}</div>
+      </div>
+      <div style="position:absolute; left:16px; top:10px; font-size:11px; color:rgba(23,32,27,0.45);">seed coordinates, demo geography only</div>
+    </div>
+  </sc-if>
+
+  <div style="display:flex; flex-direction:column; gap:{{ rowGap }};">
+    <sc-for list="{{ rows }}" as="r" hint-placeholder-count="8">
+      <div style="border-radius:12px; padding:{{ rowPadding }}; background:{{ r.bg }}; border:1px solid {{ r.border }}; box-shadow:{{ r.shadow }}; transition:box-shadow .15s,border-color .15s;">
+        <div style="display:flex; align-items:center; gap:22px;">
+
+          <sc-if value="{{ showTimeline }}" hint-placeholder-val="{{ true }}">
+            <svg viewBox="0 0 140 64" style="width:150px; height:64px; flex-shrink:0;">
+              <line x1="0" y1="54" x2="140" y2="54" stroke="#17201b" stroke-opacity="0.1" stroke-width="1"></line>
+              <sc-for list="{{ r.bars }}" as="bar" hint-placeholder-count="4">
+                <rect x="{{ bar.x }}" y="{{ bar.y }}" width="{{ bar.w }}" height="{{ bar.h }}" rx="1.5" fill="{{ bar.color }}"></rect>
+                <text x="{{ bar.cx }}" y="{{ bar.labelY }}" text-anchor="middle" font-size="7" font-weight="700" fill="#17201b">{{ bar.grade }}</text>
+              </sc-for>
+            </svg>
+          </sc-if>
+
+          <button type="button" onClick="{{ r.onSelect }}" style="all:unset; cursor:pointer; flex:1; min-width:0;">
+            <div style="font-family:'Source Serif 4',serif; font-weight:700; font-size:19px; line-height:1.15;">{{ r.name }}</div>
+            <div style="margin-top:3px; font-size:13px; color:rgba(23,32,27,0.6);">{{ r.cuisine }} · {{ r.neighborhood }}</div>
+          </button>
+
+          <div style="flex-shrink:0; width:64px; text-align:right;">
+            <div style="font-size:10px; font-weight:700; letter-spacing:0.04em; text-transform:uppercase; color:rgba(23,32,27,0.45);">Grade</div>
+            <div style="margin-top:2px; font-family:'Source Serif 4',serif; font-weight:700; font-size:22px;">{{ r.grade }}</div>
+          </div>
+
+          <div style="flex-shrink:0; width:160px;">
+            <div style="display:flex; align-items:baseline; justify-content:space-between;">
+              <span style="font-size:10px; font-weight:700; letter-spacing:0.04em; text-transform:uppercase; color:rgba(23,32,27,0.45);">Reliability</span>
+              <span style="font-size:15px; font-weight:700; color:{{ r.meterColor }};">{{ r.score }}</span>
+            </div>
+            <div style="margin-top:6px; height:6px; border-radius:4px; background:rgba(23,32,27,0.08); overflow:hidden;">
+              <div style="height:100%; border-radius:4px; width:{{ r.meterPercent }}; background:{{ r.meterColor }};"></div>
+            </div>
+          </div>
+
+          <a href="#" style="flex-shrink:0; min-height:38px; display:inline-flex; align-items:center; padding:0 18px; border-radius:7px; background:#17201b; color:#fff; font-size:13px; font-weight:600; text-decoration:none;">Open profile</a>
+        </div>
+
+        <div style="display:flex; flex-wrap:wrap; align-items:center; gap:14px; margin-top:12px; padding-left:172px;">
+          <span style="display:inline-flex; align-items:center; gap:5px; font-size:12px; font-weight:600; border:1px solid rgba(23,32,27,0.16); border-radius:20px; padding:3px 10px;">
+            <span style="font-size:13px;">{{ r.trajectoryIcon }}</span>{{ r.sanoLabel }}
+          </span>
+          <span style="display:inline-flex; align-items:center; gap:4px; font-size:12px; color:rgba(23,32,27,0.55);">
+            <sc-for list="{{ r.confidenceDots }}" as="dot" hint-placeholder-count="3">
+              <span style="width:6px; height:6px; border-radius:50%; background:{{ dot }};"></span>
+            </sc-for>
+            {{ r.confidenceLabel }}
+          </span>
+          <span style="font-size:12px; color:rgba(23,32,27,0.55);">{{ r.rating }} · {{ r.reviewCountLabel }} reviews</span>
+        </div>
+        <p style="margin:8px 0 0; padding-left:172px; font-size:13.5px; line-height:1.5; color:rgba(23,32,27,0.72); max-width:760px;">{{ r.explanation }}</p>
+      </div>
+    </sc-for>
+  </div>
+
+</div>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;density&quot;: {&quot;editor&quot;: &quot;enum&quot;, &quot;default&quot;: &quot;comfortable&quot;, &quot;tsType&quot;: &quot;string&quot;, &quot;options&quot;: [&quot;comfortable&quot;, &quot;compact&quot;], &quot;section&quot;: &quot;Layout&quot;}, &quot;mapVisible&quot;: {&quot;editor&quot;: &quot;boolean&quot;, &quot;default&quot;: true, &quot;tsType&quot;: &quot;boolean&quot;, &quot;section&quot;: &quot;Layout&quot;}}">
+class Component extends DCLogic {
+  static RESTAURANTS = [
+    { id:"orchard-noodle-house", name:"Orchard Noodle House", cuisine:"Chinese", neighborhood:"Lower East Side", address:"128 Orchard St, Manhattan", latitude:40.7192, longitude:-73.9894, rating:4.6, reviewCount:1840, grade:"A", score:84, trajectory:"improving", confidence:"high", sanoLabel:"Improving record", explanation:"Recent inspections show lower recorded scores after an earlier repeat pattern.", inspections:[{date:"2022-05-10",score:24,grade:"B",criticalCount:2,repeatPattern:true},{date:"2023-01-18",score:18,grade:"B",criticalCount:1,repeatPattern:true},{date:"2023-11-03",score:12,grade:"A",criticalCount:0,repeatPattern:false},{date:"2024-09-14",score:10,grade:"A",criticalCount:0,repeatPattern:false},{date:"2025-06-22",score:8,grade:"A",criticalCount:0,repeatPattern:false}] },
+    { id:"hudson-green-kitchen", name:"Hudson Green Kitchen", cuisine:"American", neighborhood:"West Village", address:"42 Hudson St, Manhattan", latitude:40.7332, longitude:-74.0061, rating:4.4, reviewCount:970, grade:"A", score:89, trajectory:"stable", confidence:"high", sanoLabel:"Consistent record", explanation:"Multiple recent A-grade inspections stay within a narrow score range.", inspections:[{date:"2021-12-16",score:11,grade:"A",criticalCount:0,repeatPattern:false},{date:"2022-10-07",score:9,grade:"A",criticalCount:0,repeatPattern:false},{date:"2023-08-21",score:12,grade:"A",criticalCount:0,repeatPattern:false},{date:"2024-05-30",score:10,grade:"A",criticalCount:0,repeatPattern:false},{date:"2025-04-11",score:9,grade:"A",criticalCount:0,repeatPattern:false}] },
+    { id:"canal-little-thai", name:"Canal Little Thai", cuisine:"Thai", neighborhood:"Chinatown", address:"77 Canal St, Manhattan", latitude:40.7157, longitude:-73.9971, rating:4.7, reviewCount:2260, grade:"A", score:58, trajectory:"volatile", confidence:"high", sanoLabel:"Recent critical flag", explanation:"High popularity sits beside a volatile inspection timeline and a recent critical flag.", inspections:[{date:"2021-11-03",score:9,grade:"A",criticalCount:0,repeatPattern:false},{date:"2022-08-25",score:27,grade:"B",criticalCount:2,repeatPattern:true},{date:"2023-06-12",score:11,grade:"A",criticalCount:0,repeatPattern:false},{date:"2024-03-04",score:31,grade:"C",criticalCount:3,repeatPattern:true},{date:"2025-07-01",score:13,grade:"A",criticalCount:1,repeatPattern:true}] },
+    { id:"astoria-souvlaki-room", name:"Astoria Souvlaki Room", cuisine:"Greek", neighborhood:"Astoria", address:"31-18 Broadway, Queens", latitude:40.7618, longitude:-73.9254, rating:4.5, reviewCount:1410, grade:"A", score:81, trajectory:"stable", confidence:"medium", sanoLabel:"Consistent record", explanation:"Three A-grade cycles provide a stable but shorter inspection view.", inspections:[{date:"2023-03-19",score:12,grade:"A",criticalCount:0,repeatPattern:false},{date:"2024-02-09",score:10,grade:"A",criticalCount:0,repeatPattern:false},{date:"2025-01-27",score:11,grade:"A",criticalCount:0,repeatPattern:false}] },
+    { id:"sunset-taco-counter", name:"Sunset Taco Counter", cuisine:"Mexican", neighborhood:"Sunset Park", address:"4921 5th Ave, Brooklyn", latitude:40.6467, longitude:-74.0108, rating:4.3, reviewCount:820, grade:"B", score:66, trajectory:"improving", confidence:"medium", sanoLabel:"Improving record", explanation:"Scores are moving downward after an earlier B-grade inspection cycle.", inspections:[{date:"2022-09-02",score:24,grade:"B",criticalCount:1,repeatPattern:false},{date:"2023-12-15",score:17,grade:"B",criticalCount:0,repeatPattern:false},{date:"2025-02-18",score:12,grade:"A",criticalCount:0,repeatPattern:false}] },
+    { id:"cobble-hill-arepa", name:"Cobble Hill Arepa", cuisine:"Latin American", neighborhood:"Cobble Hill", address:"210 Court St, Brooklyn", latitude:40.6865, longitude:-73.9944, rating:4.2, reviewCount:640, grade:"A", score:76, trajectory:"stable", confidence:"medium", sanoLabel:"Consistent record", explanation:"Inspection scores are moderate and steady across the available history.", inspections:[{date:"2022-06-17",score:14,grade:"A",criticalCount:0,repeatPattern:false},{date:"2023-04-29",score:13,grade:"A",criticalCount:0,repeatPattern:false},{date:"2024-11-20",score:15,grade:"A",criticalCount:0,repeatPattern:false}] },
+    { id:"mott-street-ramen", name:"Mott Street Ramen", cuisine:"Japanese", neighborhood:"Nolita", address:"63 Mott St, Manhattan", latitude:40.722, longitude:-73.9957, rating:4.8, reviewCount:3120, grade:"Pending", score:52, trajectory:"declining", confidence:"limited", sanoLabel:"Limited data", explanation:"Popularity is high, but the available inspection history is short and currently pending.", inspections:[{date:"2024-08-08",score:13,grade:"A",criticalCount:0,repeatPattern:false},{date:"2025-10-02",score:28,grade:"Pending",criticalCount:2,repeatPattern:false}] },
+    { id:"jackson-heights-dosa", name:"Jackson Heights Dosa", cuisine:"Indian", neighborhood:"Jackson Heights", address:"37-05 74th St, Queens", latitude:40.7484, longitude:-73.8912, rating:4.5, reviewCount:1220, grade:"A", score:73, trajectory:"stable", confidence:"medium", sanoLabel:"Consistent record", explanation:"Available inspections are steady, with one older critical flag not repeated recently.", inspections:[{date:"2022-03-23",score:16,grade:"B",criticalCount:1,repeatPattern:false},{date:"2023-07-14",score:12,grade:"A",criticalCount:0,repeatPattern:false},{date:"2025-03-05",score:13,grade:"A",criticalCount:0,repeatPattern:false}] }
+  ];
+
+  state = {
+    selectedId: "orchard-noodle-house",
+    query: "",
+    cuisine: "all",
+    trajectory: "all",
+    confidence: "all",
+    recentCriticalOnly: false,
+    showTimeline: true
+  };
+
+  meterColor(score) {
+    if (score >= 78) return "#486b55";
+    if (score >= 62) return "#d69d3f";
+    return "#c8664c";
+  }
+
+  trajectoryIcon(t) {
+    return { improving: "↗", declining: "↘", volatile: "↕", stable: "→" }[t] || "→";
+  }
+
+  confidenceDots(level) {
+    const filled = { high: 3, medium: 2, limited: 1 }[level] || 1;
+    return [0, 1, 2].map((i) => (i < filled ? "#17201b" : "rgba(23,32,27,0.18)"));
+  }
+
+  confidenceLabel(level) {
+    return { high: "High confidence", medium: "Medium confidence", limited: "Limited data" }[level] || "Limited data";
+  }
+
+  buildBars(inspections) {
+    const ordered = [...inspections].sort((a, b) => a.date.localeCompare(b.date));
+    const maxScore = Math.max(...ordered.map((i) => i.score), 1);
+    const count = ordered.length;
+    const gap = count > 1 ? Math.min(6, 20 / count) : 0;
+    const w = count ? (140 - gap * Math.max(count - 1, 0)) / count : 0;
+    return ordered.map((insp, idx) => {
+      const x = idx * (w + gap);
+      const h = Math.max(3, (insp.score / maxScore) * 42);
+      const y = 54 - h;
+      const color = insp.criticalCount > 0 ? "#c8664c" : insp.repeatPattern ? "#d69d3f" : "#486b55";
+      return { x, y, w, h, color, cx: x + w / 2, labelY: Math.max(8, y - 4), grade: insp.grade };
+    });
+  }
+
+  filtered() {
+    const { query, cuisine, trajectory, confidence, recentCriticalOnly } = this.state;
+    const q = query.trim().toLowerCase();
+    return Component.RESTAURANTS.filter((r) => {
+      if (q && !(r.name.toLowerCase().includes(q) || r.cuisine.toLowerCase().includes(q) || r.neighborhood.toLowerCase().includes(q))) return false;
+      if (cuisine !== "all" && r.cuisine !== cuisine) return false;
+      if (trajectory !== "all" && r.trajectory !== trajectory) return false;
+      if (confidence !== "all" && r.confidence !== confidence) return false;
+      if (recentCriticalOnly) {
+        const sorted = [...r.inspections].sort((a, b) => b.date.localeCompare(a.date));
+        const recentCritical = sorted.slice(0, 2).some((i) => i.criticalCount > 0);
+        if (!recentCritical) return false;
+      }
+      return true;
+    });
+  }
+
+  renderVals() {
+    const list = this.filtered();
+    const selected = list.find((r) => r.id === this.state.selectedId) || list[0] || null;
+
+    const lats = list.length ? list.map((r) => r.latitude) : [40.7128];
+    const lngs = list.length ? list.map((r) => r.longitude) : [-74.006];
+    const minLat = Math.min(...lats) - 0.01, maxLat = Math.max(...lats) + 0.01;
+    const minLng = Math.min(...lngs) - 0.01, maxLng = Math.max(...lngs) + 0.01;
+
+    const mapPins = list.map((r) => {
+      const x = ((r.longitude - minLng) / (maxLng - minLng || 1)) * 100;
+      const y = 100 - ((r.latitude - minLat) / (maxLat - minLat || 1)) * 100;
+      const isSel = selected && r.id === selected.id;
+      return {
+        left: x + "%", top: y + "%", grade: r.grade,
+        bg: isSel ? "#c8664c" : "#486b55",
+        name: r.name,
+        onSelect: () => this.setState({ selectedId: r.id })
+      };
+    });
+
+    const rows = list.map((r) => {
+      const isSel = selected && r.id === selected.id;
+      return {
+        id: r.id,
+        name: r.name,
+        cuisine: r.cuisine,
+        neighborhood: r.neighborhood,
+        grade: r.grade,
+        score: r.score,
+        meterColor: this.meterColor(r.score),
+        meterPercent: Math.max(4, r.score) + "%",
+        trajectoryIcon: this.trajectoryIcon(r.trajectory),
+        sanoLabel: r.sanoLabel,
+        confidenceDots: this.confidenceDots(r.confidence),
+        confidenceLabel: this.confidenceLabel(r.confidence),
+        rating: r.rating.toFixed(1),
+        reviewCountLabel: r.reviewCount.toLocaleString(),
+        explanation: r.explanation,
+        bars: this.buildBars(r.inspections),
+        bg: isSel ? "#f6f2ea" : "#ffffff",
+        border: isSel ? "#486b55" : "rgba(23,32,27,0.08)",
+        shadow: isSel ? "0 10px 30px rgba(23,32,27,0.09)" : "0 1px 2px rgba(23,32,27,0.03)",
+        onSelect: () => this.setState({ selectedId: r.id })
+      };
+    });
+
+    const cuisines = [...new Set(Component.RESTAURANTS.map((r) => r.cuisine))].sort();
+
+    return {
+      query: this.state.query,
+      cuisine: this.state.cuisine,
+      trajectory: this.state.trajectory,
+      confidence: this.state.confidence,
+      recentCriticalOnly: this.state.recentCriticalOnly,
+      showTimeline: this.state.showTimeline,
+      cuisines,
+      resultCountLabel: `${list.length} match${list.length === 1 ? "" : "es"}`,
+      mapVisible: this.props.mapVisible ?? true,
+      mapPins,
+      selectedRestaurant: selected || { name: "No match", address: "" },
+      rows,
+      rowGap: (this.props.density ?? "comfortable") === "compact" ? "10px" : "16px",
+      rowPadding: (this.props.density ?? "comfortable") === "compact" ? "14px 18px" : "20px 24px",
+      onQueryChange: (e) => this.setState({ query: e.target.value }),
+      onCuisineChange: (e) => this.setState({ cuisine: e.target.value }),
+      onTrajectoryChange: (e) => this.setState({ trajectory: e.target.value }),
+      onConfidenceChange: (e) => this.setState({ confidence: e.target.value }),
+      onRecentCriticalChange: (e) => this.setState({ recentCriticalOnly: e.target.checked }),
+      onToggleTimeline: (e) => this.setState({ showTimeline: e.target.checked })
+    };
+  }
+}
+
+</script>
+</body>
+</html>
