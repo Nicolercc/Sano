@@ -82,7 +82,7 @@ Primary files:
 - `components/SanoScorePanel.tsx`
 - `components/Alternatives.tsx`
 - `components/MethodologyPanel.tsx`
-- `docs/DEMO_SCRIPT.md`
+- `docs/QUALITY_CHECKLIST.md`
 
 Avoid unless coordinated:
 

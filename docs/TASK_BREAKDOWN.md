@@ -176,9 +176,9 @@ Acceptance criteria:
 
 Deliverables:
 
-- Updated `docs/DEMO_SCRIPT.md`
 - Completed `docs/QUALITY_CHECKLIST.md`
 - Backup screenshots if possible.
+- A short presentation walkthrough in the team's slides or notes.
 
 Acceptance criteria:
 

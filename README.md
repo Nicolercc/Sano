@@ -103,13 +103,10 @@ sano/
     DATA_PLAN.md
     SPRINT_PLAN.md
     TEAM_OPERATING_MODEL.md
-    DEMO_SCRIPT.md
     QUALITY_CHECKLIST.md
     LLM_GUIDE.md
-    adr/
-      ADR-001-scope.md
-      ADR-002-stack.md
-      ADR-003-data-strategy.md
+    TASK_BREAKDOWN.md
+    AGENT_ORCHESTRATION.md
 ```
 
 ## Documentation Map
@@ -120,10 +117,10 @@ sano/
 - [Team Operating Model](docs/TEAM_OPERATING_MODEL.md): ownership, branch rules, and conflict avoidance.
 - [Contributing](docs/CONTRIBUTING.md): Git workflow, PR expectations, and coding rules.
 - [Data Plan](docs/DATA_PLAN.md): official data sources, seed strategy, and Supabase plan.
-- [Demo Script](docs/DEMO_SCRIPT.md): final presentation flow.
+- [Task Breakdown](docs/TASK_BREAKDOWN.md): assignable work for the three-person team.
 - [Quality Checklist](docs/QUALITY_CHECKLIST.md): final acceptance criteria.
 - [LLM Guide](docs/LLM_GUIDE.md): how contributors should use AI tools without breaking scope.
-- [ADRs](docs/adr): architecture decision records.
+- [Agent Orchestration](docs/AGENT_ORCHESTRATION.md): how to coordinate Codex, Cursor, and Claude.
 
 ## Team Principle
 
