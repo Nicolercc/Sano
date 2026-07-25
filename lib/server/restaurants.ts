@@ -57,8 +57,9 @@ export function getRestaurantDataSummary() {
   );
 
   return {
-    source: "NYC DOHMH Restaurant Inspection Results",
-    mode: "curated-real-data-seed",
+    source: "Synthetic demo seed modeled on NYC DOHMH Restaurant Inspection Results fields",
+    officialSource: "NYC DOHMH Restaurant Inspection Results",
+    mode: "synthetic-demo-seed",
     restaurantCount: restaurants.length,
     inspectionCount,
     dataAsOf: dataAsOfDates[dataAsOfDates.length - 1] ?? null

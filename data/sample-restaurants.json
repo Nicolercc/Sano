@@ -19,7 +19,7 @@
     "sanoLabel": "Improving record",
     "explanation": "Recent inspections show lower recorded scores after an earlier repeat pattern.",
     "dataAsOf": "2026-07-15",
-    "sourceNotes": "Demo seed shaped from NYC DOHMH inspection fields; replace with script output for official extracts.",
+    "sourceNotes": "Synthetic demo seed modeled on NYC DOHMH inspection fields; not an official record extract. Replace with script output for official extracts.",
     "alternatives": ["hudson-green-kitchen", "canal-little-thai"],
     "inspections": [
       {
@@ -94,7 +94,7 @@
     "sanoLabel": "Consistent record",
     "explanation": "Multiple recent A-grade inspections stay within a narrow score range.",
     "dataAsOf": "2026-07-15",
-    "sourceNotes": "Demo seed shaped from NYC DOHMH inspection fields; replace with script output for official extracts.",
+    "sourceNotes": "Synthetic demo seed modeled on NYC DOHMH inspection fields; not an official record extract. Replace with script output for official extracts.",
     "alternatives": ["orchard-noodle-house", "cobble-hill-arepa"],
     "inspections": [
       {
@@ -169,7 +169,7 @@
     "sanoLabel": "Recent critical flag",
     "explanation": "High popularity sits beside a volatile inspection timeline and a recent critical flag.",
     "dataAsOf": "2026-07-15",
-    "sourceNotes": "Demo seed shaped from NYC DOHMH inspection fields; replace with script output for official extracts.",
+    "sourceNotes": "Synthetic demo seed modeled on NYC DOHMH inspection fields; not an official record extract. Replace with script output for official extracts.",
     "alternatives": ["orchard-noodle-house", "hudson-green-kitchen"],
     "inspections": [
       {
@@ -244,7 +244,7 @@
     "sanoLabel": "Consistent record",
     "explanation": "Three A-grade cycles provide a stable but shorter inspection view.",
     "dataAsOf": "2026-07-15",
-    "sourceNotes": "Demo seed shaped from NYC DOHMH inspection fields; replace with script output for official extracts.",
+    "sourceNotes": "Synthetic demo seed modeled on NYC DOHMH inspection fields; not an official record extract. Replace with script output for official extracts.",
     "alternatives": ["sunset-taco-counter", "cobble-hill-arepa"],
     "inspections": [
       {
@@ -299,7 +299,7 @@
     "sanoLabel": "Improving record",
     "explanation": "Scores are moving downward after an earlier B-grade inspection cycle.",
     "dataAsOf": "2026-07-15",
-    "sourceNotes": "Demo seed shaped from NYC DOHMH inspection fields; replace with script output for official extracts.",
+    "sourceNotes": "Synthetic demo seed modeled on NYC DOHMH inspection fields; not an official record extract. Replace with script output for official extracts.",
     "alternatives": ["cobble-hill-arepa", "astoria-souvlaki-room"],
     "inspections": [
       {
@@ -354,7 +354,7 @@
     "sanoLabel": "Consistent record",
     "explanation": "Inspection scores are moderate and steady across the available history.",
     "dataAsOf": "2026-07-15",
-    "sourceNotes": "Demo seed shaped from NYC DOHMH inspection fields; replace with script output for official extracts.",
+    "sourceNotes": "Synthetic demo seed modeled on NYC DOHMH inspection fields; not an official record extract. Replace with script output for official extracts.",
     "alternatives": ["hudson-green-kitchen", "sunset-taco-counter"],
     "inspections": [
       {
@@ -409,7 +409,7 @@
     "sanoLabel": "Limited data",
     "explanation": "Popularity is high, but the available inspection history is short and currently pending.",
     "dataAsOf": "2026-07-15",
-    "sourceNotes": "Demo seed shaped from NYC DOHMH inspection fields; replace with script output for official extracts.",
+    "sourceNotes": "Synthetic demo seed modeled on NYC DOHMH inspection fields; not an official record extract. Replace with script output for official extracts.",
     "alternatives": ["orchard-noodle-house", "hudson-green-kitchen"],
     "inspections": [
       {
@@ -454,7 +454,7 @@
     "sanoLabel": "Consistent record",
     "explanation": "Available inspections are steady, with one older critical flag not repeated recently.",
     "dataAsOf": "2026-07-15",
-    "sourceNotes": "Demo seed shaped from NYC DOHMH inspection fields; replace with script output for official extracts.",
+    "sourceNotes": "Synthetic demo seed modeled on NYC DOHMH inspection fields; not an official record extract. Replace with script output for official extracts.",
     "alternatives": ["astoria-souvlaki-room", "hudson-green-kitchen"],
     "inspections": [
       {

@@ -18,7 +18,7 @@ Decisions to confirm:
 
 1. Stack: Next.js, TypeScript, Tailwind, MapLibre, Supabase, Python, Vercel.
 2. MVP scope: search/list/map, profile, timeline, score panel, alternatives, methodology.
-3. Data strategy: real official NYC inspection data prepared into a stable seed first.
+3. Data strategy: clearly disclosed synthetic demo seed first, then real official NYC inspection data prepared into a stable seed.
 4. Branch workflow: no direct pushes to `main`.
 5. File ownership: one owner per area.
 
@@ -168,7 +168,7 @@ Tasks:
 2. Create or improve `scripts/score_restaurants.py`.
 3. Document the data pipeline.
 4. Decide whether Supabase integration is feasible before final demo.
-5. If Supabase is too risky, keep curated real-data seed and explain it clearly.
+5. If Supabase is too risky, keep the clearly disclosed synthetic demo seed and explain the official-data replacement path.
 
 Contributor focus:
 
@@ -251,4 +251,3 @@ Done when:
 - Demo script works.
 - Backup screenshots exist.
 - Team can explain product, stack, data, and tradeoffs.
-

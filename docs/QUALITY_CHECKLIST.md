@@ -14,7 +14,7 @@ Use this before the final demo and before major pull requests.
 
 ## Data
 
-- [ ] Data is real official data or a curated seed based on real official data.
+- [ ] Demo data is either real official data or clearly disclosed synthetic data modeled on official fields.
 - [ ] Demo data is stable.
 - [ ] Data as-of date is visible where appropriate.
 - [ ] Derived fields are explainable.
@@ -59,4 +59,3 @@ Use this before the final demo and before major pull requests.
 - [ ] Team can explain data source.
 - [ ] Team can explain scoring at a high level.
 - [ ] Team can explain limitations.
-

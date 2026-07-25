@@ -1,6 +1,6 @@
 # Sano API
 
-The Sunday demo uses a stable app-ready seed derived from NYC DOHMH inspection fields. The API layer gives the frontend and future clients a backend contract while keeping live external APIs out of the presentation path.
+The Sunday demo uses a stable synthetic app-ready seed modeled on NYC DOHMH inspection fields. The API layer gives the frontend and future clients a backend contract while keeping live external APIs out of the presentation path.
 
 ## Endpoints
 
@@ -11,4 +11,4 @@ The Sunday demo uses a stable app-ready seed derived from NYC DOHMH inspection f
 
 ## Current Data Mode
 
-`curated-real-data-seed` is intentionally stable for demo reliability. The next production step is to replace `lib/server/restaurants.ts` with a Supabase-backed repository while keeping the API response shape stable.
+`synthetic-demo-seed` is intentionally stable for demo reliability. It is not an official NYC record extract and should not be presented as one. The next production step is to replace `lib/server/restaurants.ts` with a Supabase-backed repository populated by the ingestion/scoring scripts while keeping the API response shape stable.

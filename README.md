@@ -41,7 +41,7 @@ The MVP is a polished demo of the core Sano experience:
 - Trust Gap indicator
 - Alternatives with stronger inspection trajectories
 - Methodology and limitations page
-- Real official NYC inspection data or a curated real-data seed
+- Clearly disclosed demo data modeled on NYC inspection fields, with a path to real official NYC inspection data
 
 ## What We Are Not Building This Week
 
@@ -125,4 +125,3 @@ sano/
 ## Team Principle
 
 When uncertain, choose the option that makes the demo clearer, the code easier to review, and the product claim more defensible.
-

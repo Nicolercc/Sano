@@ -54,7 +54,7 @@ Needs:
 1. Make inspection history legible inside a consumer discovery flow.
 2. Distinguish among restaurants with similar ratings or public grades.
 3. Explain every derived signal in plain language.
-4. Use real official inspection data or a curated real-data seed.
+4. Clearly distinguish synthetic demo data from future real official inspection data.
 5. Ship a demo whose value is understandable in 30 seconds.
 
 ## Non-Goals
@@ -190,4 +190,3 @@ The MVP is successful when:
 4. A user can explain what the Sano label means.
 5. The team can present the demo in under 5 minutes.
 6. The app is deployed and stable.
-
