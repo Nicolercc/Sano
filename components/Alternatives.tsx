@@ -1,5 +1,5 @@
 import RestaurantCard from "@/components/RestaurantCard";
-import { getAlternatives } from "@/lib/mock-data";
+import { getAlternatives } from "@/lib/server/restaurants";
 import type { Restaurant } from "@/lib/types";
 
 type AlternativesProps = {

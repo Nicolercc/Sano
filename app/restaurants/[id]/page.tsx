@@ -1,6 +1,6 @@
 import { notFound } from "next/navigation";
 import RestaurantProfile from "@/components/RestaurantProfile";
-import { restaurants } from "@/lib/mock-data";
+import { getRestaurant, restaurants } from "@/lib/server/restaurants";
 
 type RestaurantPageProps = {
   params: {
@@ -13,7 +13,7 @@ export function generateStaticParams() {
 }
 
 export default function RestaurantPage({ params }: RestaurantPageProps) {
-  const restaurant = restaurants.find((item) => item.id === params.id);
+  const restaurant = getRestaurant(params.id);
 
   if (!restaurant) {
     notFound();
