@@ -7,6 +7,7 @@ type FilterBarProps = {
   cuisines: string[];
   resultCount: number;
   onChange: (filters: RestaurantFilters) => void;
+  onClear: () => void;
 };
 
 const trajectoryOptions: Array<"all" | Trajectory> = [
@@ -30,12 +31,25 @@ function label(value: string) {
     : value.charAt(0).toUpperCase() + value.slice(1);
 }
 
+export function hasActiveFilters(filters: RestaurantFilters) {
+  return (
+    filters.query.trim() !== "" ||
+    filters.cuisine !== "all" ||
+    filters.trajectory !== "all" ||
+    filters.confidence !== "all" ||
+    filters.recentCriticalOnly
+  );
+}
+
 export default function FilterBar({
   filters,
   cuisines,
   resultCount,
-  onChange
+  onChange,
+  onClear
 }: FilterBarProps) {
+  const filtersActive = hasActiveFilters(filters);
+
   return (
     <section className="flex flex-wrap items-center gap-2 rounded-lg border border-ink/10 bg-white/65 p-2.5 shadow-sm backdrop-blur">
       <label className="min-w-0 flex-1 basis-full sm:basis-64">
@@ -126,7 +140,21 @@ export default function FilterBar({
         <span className="whitespace-nowrap">Recent criticals</span>
       </label>
 
-      <span className="ml-auto hidden whitespace-nowrap px-2 text-xs font-semibold text-ink/50 sm:inline">
+      {filtersActive ? (
+        <button
+          type="button"
+          onClick={onClear}
+          className="inline-flex min-h-9 items-center rounded-md border border-ink/10 bg-white px-3 text-sm font-semibold text-ink/70 transition hover:border-moss/40 hover:text-ink focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-moss"
+        >
+          Clear filters
+        </button>
+      ) : null}
+
+      <span
+        className={`ml-auto hidden whitespace-nowrap px-2 text-xs font-semibold sm:inline ${
+          resultCount === 0 && filtersActive ? "text-amber" : "text-ink/50"
+        }`}
+      >
         {resultCount} {resultCount === 1 ? "match" : "matches"}
       </span>
     </section>

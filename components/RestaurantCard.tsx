@@ -93,13 +93,13 @@ export default function RestaurantCard({
         <button
           type="button"
           onClick={() => onSelect?.(restaurant)}
-          className="order-2 rounded-md text-left focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-moss lg:order-1"
+          className="order-3 rounded-md text-left focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-moss lg:order-1"
           aria-label={`Select ${restaurant.name}`}
           aria-pressed={selected}
         >
           <svg
             viewBox={`0 0 ${timelineWidth} ${timelineHeight}`}
-            className="h-16 w-full max-w-[11rem] lg:max-w-none"
+            className="h-14 w-full max-w-[10rem] sm:h-16 sm:max-w-[11rem] lg:max-w-none"
             role="img"
             aria-label={`Mini inspection timeline for ${restaurant.name}`}
           >
@@ -147,74 +147,86 @@ export default function RestaurantCard({
           aria-label={`Select ${restaurant.name}`}
           aria-pressed={selected}
         >
-          <h2 className="font-serif text-xl font-bold leading-tight text-ink">
+          <h2 className="font-serif text-[1.2rem] font-bold leading-snug text-ink sm:text-xl sm:leading-tight">
             {restaurant.name}
           </h2>
-          <p className="mt-1 text-sm text-ink/60">
-            {restaurant.cuisine} · {restaurant.neighborhood} · {restaurant.priceLevel}
+          <p className="mt-1.5 text-sm leading-5 text-ink/60">
+            <span className="block sm:inline">{restaurant.cuisine}</span>
+            <span className="hidden text-ink/30 sm:inline"> · </span>
+            <span className="block sm:inline">
+              {restaurant.neighborhood}
+              <span className="text-ink/30"> · </span>
+              {restaurant.priceLevel}
+            </span>
           </p>
         </button>
 
-        <div className="order-3 flex items-end justify-between gap-3 lg:block lg:text-right">
-          <p className="text-[10px] font-bold uppercase tracking-wide text-ink/45">
-            Grade
-          </p>
-          <p className="font-serif text-2xl font-bold leading-none text-ink">
-            {restaurant.grade}
-          </p>
-        </div>
-
-        <div className="order-4 min-w-0">
-          <div className="flex items-baseline justify-between gap-3">
-            <p className="text-[10px] font-bold uppercase tracking-wide text-ink/45">
-              Reliability
-            </p>
-            <p
-              className={`text-base font-black ${scoreTone(
-                restaurant.inspectionReliabilityScore
-              )}`}
-            >
-              {restaurant.inspectionReliabilityScore}
-            </p>
-          </div>
-          <div className="mt-2 h-1.5 overflow-hidden rounded-full bg-ink/10">
-            <div
-              className={`h-full rounded-full ${scoreMeterClass(
-                restaurant.inspectionReliabilityScore
-              )}`}
-              style={{ width: meterWidth }}
-            />
-          </div>
-        </div>
-
         <Link
           href={`/restaurants/${restaurant.id}`}
-          className="order-5 inline-flex min-h-10 items-center justify-center rounded-md bg-ink px-4 text-sm font-semibold text-white transition hover:bg-moss focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-moss"
+          className="order-2 inline-flex min-h-11 w-full items-center justify-center rounded-md bg-ink px-4 text-sm font-semibold text-white transition hover:bg-moss focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-moss lg:order-5 lg:min-h-10 lg:w-auto"
         >
           Open profile
         </Link>
+
+        <div className="order-4 grid grid-cols-2 gap-4 border-t border-ink/8 pt-4 lg:contents lg:border-0 lg:pt-0">
+          <div className="min-w-0 lg:text-right">
+            <p className="text-[10px] font-bold uppercase tracking-wide text-ink/45">
+              Grade
+            </p>
+            <p className="mt-1 font-serif text-2xl font-bold leading-none text-ink">
+              {restaurant.grade}
+            </p>
+          </div>
+
+          <div className="min-w-0">
+            <div className="flex items-baseline justify-between gap-2 lg:gap-3">
+              <p className="text-[10px] font-bold uppercase tracking-wide text-ink/45">
+                Reliability
+              </p>
+              <p
+                className={`text-base font-black tabular-nums ${scoreTone(
+                  restaurant.inspectionReliabilityScore
+                )}`}
+              >
+                {restaurant.inspectionReliabilityScore}
+              </p>
+            </div>
+            <div className="mt-2 h-1.5 overflow-hidden rounded-full bg-ink/10">
+              <div
+                className={`h-full rounded-full ${scoreMeterClass(
+                  restaurant.inspectionReliabilityScore
+                )}`}
+                style={{ width: meterWidth }}
+              />
+            </div>
+          </div>
+        </div>
       </div>
 
-      <div className="mt-4 flex flex-wrap items-center gap-2 lg:pl-[11rem]">
-        <span className="inline-flex items-center rounded-full border border-ink/15 px-3 py-1 text-xs font-bold text-ink">
-          {trajectorySymbol(restaurant.trajectory)} · {restaurant.sanoLabel}
-        </span>
-        <span
-          className={`inline-flex items-center rounded-full px-3 py-1 text-xs font-bold ${confidenceTone(
-            restaurant.confidence
-          )}`}
-        >
-          {confidenceLabel(restaurant.confidence)}
-        </span>
-        <span className="inline-flex items-center rounded-full bg-oat px-3 py-1 text-xs font-bold text-ink/65">
-          {trajectoryLabel(restaurant.trajectory)}
-        </span>
-        <span className="text-sm font-semibold text-ink/60">
-          {restaurant.rating.toFixed(1)} · {formatNumber(restaurant.reviewCount)} reviews
-        </span>
+      <div className="mt-4 flex flex-col gap-3 border-t border-ink/8 pt-4 lg:border-0 lg:pl-[11rem] lg:pt-0">
+        <div className="flex flex-wrap items-center gap-x-2 gap-y-2">
+          <span className="inline-flex max-w-full items-center rounded-full border border-ink/15 px-3 py-1.5 text-xs font-bold leading-none text-ink">
+            {trajectorySymbol(restaurant.trajectory)} · {restaurant.sanoLabel}
+          </span>
+          <span
+            className={`inline-flex items-center rounded-full px-3 py-1.5 text-xs font-bold leading-none ${confidenceTone(
+              restaurant.confidence
+            )}`}
+          >
+            {confidenceLabel(restaurant.confidence)}
+          </span>
+          <span className="inline-flex items-center rounded-full bg-oat px-3 py-1.5 text-xs font-bold leading-none text-ink/65">
+            {trajectoryLabel(restaurant.trajectory)}
+          </span>
+        </div>
+        <p className="text-sm font-semibold leading-5 text-ink/60">
+          {restaurant.rating.toFixed(1)} rating
+          <span className="text-ink/30"> · </span>
+          {formatNumber(restaurant.reviewCount)} reviews
+        </p>
       </div>
 
-      <p className="mt-3 max-w-4xl text-sm leading-6 text-ink/70 lg:pl-[11rem]">
+      <p className="mt-3 text-sm leading-6 text-ink/70 lg:pl-[11rem]">
         {restaurant.explanation}
       </p>
     </article>

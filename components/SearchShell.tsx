@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useMemo, useState } from "react";
-import FilterBar from "@/components/FilterBar";
+import FilterBar, { hasActiveFilters } from "@/components/FilterBar";
 import MapResults from "@/components/MapResults";
 import RestaurantCard from "@/components/RestaurantCard";
 import { hasRecentCriticalFlag } from "@/lib/scoring";
@@ -19,6 +19,28 @@ const defaultFilters: RestaurantFilters = {
   confidence: "all",
   recentCriticalOnly: false
 };
+
+function activeFilterSummary(filters: RestaurantFilters) {
+  const parts: string[] = [];
+
+  if (filters.query.trim()) {
+    parts.push(`“${filters.query.trim()}”`);
+  }
+  if (filters.cuisine !== "all") {
+    parts.push(filters.cuisine);
+  }
+  if (filters.trajectory !== "all") {
+    parts.push(`${filters.trajectory} trajectory`);
+  }
+  if (filters.confidence !== "all") {
+    parts.push(`${filters.confidence} confidence`);
+  }
+  if (filters.recentCriticalOnly) {
+    parts.push("recent criticals only");
+  }
+
+  return parts;
+}
 
 export default function SearchShell({ restaurants }: SearchShellProps) {
   const [filters, setFilters] = useState(defaultFilters);
@@ -67,6 +89,11 @@ export default function SearchShell({ restaurants }: SearchShellProps) {
     filteredRestaurants[0] ??
     null;
 
+  const filtersActive = hasActiveFilters(filters);
+  const filterParts = activeFilterSummary(filters);
+
+  const clearFilters = () => setFilters(defaultFilters);
+
   return (
     <main className="min-h-screen bg-oat text-ink">
       <div className="mx-auto flex w-full max-w-7xl flex-col gap-5 px-4 py-6 sm:px-6 lg:px-8 lg:py-10">
@@ -95,6 +122,7 @@ export default function SearchShell({ restaurants }: SearchShellProps) {
           cuisines={cuisines}
           resultCount={filteredRestaurants.length}
           onChange={setFilters}
+          onClear={clearFilters}
         />
 
         <MapResults
@@ -131,11 +159,41 @@ export default function SearchShell({ restaurants }: SearchShellProps) {
               ))}
             </div>
           ) : (
-            <div className="rounded-lg border border-ink/10 bg-white p-8 text-center shadow-sm">
-              <p className="font-bold text-ink">No restaurants match those filters.</p>
-              <p className="mt-2 text-sm text-ink/60">
-                Try a broader cuisine, trajectory, or confidence setting.
+            <div className="rounded-lg border border-ink/10 bg-white p-8 shadow-sm">
+              <p className="text-lg font-bold text-ink">
+                No restaurants match right now
               </p>
+              <p className="mt-2 max-w-lg text-sm leading-6 text-ink/65">
+                {filtersActive ? (
+                  <>
+                    Nothing in this demo set fits your current filters
+                    {filterParts.length ? (
+                      <>
+                        :{" "}
+                        <span className="font-semibold text-ink/80">
+                          {filterParts.join(" · ")}
+                        </span>
+                      </>
+                    ) : null}
+                    . Widen a setting above, or clear filters to see every
+                    restaurant again.
+                  </>
+                ) : (
+                  <>
+                    The demo seed has no restaurants to show yet. Check back once
+                    data is loaded.
+                  </>
+                )}
+              </p>
+              {filtersActive ? (
+                <button
+                  type="button"
+                  onClick={clearFilters}
+                  className="mt-5 inline-flex min-h-10 items-center rounded-md border border-ink/15 bg-oat px-4 text-sm font-semibold text-ink shadow-sm transition hover:border-moss/40 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-moss"
+                >
+                  Clear filters
+                </button>
+              ) : null}
             </div>
           )}
         </section>
