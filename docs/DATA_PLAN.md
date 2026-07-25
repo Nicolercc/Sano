@@ -61,8 +61,8 @@ Each restaurant record should include:
 - address
 - latitude
 - longitude
-- rating
-- reviewCount
+- rating, only when a separate popularity source exists
+- reviewCount, only when a separate popularity source exists
 - grade
 - inspectionReliabilityScore
 - trajectory
@@ -137,6 +137,8 @@ Recommended tables:
 4. Use "data as of" dates.
 5. Do not show high-confidence labels for low-confidence records.
 6. Prefer fewer trustworthy records over many questionable records.
+7. Return unavailable public API metadata as `null` with explicit availability
+   flags instead of encoding absence as fake-looking zeroes.
 
 ## Presentation Positioning
 

@@ -39,11 +39,27 @@ Sano does not claim:
    official NYC rating, no safety or illness prediction.
 7. Optional engineering proof:
    open `/api/health` and confirm `mode = official-generated-seed`.
+8. Optional API proof:
+   open `/api/restaurants` and point out that unavailable rating, review,
+   price, and trust-gap fields are returned as `null` with explicit metadata
+   availability flags.
 
 ## Recommended Showcase
 
-Pick one restaurant from the committed seed that lets you explain the product
-calmly. Avoid framing any restaurant as “safe” or “unsafe.” Good demo language:
+Primary path:
+
+- `Lucky Chix` — `/restaurants/50169790`
+- Why: current A grade, four inspection cycles, medium confidence, and enough
+  timeline movement to explain why inspection history adds context without
+  turning the demo punitive.
+
+Backup path:
+
+- `Cutwater Cocktail Bar` — `/restaurants/50006959`
+- Why: stable derived signal, medium confidence, and a calm comparison story if
+  the room needs a less volatile example.
+
+Avoid framing any restaurant as “safe” or “unsafe.” Good demo language:
 
 > “This profile shows how a single current grade can sit beside a longer
 > inspection timeline. Sano summarizes the pattern, but the official record and

@@ -88,6 +88,19 @@ async function main() {
       restaurantPayload.restaurants.length === restaurantPayload.count,
     "/api/restaurants payload shape is invalid"
   );
+  assert(
+    restaurantPayload.restaurants.every(
+      (restaurant) =>
+        restaurant.metadataAvailability?.popularity === false &&
+        restaurant.metadataAvailability?.price === false &&
+        restaurant.metadataAvailability?.trustGap === false &&
+        restaurant.rating === null &&
+        restaurant.reviewCount === null &&
+        restaurant.priceLevel === null &&
+        restaurant.trustGap === null
+    ),
+    "/api/restaurants exposes unavailable official metadata as if it were sourced"
+  );
 
   const showcase = chooseShowcaseRestaurant(restaurantPayload.restaurants);
   assert(showcase?.id && showcase?.name, "No showcase restaurant available");

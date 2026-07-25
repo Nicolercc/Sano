@@ -44,6 +44,30 @@ later moves from committed JSON to Supabase.
 }
 ```
 
+## Restaurant Metadata Availability
+
+Official NYC DOHMH inspection records do not include consumer ratings, review
+counts, price level, or popularity-derived trust gap. In
+`official-generated-seed` mode, the public API returns those unavailable fields
+as `null` and exposes explicit availability flags:
+
+```json
+{
+  "rating": null,
+  "reviewCount": null,
+  "priceLevel": null,
+  "trustGap": null,
+  "metadataAvailability": {
+    "popularity": false,
+    "price": false,
+    "trustGap": false
+  }
+}
+```
+
+This keeps the public API honest while the internal UI model remains stable for
+the current demo.
+
 ## Demo Contract
 
 Sano demonstrates:

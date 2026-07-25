@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
+import { serializeRestaurantsForApi } from "@/lib/server/api-serialization";
 import { listRestaurants } from "@/lib/server/restaurants";
 
 function booleanParam(value: string | null) {
@@ -17,6 +18,6 @@ export function GET(request: NextRequest) {
 
   return NextResponse.json({
     count: restaurants.length,
-    restaurants
+    restaurants: serializeRestaurantsForApi(restaurants)
   });
 }

@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
+import { serializeRestaurantForApi } from "@/lib/server/api-serialization";
 import { getRestaurant } from "@/lib/server/restaurants";
 
 type RestaurantRouteContext = {
@@ -14,5 +15,5 @@ export function GET(_request: NextRequest, { params }: RestaurantRouteContext) {
     return NextResponse.json({ error: "Restaurant not found" }, { status: 404 });
   }
 
-  return NextResponse.json({ restaurant });
+  return NextResponse.json({ restaurant: serializeRestaurantForApi(restaurant) });
 }

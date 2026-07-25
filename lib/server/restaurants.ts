@@ -51,6 +51,10 @@ const selectedDataSource = selectRestaurantDataSource();
 
 export const restaurants = selectedDataSource.restaurants;
 
+export function getRestaurantDataMode() {
+  return selectedDataSource.mode;
+}
+
 export type RestaurantQuery = {
   q?: string | null;
   cuisine?: string | null;
