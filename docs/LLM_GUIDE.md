@@ -13,7 +13,7 @@ Follow the existing repo structure. Avoid changing shared types or sample data u
 Ask for one focused thing:
 
 ```txt
-Create a React component named RestaurantCard that accepts the existing Restaurant type and displays name, cuisine, neighborhood, rating, grade, Sano label, confidence, and explanation.
+Create a React component named RestaurantCard that accepts the existing Restaurant type and displays name, cuisine, neighborhood, available grade fields, Sano label, confidence, source note, and explanation.
 ```
 
 ```txt
@@ -97,4 +97,3 @@ Rules:
 - Keep the North Star intact.
 - Make the text useful to a three-person team.
 ```
-

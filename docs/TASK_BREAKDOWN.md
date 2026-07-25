@@ -55,7 +55,7 @@ Acceptance criteria:
 Deliverables:
 
 - `components/RestaurantCard.tsx`
-- Cards display rating, grade, Sano label, confidence, and explanation.
+- Cards display available grade fields, Sano label, confidence, source-aware popularity availability, and explanation.
 
 Acceptance criteria:
 
@@ -145,7 +145,7 @@ Deliverables:
 Acceptance criteria:
 
 - User can open a profile.
-- Profile displays rating, grade, Sano score, trajectory, confidence, and explanation.
+- Profile displays available grade fields, Sano score, trajectory, confidence, source note, and explanation.
 - Profile includes disclaimer.
 
 ### P0: Build Trust Timeline
@@ -209,4 +209,3 @@ Acceptance criteria:
 - Methodology reviewed.
 - No placeholder text.
 - No absolute safety claims.
-

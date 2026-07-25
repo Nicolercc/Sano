@@ -135,10 +135,10 @@ export default function SearchShell({ restaurants }: SearchShellProps) {
           <div className="flex flex-wrap items-end justify-between gap-3">
             <div>
               <h1 className="text-xl font-bold text-ink">
-                Restaurants near your search
+                Restaurants in this demo extract
               </h1>
               <p className="mt-1 text-sm text-ink/55">
-                Inspection history context shown next to public grades and ratings.
+                Inspection history context shown next to available public grade fields.
               </p>
             </div>
             <span className="text-sm font-semibold text-ink/55">
@@ -175,8 +175,8 @@ export default function SearchShell({ restaurants }: SearchShellProps) {
                         </span>
                       </>
                     ) : null}
-                    . Widen a setting above, or clear filters to see every
-                    restaurant again.
+                    . Widen a setting above, or clear filters to see all
+                    restaurants in this demo extract again.
                   </>
                 ) : (
                   <>

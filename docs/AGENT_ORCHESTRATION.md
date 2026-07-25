@@ -83,8 +83,8 @@ Show:
 - name
 - cuisine
 - neighborhood
-- rating
-- review count
+- external rating only if separately sourced
+- external review count only if separately sourced
 - current grade
 - Sano label
 - confidence
