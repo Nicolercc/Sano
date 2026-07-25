@@ -1,14 +1,62 @@
 # Sano API
 
-The Sunday demo uses a stable synthetic app-ready seed modeled on NYC DOHMH inspection fields. The API layer gives the frontend and future clients a backend contract while keeping live external APIs out of the presentation path.
+The current demo uses a committed, curated official seed generated from NYC
+DOHMH Restaurant Inspection Results. The API layer gives the frontend and future
+clients a stable backend contract while keeping live external APIs out of the
+presentation path.
 
 ## Endpoints
 
 - `GET /api/health`: service status plus data-source summary.
-- `GET /api/restaurants`: list restaurants from the app-ready seed.
+- `GET /api/restaurants`: list restaurants from the active app-ready seed.
 - `GET /api/restaurants?q=&cuisine=&trajectory=&confidence=&recentCriticalOnly=`: filtered restaurant list.
 - `GET /api/restaurants/:id`: one restaurant profile record.
 
 ## Current Data Mode
 
-`synthetic-demo-seed` is intentionally stable for demo reliability. It is not an official NYC record extract and should not be presented as one. The next production step is to replace `lib/server/restaurants.ts` with a Supabase-backed repository populated by the ingestion/scoring scripts while keeping the API response shape stable.
+`official-generated-seed` is the primary mode. It means:
+
+- the committed app-ready records came from the NYC DOHMH Restaurant Inspection
+  Results dataset through the local ingestion and scoring scripts;
+- the extract is curated and offline for demo stability;
+- the extract is not live synchronization and not comprehensive citywide
+  coverage;
+- Sano-derived scores are not official NYC ratings.
+
+The repository keeps `synthetic-demo-seed` as a fallback mode for failure
+containment only. The API response shape should remain stable when the backend
+later moves from committed JSON to Supabase.
+
+## Health Response
+
+`GET /api/health` should return JSON similar to:
+
+```json
+{
+  "status": "ok",
+  "app": "sano",
+  "data": {
+    "mode": "official-generated-seed",
+    "restaurantCount": 16,
+    "inspectionCount": 57,
+    "fallbackAvailable": true
+  }
+}
+```
+
+## Demo Contract
+
+Sano demonstrates:
+
+- restaurant discovery
+- inspection transparency
+- derived inspection-history indicators
+- methodology and limitations
+- a stable API contract
+
+Sano does not claim:
+
+- real-time DOHMH synchronization
+- comprehensive restaurant coverage
+- absolute restaurant safety
+- official consumer ratings

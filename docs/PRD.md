@@ -10,13 +10,18 @@ We are not building "a restaurant app." We are building one polished proof that 
 
 ## Product Summary
 
-Sano is a consumer restaurant discovery app that interprets official inspection history alongside popularity signals. It helps diners understand whether a restaurant's inspection record is stable, improving, volatile, or showing repeat patterns.
+Sano is a consumer restaurant discovery app that interprets official inspection
+history and turns it into plain-language comparison context. It helps diners
+understand whether a restaurant's inspection record is stable, improving,
+volatile, or showing repeat patterns.
 
 Sano does not replace official grades. It explains the history underneath them.
 
 ## Problem
 
-Diners often choose among restaurants that all look acceptable: high ratings, convenient locations, familiar cuisines, and current public grades. The posted grade is a compressed snapshot and does not quickly show:
+Diners often choose among restaurants that all look acceptable: convenient
+locations, familiar cuisines, and current public grades. The posted grade is a
+compressed snapshot and does not quickly show:
 
 - Whether inspection scores are improving or declining.
 - Whether critical violations are repeated.
@@ -52,9 +57,9 @@ Needs:
 ## Product Goals
 
 1. Make inspection history legible inside a consumer discovery flow.
-2. Distinguish among restaurants with similar ratings or public grades.
+2. Distinguish among restaurants with similar cuisines, neighborhoods, or public grades.
 3. Explain every derived signal in plain language.
-4. Clearly distinguish synthetic demo data from future real official inspection data.
+4. Clearly distinguish official source fields from Sano-derived context.
 5. Ship a demo whose value is understandable in 30 seconds.
 
 ## Non-Goals
@@ -83,7 +88,7 @@ Needs:
 ### Search And Results
 
 - Restaurant search by name, cuisine, or neighborhood.
-- Filter controls for cuisine, rating, trajectory, recent criticals, and confidence.
+- Filter controls for cuisine, trajectory, recent criticals, and confidence.
 - List of restaurants.
 - Map or map-like geographic panel.
 - Selected restaurant state.

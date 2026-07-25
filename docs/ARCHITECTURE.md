@@ -63,9 +63,12 @@ Pages should compose components. They should not contain large scoring formulas,
 
 ## Data Architecture
 
-### Phase 1: Curated Real-Data Seed
+### Phase 1: Curated Official Seed
 
-The app currently starts with a stable synthetic JSON seed modeled on official inspection fields. The repository boundary should make it straightforward to replace that seed with real official inspection data.
+The app currently starts with a stable official JSON seed generated from NYC
+DOHMH Restaurant Inspection Results. The repository boundary keeps a synthetic
+fallback available for failure containment and makes it straightforward to later
+replace committed JSON with Supabase queries.
 
 This makes the frontend reliable while still keeping the demo credible.
 
@@ -114,7 +117,7 @@ Environment variables should be documented in `.env.example` once the app is sca
 ## Risk Controls
 
 1. Do not depend on live external APIs during final presentation.
-2. Keep sample data stable.
+2. Keep the committed official seed stable for the demo.
 3. Keep derived claims explainable.
 4. Keep shared types coordinated.
 5. Prefer small pull requests.

@@ -73,7 +73,7 @@ Work only on `components/RestaurantCard.tsx`.
 
 Project context:
 - Sano is a Next.js + TypeScript + Tailwind app.
-- Sano interprets restaurant inspection history alongside popularity.
+- Sano interprets official restaurant inspection history. Popularity metadata is shown only when a real source exists.
 - Sano is not a generic restaurant app.
 
 Task:
@@ -128,7 +128,7 @@ Constraints:
 Review Sano as a senior product and engineering advisor.
 
 Context:
-Sano is a one-week, three-person capstone app. It interprets official restaurant inspection history alongside popularity.
+Sano is a one-week, three-person capstone app. It interprets official restaurant inspection history and shows popularity metadata only when a real source exists.
 
 North Star:
 We are not building "a restaurant app." We are building one polished proof that inspection history contains useful context hidden by public grades.

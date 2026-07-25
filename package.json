@@ -6,7 +6,11 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "validate:official": "python3 scripts/validate_restaurant_seed.py data/official-restaurants.json --kind official",
+    "validate:synthetic": "python3 scripts/validate_restaurant_seed.py data/sample-restaurants.json --kind synthetic",
+    "check": "npm run validate:official && npm run validate:synthetic && npm run lint && npm run build",
+    "acceptance": "node scripts/acceptance.mjs"
   },
   "dependencies": {
     "next": "14.2.5",

@@ -4,11 +4,16 @@ Sano is a restaurant discovery and inspection-history interpretation app.
 
 We are not building "a restaurant app." We are building one polished proof that inspection history contains useful context hidden by public grades.
 
-Sano helps diners compare restaurants that may all look strong on the surface: good ratings, familiar cuisines, convenient locations, and current public grades. The product reveals the inspection history underneath those compressed signals: trajectory, volatility, repeat patterns, recent critical flags, and confidence in the data.
+Sano helps diners compare restaurants that may look similar on the surface:
+familiar cuisines, convenient locations, and current public grades. The product
+reveals inspection-history context underneath those compressed signals:
+trajectory, volatility, repeat patterns, recent critical flags, and confidence
+in the prepared data.
 
 ## One-Line Promise
 
-Sano interprets a restaurant's inspection history alongside its popularity, so diners see what a single posted grade compresses away.
+Sano turns public restaurant inspection history into clear comparison context,
+so diners see what a single posted grade compresses away.
 
 ## What This MVP Proves
 
@@ -38,10 +43,11 @@ The MVP is a polished demo of the core Sano experience:
 - Restaurant profile page
 - Inspection timeline visualization
 - Inspection Reliability Score
-- Trust Gap indicator
+- Trust Gap indicator only when popularity metadata exists
 - Alternatives with stronger inspection trajectories
 - Methodology and limitations page
-- Clearly disclosed demo data modeled on NYC inspection fields, with a path to real official NYC inspection data
+- Clearly disclosed curated official seed generated from NYC DOHMH inspection
+  records, with synthetic fallback for failure containment
 
 ## What We Are Not Building This Week
 

@@ -14,12 +14,14 @@ Use this before the final demo and before major pull requests.
 
 ## Data
 
-- [ ] Demo data is either real official data or clearly disclosed synthetic data modeled on official fields.
+- [ ] Primary demo data is the committed official generated seed.
+- [ ] Synthetic data is retained only as a controlled fallback.
 - [ ] Demo data is stable.
 - [ ] Data as-of date is visible where appropriate.
 - [ ] Derived fields are explainable.
 - [ ] No invented official inspection claims are presented as fact.
 - [ ] Low-confidence data is not over-labeled.
+- [ ] Public ratings/reviews/trust gap are hidden or marked unavailable when popularity metadata is missing.
 
 ## UX And Visual Design
 
@@ -44,7 +46,12 @@ Use this before the final demo and before major pull requests.
 
 - [ ] App runs locally.
 - [ ] App builds.
+- [ ] `npm run check` passes.
+- [ ] `npm run acceptance` passes against the demo URL.
 - [ ] Main routes work.
+- [ ] `/api/health` returns JSON with `mode = official-generated-seed`.
+- [ ] `/api/restaurants` returns JSON with the official seed count.
+- [ ] Missing restaurant IDs return controlled JSON/page responses.
 - [ ] No unused placeholder pages.
 - [ ] No unnecessary dependencies.
 - [ ] Shared types are consistent.
