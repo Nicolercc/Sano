@@ -21,6 +21,16 @@ BOROUGH_COORDINATES = {
     "Nyc": (40.7128, -74.0060),
 }
 
+GRADE_MAP = {
+    "A": "A",
+    "B": "B",
+    "C": "C",
+    "N": "Not Yet Graded",
+    "P": "Pending",
+    "Z": "Pending",
+    "": "Pending",
+}
+
 
 def clamp(value: float, minimum: int = 0, maximum: int = 100) -> int:
     return round(min(maximum, max(minimum, value)))
@@ -74,6 +84,11 @@ def confidence(inspections: list[dict[str, Any]]) -> str:
     return "limited"
 
 
+def normalize_grade(value: Any) -> str:
+    grade = str(value or "").strip().upper()
+    return GRADE_MAP.get(grade, "Pending")
+
+
 def label(score: int, trend: str, confidence_value: str, recent_critical: bool) -> str:
     if confidence_value == "limited":
         return "Limited data"
@@ -125,6 +140,8 @@ def coordinates(record: dict[str, Any]) -> tuple[float, float, str]:
 def build_app_record(record: dict[str, Any], data_as_of: str) -> dict[str, Any]:
     inspections = record.get("inspections", [])
     repeat_patterns(inspections)
+    for inspection in inspections:
+        inspection["grade"] = normalize_grade(inspection.get("grade"))
     score = reliability_score(inspections)
     trend = trajectory(inspections)
     conf = confidence(inspections)
@@ -133,7 +150,9 @@ def build_app_record(record: dict[str, Any], data_as_of: str) -> dict[str, Any]:
         for item in sorted(inspections, key=lambda item: item["date"], reverse=True)[:2]
     )
     current_grade = (
-        sorted(inspections, key=lambda item: item["date"], reverse=True)[0].get("grade")
+        normalize_grade(
+            sorted(inspections, key=lambda item: item["date"], reverse=True)[0].get("grade")
+        )
         if inspections
         else "Pending"
     )
