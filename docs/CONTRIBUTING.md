@@ -10,7 +10,7 @@ All work should happen on a feature branch and be merged through a pull request.
 
 ## Branch Naming
 
-Use clear branch names:
+Use clear branch names, examples below:
 
 ```txt
 feature/app-shell

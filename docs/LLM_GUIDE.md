@@ -1,7 +1,5 @@
 # LLM Guide
 
-Contributors may use AI tools, but the output must stay aligned with this repository's architecture, data model, and product scope.
-
 ## Standard Context To Paste Into An LLM
 
 ```txt
