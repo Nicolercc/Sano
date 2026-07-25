@@ -1,0 +1,21 @@
+{
+  "sourceName": "NYC DOHMH Restaurant Inspection Results",
+  "source": "normalized-official-records",
+  "mode": "official-generated-seed",
+  "inputPath": "data/generated/normalized-inspections.json",
+  "outputPath": "data/official-restaurants.json",
+  "scoredAt": "2026-07-25T17:50:53.061866+00:00",
+  "dataAsOf": "2026-07-25",
+  "inputRestaurantCount": 11460,
+  "scoredRestaurantCount": 16,
+  "upstreamProvenance": {
+    "sourceName": "NYC DOHMH Restaurant Inspection Results",
+    "source": "socrata-api",
+    "sourceUrl": "https://data.cityofnewyork.us/resource/43nn-pn8j.json?%24limit=50000&%24order=inspection_date+DESC",
+    "inputPath": null,
+    "outputPath": "data/generated/normalized-inspections.json",
+    "fetchedAt": "2026-07-25T17:49:35.031385+00:00",
+    "inputRowCount": 50000,
+    "normalizedRestaurantCount": 11460
+  }
+}

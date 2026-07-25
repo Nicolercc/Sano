@@ -21,6 +21,70 @@ BOROUGH_COORDINATES = {
     "Nyc": (40.7128, -74.0060),
 }
 
+NEIGHBORHOOD_BY_ZIP = {
+    "10001": "Chelsea",
+    "10002": "Lower East Side",
+    "10003": "East Village",
+    "10009": "East Village",
+    "10010": "Flatiron",
+    "10011": "Chelsea",
+    "10012": "SoHo",
+    "10013": "Tribeca",
+    "10014": "West Village",
+    "10016": "Murray Hill",
+    "10019": "Midtown West",
+    "10022": "Midtown East",
+    "10023": "Upper West Side",
+    "10024": "Upper West Side",
+    "10025": "Upper West Side",
+    "10026": "Harlem",
+    "10027": "Morningside Heights",
+    "10028": "Upper East Side",
+    "10029": "East Harlem",
+    "10031": "Hamilton Heights",
+    "10032": "Washington Heights",
+    "10033": "Washington Heights",
+    "10036": "Times Square",
+    "10038": "Financial District",
+    "10065": "Upper East Side",
+    "10075": "Upper East Side",
+    "10128": "Carnegie Hill",
+    "10451": "Concourse",
+    "10454": "Mott Haven",
+    "10458": "Belmont",
+    "10461": "Pelham Bay",
+    "10463": "Riverdale",
+    "10467": "Norwood",
+    "11201": "Brooklyn Heights",
+    "11205": "Fort Greene",
+    "11206": "Williamsburg",
+    "11211": "Williamsburg",
+    "11215": "Park Slope",
+    "11217": "Boerum Hill",
+    "11218": "Kensington",
+    "11220": "Sunset Park",
+    "11221": "Bushwick",
+    "11222": "Greenpoint",
+    "11225": "Prospect Lefferts Gardens",
+    "11226": "Flatbush",
+    "11231": "Carroll Gardens",
+    "11232": "Sunset Park",
+    "11237": "Bushwick",
+    "11238": "Prospect Heights",
+    "11101": "Long Island City",
+    "11103": "Astoria",
+    "11106": "Astoria",
+    "11354": "Flushing",
+    "11372": "Jackson Heights",
+    "11373": "Elmhurst",
+    "11375": "Forest Hills",
+    "11377": "Woodside",
+    "11432": "Jamaica",
+    "11694": "Rockaway Park",
+    "10301": "St. George",
+    "10306": "New Dorp",
+}
+
 GRADE_MAP = {
     "A": "A",
     "B": "B",
@@ -30,6 +94,11 @@ GRADE_MAP = {
     "Z": "Pending",
     "": "Pending",
 }
+
+OFFICIAL_SOURCE_NOTE = (
+    "Generated from normalized NYC DOHMH inspection records. "
+    "Popularity and price metadata are unavailable in the official inspection source."
+)
 
 
 def clamp(value: float, minimum: int = 0, maximum: int = 100) -> int:
@@ -90,10 +159,10 @@ def normalize_grade(value: Any) -> str:
 
 
 def label(score: int, trend: str, confidence_value: str, recent_critical: bool) -> str:
-    if confidence_value == "limited":
-        return "Limited data"
     if recent_critical:
         return "Recent critical flag"
+    if confidence_value == "limited":
+        return "Limited data"
     if trend == "volatile" or score < 62:
         return "Volatile history"
     if trend == "improving":
@@ -157,10 +226,8 @@ def build_app_record(record: dict[str, Any], data_as_of: str) -> dict[str, Any]:
         else "Pending"
     )
     latitude, longitude, coordinate_source = coordinates(record)
-    source_note = (
-        "Generated from normalized NYC DOHMH inspection records. "
-        "Popularity metadata is unavailable in the official inspection source."
-    )
+    zipcode = str(record.get("zipcode") or "").strip()
+    source_note = OFFICIAL_SOURCE_NOTE
     if coordinate_source != "official-record":
         source_note += " Coordinates use a borough-centroid fallback."
 
@@ -168,7 +235,7 @@ def build_app_record(record: dict[str, Any], data_as_of: str) -> dict[str, Any]:
         "id": slug(str(record["id"])),
         "name": record["name"],
         "cuisine": record.get("cuisine") or "Restaurant",
-        "neighborhood": record.get("neighborhood") or "NYC",
+        "neighborhood": record.get("neighborhood") or NEIGHBORHOOD_BY_ZIP.get(zipcode) or record.get("borough") or "NYC",
         "borough": record.get("borough") or "NYC",
         "address": record.get("address") or "",
         "latitude": latitude,
@@ -188,6 +255,112 @@ def build_app_record(record: dict[str, Any], data_as_of: str) -> dict[str, Any]:
         "alternatives": record.get("alternatives") or [],
         "sourceNotes": source_note,
     }
+
+
+def current_grade(record: dict[str, Any]) -> str:
+    inspections = record.get("inspections", [])
+    if not inspections:
+        return "Pending"
+    recent = sorted(inspections, key=lambda item: item["date"], reverse=True)[0]
+    return normalize_grade(recent.get("grade"))
+
+
+def curation_score(record: dict[str, Any]) -> int:
+    inspections = record.get("inspections", [])
+    if not inspections:
+        return -100
+
+    sorted_inspections = sorted(inspections, key=lambda item: item["date"], reverse=True)
+    grade = current_grade(record)
+    scores = [int(item.get("score") or 0) for item in inspections]
+    non_zero_score_count = sum(1 for score in scores if score > 0)
+    critical_count = sum(int(item.get("criticalCount") or 0) for item in inspections)
+    zip_bonus = 8 if str(record.get("zipcode") or "").strip() in NEIGHBORHOOD_BY_ZIP else 0
+    grade_bonus = {"A": 18, "B": 12, "C": 8, "Pending": -8, "Not Yet Graded": -10}.get(grade, 0)
+    confidence_bonus = min(len(inspections), 6) * 5
+    history_bonus = min(non_zero_score_count, 5) * 4
+    critical_penalty = min(critical_count * 2, 10)
+    recency_bonus = 6 if sorted_inspections[0].get("date", "") >= "2024-01-01" else 0
+    pending_penalty = 24 if grade == "Pending" else 0
+    zero_recent_penalty = 8 if int(sorted_inspections[0].get("score") or 0) == 0 else 0
+
+    return (
+        confidence_bonus
+        + history_bonus
+        + grade_bonus
+        + recency_bonus
+        + zip_bonus
+        - critical_penalty
+        - pending_penalty
+        - zero_recent_penalty
+    )
+
+
+def select_curated_records(records: list[dict[str, Any]], limit: int) -> list[dict[str, Any]]:
+    selected: list[dict[str, Any]] = []
+    seen_names: set[str] = set()
+    borough_counts: dict[str, int] = {}
+    cuisine_counts: dict[str, int] = {}
+    trajectory_counts: dict[str, int] = {}
+    grade_counts: dict[str, int] = {}
+    recent_critical_count = 0
+
+    ranked = sorted(
+        records,
+        key=lambda record: (
+            curation_score(record),
+            len(record.get("inspections", [])),
+            record.get("name", ""),
+        ),
+        reverse=True,
+    )
+
+    for record in ranked:
+        normalized_name = str(record.get("name", "")).lower()
+        borough = str(record.get("borough") or "NYC")
+        cuisine = str(record.get("cuisine") or "Restaurant")
+        trend = trajectory(record.get("inspections", []))
+        grade = current_grade(record)
+        has_recent_critical = any(
+            int(item.get("criticalCount") or 0) > 0
+            for item in sorted(record.get("inspections", []), key=lambda item: item["date"], reverse=True)[:2]
+        )
+
+        if normalized_name in seen_names:
+            continue
+        if borough_counts.get(borough, 0) >= max(3, math.ceil(limit / 3)):
+            continue
+        if cuisine_counts.get(cuisine, 0) >= max(2, math.ceil(limit / 5)):
+            continue
+        if trajectory_counts.get(trend, 0) >= max(3, math.ceil(limit / 3)):
+            continue
+        if grade == "Pending" and grade_counts.get("Pending", 0) >= max(3, math.ceil(limit / 4)):
+            continue
+        if has_recent_critical and recent_critical_count >= max(4, math.ceil(limit * 0.45)):
+            continue
+
+        selected.append(record)
+        seen_names.add(normalized_name)
+        borough_counts[borough] = borough_counts.get(borough, 0) + 1
+        cuisine_counts[cuisine] = cuisine_counts.get(cuisine, 0) + 1
+        trajectory_counts[trend] = trajectory_counts.get(trend, 0) + 1
+        grade_counts[grade] = grade_counts.get(grade, 0) + 1
+        if has_recent_critical:
+            recent_critical_count += 1
+
+        if len(selected) == limit:
+            return selected
+
+    for record in ranked:
+        normalized_name = str(record.get("name", "")).lower()
+        if normalized_name in seen_names:
+            continue
+        selected.append(record)
+        seen_names.add(normalized_name)
+        if len(selected) == limit:
+            return selected
+
+    return selected
 
 
 def add_alternatives(records: list[dict[str, Any]], count: int = 2) -> None:
@@ -218,15 +391,22 @@ def write_provenance(
     output_count: int,
     data_as_of: str,
 ) -> None:
+    upstream_provenance_path = input_path.parent / "provenance.json"
+    upstream_provenance = None
+    if upstream_provenance_path.exists():
+        upstream_provenance = json.loads(upstream_provenance_path.read_text(encoding="utf-8"))
+
     provenance = {
         "sourceName": "NYC DOHMH Restaurant Inspection Results",
         "source": "normalized-official-records",
+        "mode": "official-generated-seed",
         "inputPath": str(input_path),
         "outputPath": str(output_path),
         "scoredAt": datetime.now(timezone.utc).isoformat(),
         "dataAsOf": data_as_of,
         "inputRestaurantCount": input_count,
         "scoredRestaurantCount": output_count,
+        "upstreamProvenance": upstream_provenance,
     }
     path.parent.mkdir(parents=True, exist_ok=True)
     path.write_text(json.dumps(provenance, indent=2), encoding="utf-8")
@@ -265,9 +445,10 @@ def main() -> int:
         and record.get("name")
         and record.get("address")
     ]
+    curated_records = select_curated_records(eligible_records, args.limit)
     app_records = [
         build_app_record(record, args.data_as_of)
-        for record in eligible_records[: args.limit]
+        for record in curated_records
     ]
     add_alternatives(app_records)
     args.output.parent.mkdir(parents=True, exist_ok=True)

@@ -78,6 +78,15 @@ def valid_date(value: Any) -> bool:
     return True
 
 
+def parsed_date(value: Any) -> date | None:
+    if not isinstance(value, str) or not value:
+        return None
+    try:
+        return date.fromisoformat(value[:10])
+    except ValueError:
+        return None
+
+
 def expected_confidence(inspection_count: int) -> str:
     if inspection_count >= 5:
         return "high"
@@ -123,8 +132,12 @@ def validate_record(
 
     if not is_number(record.get("latitude")):
         errors.append(f"{label}: latitude must be numeric")
+    elif not -90 <= record.get("latitude") <= 90:
+        errors.append(f"{label}: latitude must be between -90 and 90")
     if not is_number(record.get("longitude")):
         errors.append(f"{label}: longitude must be numeric")
+    elif not -180 <= record.get("longitude") <= 180:
+        errors.append(f"{label}: longitude must be between -180 and 180")
     if not is_number(record.get("rating")) or record.get("rating") < 0:
         errors.append(f"{label}: rating must be a non-negative number")
     if not isinstance(record.get("reviewCount"), int) or record.get("reviewCount") < 0:
@@ -148,6 +161,7 @@ def validate_record(
         errors.append(f"{label}: sanoLabel must be one of {sorted(SANO_LABELS)}")
     if not valid_date(record.get("dataAsOf")):
         errors.append(f"{label}: dataAsOf must be an ISO date")
+    data_as_of = parsed_date(record.get("dataAsOf"))
 
     inspections = record.get("inspections")
     if not isinstance(inspections, list) or not inspections:
@@ -176,6 +190,10 @@ def validate_record(
             errors.append(f"{inspection_label}: id must be a non-empty string")
         if not valid_date(inspection.get("date")):
             errors.append(f"{inspection_label}: date must be an ISO date")
+        elif data_as_of and parsed_date(inspection.get("date")):
+            inspection_date = parsed_date(inspection.get("date"))
+            if inspection_date and inspection_date > data_as_of:
+                errors.append(f"{inspection_label}: inspection date is after dataAsOf")
         if not isinstance(inspection.get("score"), int) or inspection.get("score") < 0:
             errors.append(f"{inspection_label}: score must be a non-negative integer")
         if inspection.get("grade") not in PUBLIC_GRADES:
@@ -210,6 +228,16 @@ def validate_record(
             errors.append(f"{label}: official seed must disclose generated official provenance")
         if "synthetic demo seed" in lowered_notes:
             errors.append(f"{label}: official seed must not use synthetic seed language")
+        if record.get("rating") != 0:
+            errors.append(f"{label}: official seed rating must be 0 unless a popularity source is added")
+        if record.get("reviewCount") != 0:
+            errors.append(
+                f"{label}: official seed reviewCount must be 0 unless a popularity source is added"
+            )
+        if record.get("trustGap") != 0:
+            errors.append(
+                f"{label}: official seed trustGap must be 0 unless a popularity source is added"
+            )
 
     return errors
 

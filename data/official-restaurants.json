@@ -1,0 +1,1475 @@
+[
+  {
+    "id": "50114980",
+    "name": "787 Coffee",
+    "cuisine": "Coffee/Tea",
+    "neighborhood": "East Village",
+    "borough": "Manhattan",
+    "address": "159 2 Avenue",
+    "latitude": 40.729593809786,
+    "longitude": -73.986953230475,
+    "rating": 0.0,
+    "reviewCount": 0,
+    "priceLevel": "$$",
+    "grade": "A",
+    "inspectionReliabilityScore": 0,
+    "trajectory": "volatile",
+    "trustGap": 0,
+    "confidence": "high",
+    "sanoLabel": "Recent critical flag",
+    "explanation": "Derived from inspection score burden, critical flags, repeat patterns, volatility, and trend.",
+    "dataAsOf": "2026-07-25",
+    "inspections": [
+      {
+        "id": "50114980-2026-01-21",
+        "date": "2026-01-21",
+        "score": 27,
+        "grade": "Pending",
+        "criticalCount": 4,
+        "violationCodes": [
+          "04L",
+          "08A",
+          "28-05",
+          "04N",
+          "06C",
+          "02B"
+        ],
+        "violationDescriptions": [
+          "Evidence of mice or live mice in establishment's food or non-food areas.",
+          "Establishment is not free of harborage or conditions conducive to rodents, insects or other pests.",
+          "Food adulterated or misbranded. Adulterated or misbranded food possessed, being manufactured, produced, packed, sold, offered for sale, delivered or given away",
+          "Filth flies or food/refuse/sewage associated with (FRSA) flies or other nuisance pests in establishment\u2019s food and/or non-food areas. FRSA flies include house flies, blow flies, bottle flies, flesh flies, drain flies, Phorid flies and fruit flies.",
+          "Food, supplies, or equipment not protected from potential source of contamination during storage, preparation, transportation, display, service or from customer\u2019s refillable, reusable container. Condiments not in single-service containers or dispensed directly by the vendor.",
+          "Hot TCS food item not held at or above 140 \u00b0F."
+        ],
+        "repeatPattern": true,
+        "note": "Inspection cycle includes a repeated violation-code pattern."
+      },
+      {
+        "id": "50114980-2026-03-18",
+        "date": "2026-03-18",
+        "score": 61,
+        "grade": "Pending",
+        "criticalCount": 6,
+        "violationCodes": [
+          "06C",
+          "04L",
+          "04N",
+          "08C",
+          "08A",
+          "02B",
+          "10F",
+          "02G",
+          "06D"
+        ],
+        "violationDescriptions": [
+          "Food, supplies, or equipment not protected from potential source of contamination during storage, preparation, transportation, display, service or from customer\u2019s refillable, reusable container. Condiments not in single-service containers or dispensed directly by the vendor.",
+          "Evidence of mice or live mice in establishment's food or non-food areas.",
+          "Filth flies or food/refuse/sewage associated with (FRSA) flies or other nuisance pests in establishment\u2019s food and/or non-food areas. FRSA flies include house flies, blow flies, bottle flies, flesh flies, drain flies, Phorid flies and fruit flies.",
+          "Pesticide not properly labeled or used by unlicensed individual. Pesticide, other toxic chemical improperly used/stored. Unprotected, unlocked bait station used.",
+          "Establishment is not free of harborage or conditions conducive to rodents, insects or other pests.",
+          "Hot TCS food item not held at or above 140 \u00b0F.",
+          "Non-food contact surface or equipment made of unacceptable material, not kept clean, or not properly sealed, raised, spaced or movable to allow accessibility for cleaning on all sides, above and underneath the unit.",
+          "Cold TCS food item held above 41 \u00b0F; smoked or processed fish held above 38 \u00b0F; intact raw eggs held above 45 \u00b0F; or reduced oxygen packaged (ROP) TCS foods held above required temperatures except during active necessary preparation.",
+          "Food contact surface not properly washed, rinsed and sanitized after each use and following any activity when contamination may have occurred."
+        ],
+        "repeatPattern": true,
+        "note": "Inspection cycle includes a repeated violation-code pattern."
+      },
+      {
+        "id": "50114980-2026-03-20",
+        "date": "2026-03-20",
+        "score": 7,
+        "grade": "C",
+        "criticalCount": 1,
+        "violationCodes": [
+          "10F",
+          "06D"
+        ],
+        "violationDescriptions": [
+          "Non-food contact surface or equipment made of unacceptable material, not kept clean, or not properly sealed, raised, spaced or movable to allow accessibility for cleaning on all sides, above and underneath the unit.",
+          "Food contact surface not properly washed, rinsed and sanitized after each use and following any activity when contamination may have occurred."
+        ],
+        "repeatPattern": true,
+        "note": "Inspection cycle includes a repeated violation-code pattern."
+      },
+      {
+        "id": "50114980-2026-06-12",
+        "date": "2026-06-12",
+        "score": 35,
+        "grade": "Pending",
+        "criticalCount": 2,
+        "violationCodes": [
+          "05H",
+          "10B",
+          "06D"
+        ],
+        "violationDescriptions": [
+          "No approved written standard operating procedure for avoiding contamination by refillable returnable containers.",
+          "Anti-siphonage or back-flow prevention device not provided where required; equipment or floor not properly drained; sewage disposal system in disrepair or not functioning properly. Condensation or liquid waste improperly disposed of.",
+          "Food contact surface not properly washed, rinsed and sanitized after each use and following any activity when contamination may have occurred."
+        ],
+        "repeatPattern": true,
+        "note": "Inspection cycle includes a repeated violation-code pattern."
+      },
+      {
+        "id": "50114980-2026-07-21",
+        "date": "2026-07-21",
+        "score": 12,
+        "grade": "A",
+        "criticalCount": 2,
+        "violationCodes": [
+          "02B",
+          "04J"
+        ],
+        "violationDescriptions": [
+          "Hot TCS food item not held at or above 140 \u00b0F.",
+          "Properly scaled and calibrated thermometer or thermocouple not provided or not readily accessible in food preparation and hot/cold holding areas to measure temperatures of TCS foods during cooking, cooling, reheating, and holding."
+        ],
+        "repeatPattern": true,
+        "note": "Inspection cycle includes a repeated violation-code pattern."
+      }
+    ],
+    "alternatives": [
+      "50171997",
+      "50000233"
+    ],
+    "sourceNotes": "Generated from normalized NYC DOHMH inspection records. Popularity and price metadata are unavailable in the official inspection source."
+  },
+  {
+    "id": "50171997",
+    "name": "Current Coffee",
+    "cuisine": "Coffee/Tea",
+    "neighborhood": "Murray Hill",
+    "borough": "Manhattan",
+    "address": "217 East   29 Street",
+    "latitude": 40.742339460156,
+    "longitude": -73.97981259817,
+    "rating": 0.0,
+    "reviewCount": 0,
+    "priceLevel": "$$",
+    "grade": "A",
+    "inspectionReliabilityScore": 42,
+    "trajectory": "volatile",
+    "trustGap": 0,
+    "confidence": "medium",
+    "sanoLabel": "Recent critical flag",
+    "explanation": "Derived from inspection score burden, critical flags, repeat patterns, volatility, and trend.",
+    "dataAsOf": "2026-07-25",
+    "inspections": [
+      {
+        "id": "50171997-2026-02-03",
+        "date": "2026-02-03",
+        "score": 7,
+        "grade": "Pending",
+        "criticalCount": 1,
+        "violationCodes": [
+          "10F",
+          "04N"
+        ],
+        "violationDescriptions": [
+          "Non-food contact surface or equipment made of unacceptable material, not kept clean, or not properly sealed, raised, spaced or movable to allow accessibility for cleaning on all sides, above and underneath the unit.",
+          "Filth flies or food/refuse/sewage associated with (FRSA) flies or other nuisance pests in establishment\u2019s food and/or non-food areas. FRSA flies include house flies, blow flies, bottle flies, flesh flies, drain flies, Phorid flies and fruit flies."
+        ],
+        "repeatPattern": false,
+        "note": "Inspection cycle has no repeated pattern in this prepared extract."
+      },
+      {
+        "id": "50171997-2026-02-17",
+        "date": "2026-02-17",
+        "score": 2,
+        "grade": "Pending",
+        "criticalCount": 0,
+        "violationCodes": [
+          "10B"
+        ],
+        "violationDescriptions": [
+          "Anti-siphonage or back-flow prevention device not provided where required; equipment or floor not properly drained; sewage disposal system in disrepair or not functioning properly. Condensation or liquid waste improperly disposed of."
+        ],
+        "repeatPattern": true,
+        "note": "Inspection cycle includes a repeated violation-code pattern."
+      },
+      {
+        "id": "50171997-2026-04-28",
+        "date": "2026-04-28",
+        "score": 15,
+        "grade": "Pending",
+        "criticalCount": 1,
+        "violationCodes": [
+          "10B",
+          "04F"
+        ],
+        "violationDescriptions": [
+          "Anti-siphonage or back-flow prevention device not provided where required; equipment or floor not properly drained; sewage disposal system in disrepair or not functioning properly. Condensation or liquid waste improperly disposed of.",
+          "Food preparation area, food storage area, or other area used by employees or patrons, contaminated by sewage or liquid waste."
+        ],
+        "repeatPattern": true,
+        "note": "Inspection cycle includes a repeated violation-code pattern."
+      },
+      {
+        "id": "50171997-2026-07-01",
+        "date": "2026-07-01",
+        "score": 9,
+        "grade": "A",
+        "criticalCount": 1,
+        "violationCodes": [
+          "02G",
+          "10B"
+        ],
+        "violationDescriptions": [
+          "Cold TCS food item held above 41 \u00b0F; smoked or processed fish held above 38 \u00b0F; intact raw eggs held above 45 \u00b0F; or reduced oxygen packaged (ROP) TCS foods held above required temperatures except during active necessary preparation.",
+          "Anti-siphonage or back-flow prevention device not provided where required; equipment or floor not properly drained; sewage disposal system in disrepair or not functioning properly. Condensation or liquid waste improperly disposed of."
+        ],
+        "repeatPattern": true,
+        "note": "Inspection cycle includes a repeated violation-code pattern."
+      }
+    ],
+    "alternatives": [
+      "50000233",
+      "50131593"
+    ],
+    "sourceNotes": "Generated from normalized NYC DOHMH inspection records. Popularity and price metadata are unavailable in the official inspection source."
+  },
+  {
+    "id": "50169790",
+    "name": "Lucky Chix",
+    "cuisine": "Korean",
+    "neighborhood": "Bushwick",
+    "borough": "Brooklyn",
+    "address": "1533 Myrtle Avenue",
+    "latitude": 40.699254603923,
+    "longitude": -73.914055426764,
+    "rating": 0.0,
+    "reviewCount": 0,
+    "priceLevel": "$$",
+    "grade": "A",
+    "inspectionReliabilityScore": 60,
+    "trajectory": "volatile",
+    "trustGap": 0,
+    "confidence": "medium",
+    "sanoLabel": "Volatile history",
+    "explanation": "Derived from inspection score burden, critical flags, repeat patterns, volatility, and trend.",
+    "dataAsOf": "2026-07-25",
+    "inspections": [
+      {
+        "id": "50169790-2026-02-19",
+        "date": "2026-02-19",
+        "score": 41,
+        "grade": "Pending",
+        "criticalCount": 2,
+        "violationCodes": [
+          "06C",
+          "05F",
+          "10G"
+        ],
+        "violationDescriptions": [
+          "Food, supplies, or equipment not protected from potential source of contamination during storage, preparation, transportation, display, service or from customer\u2019s refillable, reusable container. Condiments not in single-service containers or dispensed directly by the vendor.",
+          "Insufficient or no hot holding, cold storage or cold holding equipment provided to maintain Time/Temperature Control for Safety Foods (TCS) at required temperatures",
+          "Dishwashing and ware washing: Cleaning and sanitizing of tableware, including dishes, utensils, and equipment deficient."
+        ],
+        "repeatPattern": false,
+        "note": "Inspection cycle has no repeated pattern in this prepared extract."
+      },
+      {
+        "id": "50169790-2026-03-10",
+        "date": "2026-03-10",
+        "score": 2,
+        "grade": "Pending",
+        "criticalCount": 0,
+        "violationCodes": [
+          "10D"
+        ],
+        "violationDescriptions": [
+          "Mechanical or natural ventilation not provided, inadequate, improperly installed, in disrepair or fails to prevent and control excessive build-up of grease, heat, steam condensation, vapors, odors, smoke or fumes."
+        ],
+        "repeatPattern": false,
+        "note": "Inspection cycle has no repeated pattern in this prepared extract."
+      },
+      {
+        "id": "50169790-2026-03-16",
+        "date": "2026-03-16",
+        "score": 0,
+        "grade": "C",
+        "criticalCount": 0,
+        "violationCodes": [],
+        "violationDescriptions": [],
+        "repeatPattern": false,
+        "note": "Inspection cycle has no repeated pattern in this prepared extract."
+      },
+      {
+        "id": "50169790-2026-05-27",
+        "date": "2026-05-27",
+        "score": 2,
+        "grade": "A",
+        "criticalCount": 0,
+        "violationCodes": [
+          "10F"
+        ],
+        "violationDescriptions": [
+          "Non-food contact surface or equipment made of unacceptable material, not kept clean, or not properly sealed, raised, spaced or movable to allow accessibility for cleaning on all sides, above and underneath the unit."
+        ],
+        "repeatPattern": false,
+        "note": "Inspection cycle has no repeated pattern in this prepared extract."
+      }
+    ],
+    "alternatives": [
+      "50006959",
+      "50101946"
+    ],
+    "sourceNotes": "Generated from normalized NYC DOHMH inspection records. Popularity and price metadata are unavailable in the official inspection source."
+  },
+  {
+    "id": "50102562",
+    "name": "Grand Morelos",
+    "cuisine": "Mexican",
+    "neighborhood": "Williamsburg",
+    "borough": "Brooklyn",
+    "address": "727 Grand Street",
+    "latitude": 40.711671078267,
+    "longitude": -73.943606705893,
+    "rating": 0.0,
+    "reviewCount": 0,
+    "priceLevel": "$$",
+    "grade": "A",
+    "inspectionReliabilityScore": 0,
+    "trajectory": "volatile",
+    "trustGap": 0,
+    "confidence": "medium",
+    "sanoLabel": "Recent critical flag",
+    "explanation": "Derived from inspection score burden, critical flags, repeat patterns, volatility, and trend.",
+    "dataAsOf": "2026-07-25",
+    "inspections": [
+      {
+        "id": "50102562-2026-03-16",
+        "date": "2026-03-16",
+        "score": 74,
+        "grade": "Pending",
+        "criticalCount": 6,
+        "violationCodes": [
+          "04M",
+          "04N",
+          "05D",
+          "08C",
+          "10F",
+          "06C",
+          "02B",
+          "10H",
+          "08A",
+          "04H"
+        ],
+        "violationDescriptions": [
+          "Live roaches in facility's food or non-food area.",
+          "Filth flies or food/refuse/sewage associated with (FRSA) flies or other nuisance pests in establishment\u2019s food and/or non-food areas. FRSA flies include house flies, blow flies, bottle flies, flesh flies, drain flies, Phorid flies and fruit flies.",
+          "No hand washing facility in or adjacent to toilet room or within 25 feet of a food preparation, food service or ware washing area. Hand washing facility not accessible, obstructed or used for non-hand washing purposes. No hot and cold running water or water at inadequate pressure. No soap or acceptable hand-drying device.",
+          "Pesticide not properly labeled or used by unlicensed individual. Pesticide, other toxic chemical improperly used/stored. Unprotected, unlocked bait station used.",
+          "Non-food contact surface or equipment made of unacceptable material, not kept clean, or not properly sealed, raised, spaced or movable to allow accessibility for cleaning on all sides, above and underneath the unit.",
+          "Food, supplies, or equipment not protected from potential source of contamination during storage, preparation, transportation, display, service or from customer\u2019s refillable, reusable container. Condiments not in single-service containers or dispensed directly by the vendor.",
+          "Hot TCS food item not held at or above 140 \u00b0F.",
+          "Single service article not provided. Single service article reused or not protected from contamination when transported, stored, dispensed. Drinking straws not completely enclosed in wrapper or dispensed from a sanitary device.",
+          "Establishment is not free of harborage or conditions conducive to rodents, insects or other pests.",
+          "Raw, cooked or prepared food is adulterated, contaminated, cross-contaminated, or not discarded in accordance with HACCP plan."
+        ],
+        "repeatPattern": true,
+        "note": "Inspection cycle includes a repeated violation-code pattern."
+      },
+      {
+        "id": "50102562-2026-03-19",
+        "date": "2026-03-19",
+        "score": 12,
+        "grade": "Pending",
+        "criticalCount": 1,
+        "violationCodes": [
+          "10F",
+          "04M",
+          "08A"
+        ],
+        "violationDescriptions": [
+          "Non-food contact surface or equipment made of unacceptable material, not kept clean, or not properly sealed, raised, spaced or movable to allow accessibility for cleaning on all sides, above and underneath the unit.",
+          "Live roaches in facility's food or non-food area.",
+          "Establishment is not free of harborage or conditions conducive to rodents, insects or other pests."
+        ],
+        "repeatPattern": true,
+        "note": "Inspection cycle includes a repeated violation-code pattern."
+      },
+      {
+        "id": "50102562-2026-03-23",
+        "date": "2026-03-23",
+        "score": 6,
+        "grade": "Pending",
+        "criticalCount": 1,
+        "violationCodes": [
+          "06C"
+        ],
+        "violationDescriptions": [
+          "Food, supplies, or equipment not protected from potential source of contamination during storage, preparation, transportation, display, service or from customer\u2019s refillable, reusable container. Condiments not in single-service containers or dispensed directly by the vendor."
+        ],
+        "repeatPattern": true,
+        "note": "Inspection cycle includes a repeated violation-code pattern."
+      },
+      {
+        "id": "50102562-2026-06-09",
+        "date": "2026-06-09",
+        "score": 13,
+        "grade": "A",
+        "criticalCount": 1,
+        "violationCodes": [
+          "10F",
+          "08A",
+          "04M",
+          "10B"
+        ],
+        "violationDescriptions": [
+          "Non-food contact surface or equipment made of unacceptable material, not kept clean, or not properly sealed, raised, spaced or movable to allow accessibility for cleaning on all sides, above and underneath the unit.",
+          "Establishment is not free of harborage or conditions conducive to rodents, insects or other pests.",
+          "Live roaches in facility's food or non-food area.",
+          "Anti-siphonage or back-flow prevention device not provided where required; equipment or floor not properly drained; sewage disposal system in disrepair or not functioning properly. Condensation or liquid waste improperly disposed of."
+        ],
+        "repeatPattern": true,
+        "note": "Inspection cycle includes a repeated violation-code pattern."
+      }
+    ],
+    "alternatives": [
+      "50006959",
+      "50101946"
+    ],
+    "sourceNotes": "Generated from normalized NYC DOHMH inspection records. Popularity and price metadata are unavailable in the official inspection source."
+  },
+  {
+    "id": "50161777",
+    "name": "Dark Matter Coffee - Adios Amigos",
+    "cuisine": "Coffee/Tea",
+    "neighborhood": "East Village",
+    "borough": "Manhattan",
+    "address": "1 East    1 Street",
+    "latitude": 40.724829371244,
+    "longitude": -73.992178272601,
+    "rating": 0.0,
+    "reviewCount": 0,
+    "priceLevel": "$$",
+    "grade": "A",
+    "inspectionReliabilityScore": 0,
+    "trajectory": "volatile",
+    "trustGap": 0,
+    "confidence": "medium",
+    "sanoLabel": "Recent critical flag",
+    "explanation": "Derived from inspection score burden, critical flags, repeat patterns, volatility, and trend.",
+    "dataAsOf": "2026-07-25",
+    "inspections": [
+      {
+        "id": "50161777-2026-04-02",
+        "date": "2026-04-02",
+        "score": 45,
+        "grade": "Pending",
+        "criticalCount": 4,
+        "violationCodes": [
+          "04N",
+          "08A",
+          "06D",
+          "06A",
+          "04L",
+          "10F"
+        ],
+        "violationDescriptions": [
+          "Filth flies or food/refuse/sewage associated with (FRSA) flies or other nuisance pests in establishment\u2019s food and/or non-food areas. FRSA flies include house flies, blow flies, bottle flies, flesh flies, drain flies, Phorid flies and fruit flies.",
+          "Establishment is not free of harborage or conditions conducive to rodents, insects or other pests.",
+          "Food contact surface not properly washed, rinsed and sanitized after each use and following any activity when contamination may have occurred.",
+          "Personal cleanliness is inadequate. Outer garment soiled with possible contaminant. Effective hair restraint not worn where required. Jewelry worn on hands or arms. Fingernail polish worn or fingernails not kept clean and trimmed.",
+          "Evidence of mice or live mice in establishment's food or non-food areas.",
+          "Non-food contact surface or equipment made of unacceptable material, not kept clean, or not properly sealed, raised, spaced or movable to allow accessibility for cleaning on all sides, above and underneath the unit."
+        ],
+        "repeatPattern": true,
+        "note": "Inspection cycle includes a repeated violation-code pattern."
+      },
+      {
+        "id": "50161777-2026-04-04",
+        "date": "2026-04-04",
+        "score": 5,
+        "grade": "Pending",
+        "criticalCount": 0,
+        "violationCodes": [
+          "10B",
+          "10F"
+        ],
+        "violationDescriptions": [
+          "Anti-siphonage or back-flow prevention device not provided where required; equipment or floor not properly drained; sewage disposal system in disrepair or not functioning properly. Condensation or liquid waste improperly disposed of.",
+          "Non-food contact surface or equipment made of unacceptable material, not kept clean, or not properly sealed, raised, spaced or movable to allow accessibility for cleaning on all sides, above and underneath the unit."
+        ],
+        "repeatPattern": true,
+        "note": "Inspection cycle includes a repeated violation-code pattern."
+      },
+      {
+        "id": "50161777-2026-06-24",
+        "date": "2026-06-24",
+        "score": 25,
+        "grade": "Pending",
+        "criticalCount": 3,
+        "violationCodes": [
+          "06C",
+          "10B",
+          "08A",
+          "04N",
+          "04H"
+        ],
+        "violationDescriptions": [
+          "Food, supplies, or equipment not protected from potential source of contamination during storage, preparation, transportation, display, service or from customer\u2019s refillable, reusable container. Condiments not in single-service containers or dispensed directly by the vendor.",
+          "Anti-siphonage or back-flow prevention device not provided where required; equipment or floor not properly drained; sewage disposal system in disrepair or not functioning properly. Condensation or liquid waste improperly disposed of.",
+          "Establishment is not free of harborage or conditions conducive to rodents, insects or other pests.",
+          "Filth flies or food/refuse/sewage associated with (FRSA) flies or other nuisance pests in establishment\u2019s food and/or non-food areas. FRSA flies include house flies, blow flies, bottle flies, flesh flies, drain flies, Phorid flies and fruit flies.",
+          "Raw, cooked or prepared food is adulterated, contaminated, cross-contaminated, or not discarded in accordance with HACCP plan."
+        ],
+        "repeatPattern": true,
+        "note": "Inspection cycle includes a repeated violation-code pattern."
+      },
+      {
+        "id": "50161777-2026-07-10",
+        "date": "2026-07-10",
+        "score": 11,
+        "grade": "A",
+        "criticalCount": 2,
+        "violationCodes": [
+          "08A",
+          "04L",
+          "04N"
+        ],
+        "violationDescriptions": [
+          "Establishment is not free of harborage or conditions conducive to rodents, insects or other pests.",
+          "Evidence of mice or live mice in establishment's food or non-food areas.",
+          "Filth flies or food/refuse/sewage associated with (FRSA) flies or other nuisance pests in establishment\u2019s food and/or non-food areas. FRSA flies include house flies, blow flies, bottle flies, flesh flies, drain flies, Phorid flies and fruit flies."
+        ],
+        "repeatPattern": true,
+        "note": "Inspection cycle includes a repeated violation-code pattern."
+      }
+    ],
+    "alternatives": [
+      "50171997",
+      "50000233"
+    ],
+    "sourceNotes": "Generated from normalized NYC DOHMH inspection records. Popularity and price metadata are unavailable in the official inspection source."
+  },
+  {
+    "id": "41627217",
+    "name": "Anjappar",
+    "cuisine": "Indian",
+    "neighborhood": "Murray Hill",
+    "borough": "Manhattan",
+    "address": "116 Lexington Avenue",
+    "latitude": 40.742501853152,
+    "longitude": -73.98256964798,
+    "rating": 0.0,
+    "reviewCount": 0,
+    "priceLevel": "$$",
+    "grade": "A",
+    "inspectionReliabilityScore": 0,
+    "trajectory": "volatile",
+    "trustGap": 0,
+    "confidence": "medium",
+    "sanoLabel": "Volatile history",
+    "explanation": "Derived from inspection score burden, critical flags, repeat patterns, volatility, and trend.",
+    "dataAsOf": "2026-07-25",
+    "inspections": [
+      {
+        "id": "41627217-2026-02-18",
+        "date": "2026-02-18",
+        "score": 62,
+        "grade": "Pending",
+        "criticalCount": 5,
+        "violationCodes": [
+          "06A",
+          "04L",
+          "06C",
+          "10B",
+          "08A",
+          "06D",
+          "10D",
+          "04K",
+          "10F"
+        ],
+        "violationDescriptions": [
+          "Personal cleanliness is inadequate. Outer garment soiled with possible contaminant. Effective hair restraint not worn where required. Jewelry worn on hands or arms. Fingernail polish worn or fingernails not kept clean and trimmed.",
+          "Evidence of mice or live mice in establishment's food or non-food areas.",
+          "Food, supplies, or equipment not protected from potential source of contamination during storage, preparation, transportation, display, service or from customer\u2019s refillable, reusable container. Condiments not in single-service containers or dispensed directly by the vendor.",
+          "Anti-siphonage or back-flow prevention device not provided where required; equipment or floor not properly drained; sewage disposal system in disrepair or not functioning properly. Condensation or liquid waste improperly disposed of.",
+          "Establishment is not free of harborage or conditions conducive to rodents, insects or other pests.",
+          "Food contact surface not properly washed, rinsed and sanitized after each use and following any activity when contamination may have occurred.",
+          "Mechanical or natural ventilation not provided, inadequate, improperly installed, in disrepair or fails to prevent and control excessive build-up of grease, heat, steam condensation, vapors, odors, smoke or fumes.",
+          "Evidence of rats or live rats in establishment's food or non-food areas.",
+          "Non-food contact surface or equipment made of unacceptable material, not kept clean, or not properly sealed, raised, spaced or movable to allow accessibility for cleaning on all sides, above and underneath the unit."
+        ],
+        "repeatPattern": true,
+        "note": "Inspection cycle includes a repeated violation-code pattern."
+      },
+      {
+        "id": "41627217-2026-02-24",
+        "date": "2026-02-24",
+        "score": 30,
+        "grade": "Pending",
+        "criticalCount": 4,
+        "violationCodes": [
+          "04K",
+          "08A",
+          "10F",
+          "04L",
+          "06D",
+          "05C",
+          "10B"
+        ],
+        "violationDescriptions": [
+          "Evidence of rats or live rats in establishment's food or non-food areas.",
+          "Establishment is not free of harborage or conditions conducive to rodents, insects or other pests.",
+          "Non-food contact surface or equipment made of unacceptable material, not kept clean, or not properly sealed, raised, spaced or movable to allow accessibility for cleaning on all sides, above and underneath the unit.",
+          "Evidence of mice or live mice in establishment's food or non-food areas.",
+          "Food contact surface not properly washed, rinsed and sanitized after each use and following any activity when contamination may have occurred.",
+          "Food contact surface, refillable, reusable containers, or equipment improperly constructed, placed or maintained. Unacceptable material used. Culinary sink or other acceptable method not provided for washing food.",
+          "Anti-siphonage or back-flow prevention device not provided where required; equipment or floor not properly drained; sewage disposal system in disrepair or not functioning properly. Condensation or liquid waste improperly disposed of."
+        ],
+        "repeatPattern": true,
+        "note": "Inspection cycle includes a repeated violation-code pattern."
+      },
+      {
+        "id": "41627217-2026-02-27",
+        "date": "2026-02-27",
+        "score": 3,
+        "grade": "Pending",
+        "criticalCount": 0,
+        "violationCodes": [
+          "10F"
+        ],
+        "violationDescriptions": [
+          "Non-food contact surface or equipment made of unacceptable material, not kept clean, or not properly sealed, raised, spaced or movable to allow accessibility for cleaning on all sides, above and underneath the unit."
+        ],
+        "repeatPattern": true,
+        "note": "Inspection cycle includes a repeated violation-code pattern."
+      },
+      {
+        "id": "41627217-2026-05-06",
+        "date": "2026-05-06",
+        "score": 2,
+        "grade": "A",
+        "criticalCount": 0,
+        "violationCodes": [
+          "09B"
+        ],
+        "violationDescriptions": [
+          "Thawing procedure improper."
+        ],
+        "repeatPattern": false,
+        "note": "Inspection cycle has no repeated pattern in this prepared extract."
+      }
+    ],
+    "alternatives": [
+      "50171997",
+      "50000233"
+    ],
+    "sourceNotes": "Generated from normalized NYC DOHMH inspection records. Popularity and price metadata are unavailable in the official inspection source."
+  },
+  {
+    "id": "50131593",
+    "name": "Raf'S",
+    "cuisine": "New French",
+    "neighborhood": "SoHo",
+    "borough": "Manhattan",
+    "address": "290 Elizabeth Street",
+    "latitude": 40.724774547151,
+    "longitude": -73.993303914179,
+    "rating": 0.0,
+    "reviewCount": 0,
+    "priceLevel": "$$",
+    "grade": "A",
+    "inspectionReliabilityScore": 23,
+    "trajectory": "improving",
+    "trustGap": 0,
+    "confidence": "medium",
+    "sanoLabel": "Recent critical flag",
+    "explanation": "Derived from inspection score burden, critical flags, repeat patterns, volatility, and trend.",
+    "dataAsOf": "2026-07-25",
+    "inspections": [
+      {
+        "id": "50131593-2026-02-12",
+        "date": "2026-02-12",
+        "score": 29,
+        "grade": "C",
+        "criticalCount": 3,
+        "violationCodes": [
+          "04A",
+          "02B",
+          "02G",
+          "10F"
+        ],
+        "violationDescriptions": [
+          "Food Protection Certificate (FPC) not held by manager or supervisor of food operations.",
+          "Hot TCS food item not held at or above 140 \u00b0F.",
+          "Cold TCS food item held above 41 \u00b0F; smoked or processed fish held above 38 \u00b0F; intact raw eggs held above 45 \u00b0F; or reduced oxygen packaged (ROP) TCS foods held above required temperatures except during active necessary preparation.",
+          "Non-food contact surface or equipment made of unacceptable material, not kept clean, or not properly sealed, raised, spaced or movable to allow accessibility for cleaning on all sides, above and underneath the unit."
+        ],
+        "repeatPattern": false,
+        "note": "Inspection cycle has no repeated pattern in this prepared extract."
+      },
+      {
+        "id": "50131593-2026-05-22",
+        "date": "2026-05-22",
+        "score": 21,
+        "grade": "Pending",
+        "criticalCount": 3,
+        "violationCodes": [
+          "04N",
+          "06C",
+          "08A",
+          "10B",
+          "04L"
+        ],
+        "violationDescriptions": [
+          "Filth flies or food/refuse/sewage associated with (FRSA) flies or other nuisance pests in establishment\u2019s food and/or non-food areas. FRSA flies include house flies, blow flies, bottle flies, flesh flies, drain flies, Phorid flies and fruit flies.",
+          "Food, supplies, or equipment not protected from potential source of contamination during storage, preparation, transportation, display, service or from customer\u2019s refillable, reusable container. Condiments not in single-service containers or dispensed directly by the vendor.",
+          "Establishment is not free of harborage or conditions conducive to rodents, insects or other pests.",
+          "Anti-siphonage or back-flow prevention device not provided where required; equipment or floor not properly drained; sewage disposal system in disrepair or not functioning properly. Condensation or liquid waste improperly disposed of.",
+          "Evidence of mice or live mice in establishment's food or non-food areas."
+        ],
+        "repeatPattern": true,
+        "note": "Inspection cycle includes a repeated violation-code pattern."
+      },
+      {
+        "id": "50131593-2026-06-30",
+        "date": "2026-06-30",
+        "score": 12,
+        "grade": "A",
+        "criticalCount": 2,
+        "violationCodes": [
+          "06C",
+          "04E"
+        ],
+        "violationDescriptions": [
+          "Food, supplies, or equipment not protected from potential source of contamination during storage, preparation, transportation, display, service or from customer\u2019s refillable, reusable container. Condiments not in single-service containers or dispensed directly by the vendor.",
+          "Toxic chemical or pesticide improperly stored or used such that food contamination may occur."
+        ],
+        "repeatPattern": true,
+        "note": "Inspection cycle includes a repeated violation-code pattern."
+      }
+    ],
+    "alternatives": [
+      "50171997",
+      "50000233"
+    ],
+    "sourceNotes": "Generated from normalized NYC DOHMH inspection records. Popularity and price metadata are unavailable in the official inspection source."
+  },
+  {
+    "id": "50000233",
+    "name": "Palm Court",
+    "cuisine": "American",
+    "neighborhood": "Midtown West",
+    "borough": "Manhattan",
+    "address": "768 Fifth Avenue",
+    "latitude": 40.7641481437,
+    "longitude": -73.973950630007,
+    "rating": 0.0,
+    "reviewCount": 0,
+    "priceLevel": "$$",
+    "grade": "B",
+    "inspectionReliabilityScore": 34,
+    "trajectory": "stable",
+    "trustGap": 0,
+    "confidence": "medium",
+    "sanoLabel": "Recent critical flag",
+    "explanation": "Derived from inspection score burden, critical flags, repeat patterns, volatility, and trend.",
+    "dataAsOf": "2026-07-25",
+    "inspections": [
+      {
+        "id": "50000233-2026-02-04",
+        "date": "2026-02-04",
+        "score": 12,
+        "grade": "A",
+        "criticalCount": 1,
+        "violationCodes": [
+          "10B",
+          "08A",
+          "04N"
+        ],
+        "violationDescriptions": [
+          "Anti-siphonage or back-flow prevention device not provided where required; equipment or floor not properly drained; sewage disposal system in disrepair or not functioning properly. Condensation or liquid waste improperly disposed of.",
+          "Establishment is not free of harborage or conditions conducive to rodents, insects or other pests.",
+          "Filth flies or food/refuse/sewage associated with (FRSA) flies or other nuisance pests in establishment\u2019s food and/or non-food areas. FRSA flies include house flies, blow flies, bottle flies, flesh flies, drain flies, Phorid flies and fruit flies."
+        ],
+        "repeatPattern": true,
+        "note": "Inspection cycle includes a repeated violation-code pattern."
+      },
+      {
+        "id": "50000233-2026-05-04",
+        "date": "2026-05-04",
+        "score": 14,
+        "grade": "Pending",
+        "criticalCount": 2,
+        "violationCodes": [
+          "04H",
+          "02G"
+        ],
+        "violationDescriptions": [
+          "Raw, cooked or prepared food is adulterated, contaminated, cross-contaminated, or not discarded in accordance with HACCP plan.",
+          "Cold TCS food item held above 41 \u00b0F; smoked or processed fish held above 38 \u00b0F; intact raw eggs held above 45 \u00b0F; or reduced oxygen packaged (ROP) TCS foods held above required temperatures except during active necessary preparation."
+        ],
+        "repeatPattern": false,
+        "note": "Inspection cycle has no repeated pattern in this prepared extract."
+      },
+      {
+        "id": "50000233-2026-06-16",
+        "date": "2026-06-16",
+        "score": 18,
+        "grade": "B",
+        "criticalCount": 2,
+        "violationCodes": [
+          "10B",
+          "10F",
+          "09A",
+          "06D",
+          "02B"
+        ],
+        "violationDescriptions": [
+          "Anti-siphonage or back-flow prevention device not provided where required; equipment or floor not properly drained; sewage disposal system in disrepair or not functioning properly. Condensation or liquid waste improperly disposed of.",
+          "Non-food contact surface or equipment made of unacceptable material, not kept clean, or not properly sealed, raised, spaced or movable to allow accessibility for cleaning on all sides, above and underneath the unit.",
+          "Swollen, leaking, rusted or otherwise damaged canned food to be returned to distributor not segregated from intact product and clearly labeled DO NOT USE",
+          "Food contact surface not properly washed, rinsed and sanitized after each use and following any activity when contamination may have occurred.",
+          "Hot TCS food item not held at or above 140 \u00b0F."
+        ],
+        "repeatPattern": true,
+        "note": "Inspection cycle includes a repeated violation-code pattern."
+      }
+    ],
+    "alternatives": [
+      "50006959",
+      "50171997"
+    ],
+    "sourceNotes": "Generated from normalized NYC DOHMH inspection records. Popularity and price metadata are unavailable in the official inspection source."
+  },
+  {
+    "id": "50179973",
+    "name": "Jay'S Sweets & Snackeria",
+    "cuisine": "Frozen Desserts",
+    "neighborhood": "Brooklyn",
+    "borough": "Brooklyn",
+    "address": "7803 17 Avenue",
+    "latitude": 40.61300743205,
+    "longitude": -74.000244918393,
+    "rating": 0.0,
+    "reviewCount": 0,
+    "priceLevel": "$$",
+    "grade": "Pending",
+    "inspectionReliabilityScore": 4,
+    "trajectory": "stable",
+    "trustGap": 0,
+    "confidence": "medium",
+    "sanoLabel": "Recent critical flag",
+    "explanation": "Derived from inspection score burden, critical flags, repeat patterns, volatility, and trend.",
+    "dataAsOf": "2026-07-25",
+    "inspections": [
+      {
+        "id": "50179973-2026-01-21",
+        "date": "2026-01-21",
+        "score": 30,
+        "grade": "Pending",
+        "criticalCount": 1,
+        "violationCodes": [
+          "05D",
+          "10B"
+        ],
+        "violationDescriptions": [
+          "No hand washing facility in or adjacent to toilet room or within 25 feet of a food preparation, food service or ware washing area. Hand washing facility not accessible, obstructed or used for non-hand washing purposes. No hot and cold running water or water at inadequate pressure. No soap or acceptable hand-drying device.",
+          "Anti-siphonage or back-flow prevention device not provided where required; equipment or floor not properly drained; sewage disposal system in disrepair or not functioning properly. Condensation or liquid waste improperly disposed of."
+        ],
+        "repeatPattern": true,
+        "note": "Inspection cycle includes a repeated violation-code pattern."
+      },
+      {
+        "id": "50179973-2026-02-02",
+        "date": "2026-02-02",
+        "score": 32,
+        "grade": "Pending",
+        "criticalCount": 1,
+        "violationCodes": [
+          "10B",
+          "10F",
+          "05A"
+        ],
+        "violationDescriptions": [
+          "Anti-siphonage or back-flow prevention device not provided where required; equipment or floor not properly drained; sewage disposal system in disrepair or not functioning properly. Condensation or liquid waste improperly disposed of.",
+          "Non-food contact surface or equipment made of unacceptable material, not kept clean, or not properly sealed, raised, spaced or movable to allow accessibility for cleaning on all sides, above and underneath the unit.",
+          "Sewage disposal system is not provided, improper, inadequate or unapproved."
+        ],
+        "repeatPattern": true,
+        "note": "Inspection cycle includes a repeated violation-code pattern."
+      },
+      {
+        "id": "50179973-2026-02-09",
+        "date": "2026-02-09",
+        "score": 33,
+        "grade": "Not Yet Graded",
+        "criticalCount": 1,
+        "violationCodes": [
+          "05H",
+          "10H"
+        ],
+        "violationDescriptions": [
+          "No approved written standard operating procedure for avoiding contamination by refillable returnable containers.",
+          "Single service article not provided. Single service article reused or not protected from contamination when transported, stored, dispensed. Drinking straws not completely enclosed in wrapper or dispensed from a sanitary device."
+        ],
+        "repeatPattern": false,
+        "note": "Inspection cycle has no repeated pattern in this prepared extract."
+      }
+    ],
+    "alternatives": [
+      "50006959",
+      "50101946"
+    ],
+    "sourceNotes": "Generated from normalized NYC DOHMH inspection records. Popularity and price metadata are unavailable in the official inspection source."
+  },
+  {
+    "id": "50006959",
+    "name": "Cutwater Cocktail Bar",
+    "cuisine": "American",
+    "neighborhood": "Boerum Hill",
+    "borough": "Brooklyn",
+    "address": "321 Ashland Place",
+    "latitude": 40.685923161261,
+    "longitude": -73.978059347485,
+    "rating": 0.0,
+    "reviewCount": 0,
+    "priceLevel": "$$",
+    "grade": "Pending",
+    "inspectionReliabilityScore": 100,
+    "trajectory": "stable",
+    "trustGap": 0,
+    "confidence": "medium",
+    "sanoLabel": "Consistent record",
+    "explanation": "Derived from inspection score burden, critical flags, repeat patterns, volatility, and trend.",
+    "dataAsOf": "2026-07-25",
+    "inspections": [
+      {
+        "id": "50006959-2026-07-04",
+        "date": "2026-07-04",
+        "score": 0,
+        "grade": "Pending",
+        "criticalCount": 0,
+        "violationCodes": [],
+        "violationDescriptions": [],
+        "repeatPattern": false,
+        "note": "Inspection cycle has no repeated pattern in this prepared extract."
+      },
+      {
+        "id": "50006959-2026-07-11",
+        "date": "2026-07-11",
+        "score": 0,
+        "grade": "Pending",
+        "criticalCount": 0,
+        "violationCodes": [],
+        "violationDescriptions": [],
+        "repeatPattern": false,
+        "note": "Inspection cycle has no repeated pattern in this prepared extract."
+      },
+      {
+        "id": "50006959-2026-07-18",
+        "date": "2026-07-18",
+        "score": 0,
+        "grade": "Not Yet Graded",
+        "criticalCount": 0,
+        "violationCodes": [],
+        "violationDescriptions": [],
+        "repeatPattern": false,
+        "note": "Inspection cycle has no repeated pattern in this prepared extract."
+      }
+    ],
+    "alternatives": [
+      "50101946",
+      "50169790"
+    ],
+    "sourceNotes": "Generated from normalized NYC DOHMH inspection records. Popularity and price metadata are unavailable in the official inspection source."
+  },
+  {
+    "id": "41627341",
+    "name": "Subway",
+    "cuisine": "Sandwiches",
+    "neighborhood": "Pelham Bay",
+    "borough": "Bronx",
+    "address": "3683 Bruckner Boulevard",
+    "latitude": 40.852446046949,
+    "longitude": -73.827294045993,
+    "rating": 0.0,
+    "reviewCount": 0,
+    "priceLevel": "$$",
+    "grade": "Pending",
+    "inspectionReliabilityScore": 0,
+    "trajectory": "declining",
+    "trustGap": 0,
+    "confidence": "medium",
+    "sanoLabel": "Recent critical flag",
+    "explanation": "Derived from inspection score burden, critical flags, repeat patterns, volatility, and trend.",
+    "dataAsOf": "2026-07-25",
+    "inspections": [
+      {
+        "id": "41627341-2026-02-20",
+        "date": "2026-02-20",
+        "score": 20,
+        "grade": "Pending",
+        "criticalCount": 2,
+        "violationCodes": [
+          "04L",
+          "06D",
+          "08C",
+          "08A"
+        ],
+        "violationDescriptions": [
+          "Evidence of mice or live mice in establishment's food or non-food areas.",
+          "Food contact surface not properly washed, rinsed and sanitized after each use and following any activity when contamination may have occurred.",
+          "Pesticide not properly labeled or used by unlicensed individual. Pesticide, other toxic chemical improperly used/stored. Unprotected, unlocked bait station used.",
+          "Establishment is not free of harborage or conditions conducive to rodents, insects or other pests."
+        ],
+        "repeatPattern": true,
+        "note": "Inspection cycle includes a repeated violation-code pattern."
+      },
+      {
+        "id": "41627341-2026-03-23",
+        "date": "2026-03-23",
+        "score": 30,
+        "grade": "C",
+        "criticalCount": 3,
+        "violationCodes": [
+          "10F",
+          "04A",
+          "06D",
+          "02G",
+          "10H",
+          "10B"
+        ],
+        "violationDescriptions": [
+          "Non-food contact surface or equipment made of unacceptable material, not kept clean, or not properly sealed, raised, spaced or movable to allow accessibility for cleaning on all sides, above and underneath the unit.",
+          "Food Protection Certificate (FPC) not held by manager or supervisor of food operations.",
+          "Food contact surface not properly washed, rinsed and sanitized after each use and following any activity when contamination may have occurred.",
+          "Cold TCS food item held above 41 \u00b0F; smoked or processed fish held above 38 \u00b0F; intact raw eggs held above 45 \u00b0F; or reduced oxygen packaged (ROP) TCS foods held above required temperatures except during active necessary preparation.",
+          "Single service article not provided. Single service article reused or not protected from contamination when transported, stored, dispensed. Drinking straws not completely enclosed in wrapper or dispensed from a sanitary device.",
+          "Anti-siphonage or back-flow prevention device not provided where required; equipment or floor not properly drained; sewage disposal system in disrepair or not functioning properly. Condensation or liquid waste improperly disposed of."
+        ],
+        "repeatPattern": true,
+        "note": "Inspection cycle includes a repeated violation-code pattern."
+      },
+      {
+        "id": "41627341-2026-06-16",
+        "date": "2026-06-16",
+        "score": 28,
+        "grade": "Pending",
+        "criticalCount": 3,
+        "violationCodes": [
+          "08A",
+          "10B",
+          "10F",
+          "02G",
+          "04L",
+          "04M"
+        ],
+        "violationDescriptions": [
+          "Establishment is not free of harborage or conditions conducive to rodents, insects or other pests.",
+          "Anti-siphonage or back-flow prevention device not provided where required; equipment or floor not properly drained; sewage disposal system in disrepair or not functioning properly. Condensation or liquid waste improperly disposed of.",
+          "Non-food contact surface or equipment made of unacceptable material, not kept clean, or not properly sealed, raised, spaced or movable to allow accessibility for cleaning on all sides, above and underneath the unit.",
+          "Cold TCS food item held above 41 \u00b0F; smoked or processed fish held above 38 \u00b0F; intact raw eggs held above 45 \u00b0F; or reduced oxygen packaged (ROP) TCS foods held above required temperatures except during active necessary preparation.",
+          "Evidence of mice or live mice in establishment's food or non-food areas.",
+          "Live roaches in facility's food or non-food area."
+        ],
+        "repeatPattern": true,
+        "note": "Inspection cycle includes a repeated violation-code pattern."
+      }
+    ],
+    "alternatives": [
+      "50119429"
+    ],
+    "sourceNotes": "Generated from normalized NYC DOHMH inspection records. Popularity and price metadata are unavailable in the official inspection source."
+  },
+  {
+    "id": "50119429",
+    "name": "Mae Mae Cafe",
+    "cuisine": "Vegetarian",
+    "neighborhood": "Concourse",
+    "borough": "Bronx",
+    "address": "2417 3 Avenue",
+    "latitude": 40.808485357742,
+    "longitude": -73.930664356711,
+    "rating": 0.0,
+    "reviewCount": 0,
+    "priceLevel": "$$",
+    "grade": "Pending",
+    "inspectionReliabilityScore": 97,
+    "trajectory": "stable",
+    "trustGap": 0,
+    "confidence": "medium",
+    "sanoLabel": "Consistent record",
+    "explanation": "Derived from inspection score burden, critical flags, repeat patterns, volatility, and trend.",
+    "dataAsOf": "2026-07-25",
+    "inspections": [
+      {
+        "id": "50119429-2026-01-23",
+        "date": "2026-01-23",
+        "score": 5,
+        "grade": "A",
+        "criticalCount": 0,
+        "violationCodes": [
+          "10F",
+          "09C"
+        ],
+        "violationDescriptions": [
+          "Non-food contact surface or equipment made of unacceptable material, not kept clean, or not properly sealed, raised, spaced or movable to allow accessibility for cleaning on all sides, above and underneath the unit.",
+          "Design, construction, materials used or maintenance of food contact surface improper. Surface not easily cleanable, sanitized and maintained."
+        ],
+        "repeatPattern": false,
+        "note": "Inspection cycle has no repeated pattern in this prepared extract."
+      },
+      {
+        "id": "50119429-2026-07-04",
+        "date": "2026-07-04",
+        "score": 0,
+        "grade": "Pending",
+        "criticalCount": 0,
+        "violationCodes": [],
+        "violationDescriptions": [],
+        "repeatPattern": false,
+        "note": "Inspection cycle has no repeated pattern in this prepared extract."
+      },
+      {
+        "id": "50119429-2026-07-11",
+        "date": "2026-07-11",
+        "score": 0,
+        "grade": "Pending",
+        "criticalCount": 0,
+        "violationCodes": [],
+        "violationDescriptions": [],
+        "repeatPattern": false,
+        "note": "Inspection cycle has no repeated pattern in this prepared extract."
+      }
+    ],
+    "alternatives": [
+      "41627341"
+    ],
+    "sourceNotes": "Generated from normalized NYC DOHMH inspection records. Popularity and price metadata are unavailable in the official inspection source."
+  },
+  {
+    "id": "50101946",
+    "name": "Palenque Colombian Food",
+    "cuisine": "Spanish",
+    "neighborhood": "Williamsburg",
+    "borough": "Brooklyn",
+    "address": "298 Graham Avenue",
+    "latitude": 40.712620990813,
+    "longitude": -73.944060399422,
+    "rating": 0.0,
+    "reviewCount": 0,
+    "priceLevel": "$$",
+    "grade": "Pending",
+    "inspectionReliabilityScore": 100,
+    "trajectory": "stable",
+    "trustGap": 0,
+    "confidence": "medium",
+    "sanoLabel": "Consistent record",
+    "explanation": "Derived from inspection score burden, critical flags, repeat patterns, volatility, and trend.",
+    "dataAsOf": "2026-07-25",
+    "inspections": [
+      {
+        "id": "50101946-2026-04-04",
+        "date": "2026-04-04",
+        "score": 0,
+        "grade": "Pending",
+        "criticalCount": 0,
+        "violationCodes": [],
+        "violationDescriptions": [],
+        "repeatPattern": false,
+        "note": "Inspection cycle has no repeated pattern in this prepared extract."
+      },
+      {
+        "id": "50101946-2026-05-30",
+        "date": "2026-05-30",
+        "score": 0,
+        "grade": "Pending",
+        "criticalCount": 0,
+        "violationCodes": [],
+        "violationDescriptions": [],
+        "repeatPattern": false,
+        "note": "Inspection cycle has no repeated pattern in this prepared extract."
+      },
+      {
+        "id": "50101946-2026-06-27",
+        "date": "2026-06-27",
+        "score": 0,
+        "grade": "Pending",
+        "criticalCount": 0,
+        "violationCodes": [],
+        "violationDescriptions": [],
+        "repeatPattern": false,
+        "note": "Inspection cycle has no repeated pattern in this prepared extract."
+      }
+    ],
+    "alternatives": [
+      "50006959",
+      "50169790"
+    ],
+    "sourceNotes": "Generated from normalized NYC DOHMH inspection records. Popularity and price metadata are unavailable in the official inspection source."
+  },
+  {
+    "id": "50133676",
+    "name": "Dish Food & Events",
+    "cuisine": "Fusion",
+    "neighborhood": "Long Island City",
+    "borough": "Queens",
+    "address": "42-25C Vernon Boulevard",
+    "latitude": 40.753806055537,
+    "longitude": -73.949692413138,
+    "rating": 0.0,
+    "reviewCount": 0,
+    "priceLevel": "$$",
+    "grade": "Pending",
+    "inspectionReliabilityScore": 100,
+    "trajectory": "stable",
+    "trustGap": 0,
+    "confidence": "medium",
+    "sanoLabel": "Consistent record",
+    "explanation": "Derived from inspection score burden, critical flags, repeat patterns, volatility, and trend.",
+    "dataAsOf": "2026-07-25",
+    "inspections": [
+      {
+        "id": "50133676-2026-06-06",
+        "date": "2026-06-06",
+        "score": 0,
+        "grade": "Pending",
+        "criticalCount": 0,
+        "violationCodes": [],
+        "violationDescriptions": [],
+        "repeatPattern": false,
+        "note": "Inspection cycle has no repeated pattern in this prepared extract."
+      },
+      {
+        "id": "50133676-2026-06-13",
+        "date": "2026-06-13",
+        "score": 0,
+        "grade": "Pending",
+        "criticalCount": 0,
+        "violationCodes": [],
+        "violationDescriptions": [],
+        "repeatPattern": false,
+        "note": "Inspection cycle has no repeated pattern in this prepared extract."
+      },
+      {
+        "id": "50133676-2026-06-19",
+        "date": "2026-06-19",
+        "score": 0,
+        "grade": "Pending",
+        "criticalCount": 0,
+        "violationCodes": [],
+        "violationDescriptions": [],
+        "repeatPattern": false,
+        "note": "Inspection cycle has no repeated pattern in this prepared extract."
+      }
+    ],
+    "alternatives": [
+      "40510647",
+      "50142455"
+    ],
+    "sourceNotes": "Generated from normalized NYC DOHMH inspection records. Popularity and price metadata are unavailable in the official inspection source."
+  },
+  {
+    "id": "40510647",
+    "name": "Roti Corner Restaurant",
+    "cuisine": "Caribbean",
+    "neighborhood": "Jamaica",
+    "borough": "Queens",
+    "address": "180-18 Hillside Avenue",
+    "latitude": 40.713034345317,
+    "longitude": -73.782170176262,
+    "rating": 0.0,
+    "reviewCount": 0,
+    "priceLevel": "$$",
+    "grade": "A",
+    "inspectionReliabilityScore": 41,
+    "trajectory": "volatile",
+    "trustGap": 0,
+    "confidence": "medium",
+    "sanoLabel": "Volatile history",
+    "explanation": "Derived from inspection score burden, critical flags, repeat patterns, volatility, and trend.",
+    "dataAsOf": "2026-07-25",
+    "inspections": [
+      {
+        "id": "40510647-2026-01-21",
+        "date": "2026-01-21",
+        "score": 35,
+        "grade": "Pending",
+        "criticalCount": 1,
+        "violationCodes": [
+          "28-06",
+          "10B",
+          "04L",
+          "08A"
+        ],
+        "violationDescriptions": [
+          "Contract with a pest management professional not in place. Record of extermination activities not kept on premises.",
+          "Anti-siphonage or back-flow prevention device not provided where required; equipment or floor not properly drained; sewage disposal system in disrepair or not functioning properly. Condensation or liquid waste improperly disposed of.",
+          "Evidence of mice or live mice in establishment's food or non-food areas.",
+          "Establishment is not free of harborage or conditions conducive to rodents, insects or other pests."
+        ],
+        "repeatPattern": false,
+        "note": "Inspection cycle has no repeated pattern in this prepared extract."
+      },
+      {
+        "id": "40510647-2026-01-23",
+        "date": "2026-01-23",
+        "score": 2,
+        "grade": "Pending",
+        "criticalCount": 0,
+        "violationCodes": [
+          "10F"
+        ],
+        "violationDescriptions": [
+          "Non-food contact surface or equipment made of unacceptable material, not kept clean, or not properly sealed, raised, spaced or movable to allow accessibility for cleaning on all sides, above and underneath the unit."
+        ],
+        "repeatPattern": true,
+        "note": "Inspection cycle includes a repeated violation-code pattern."
+      },
+      {
+        "id": "40510647-2026-04-14",
+        "date": "2026-04-14",
+        "score": 10,
+        "grade": "A",
+        "criticalCount": 0,
+        "violationCodes": [
+          "10G",
+          "10F"
+        ],
+        "violationDescriptions": [
+          "Dishwashing and ware washing: Cleaning and sanitizing of tableware, including dishes, utensils, and equipment deficient.",
+          "Non-food contact surface or equipment made of unacceptable material, not kept clean, or not properly sealed, raised, spaced or movable to allow accessibility for cleaning on all sides, above and underneath the unit."
+        ],
+        "repeatPattern": true,
+        "note": "Inspection cycle includes a repeated violation-code pattern."
+      }
+    ],
+    "alternatives": [
+      "50133676",
+      "50142455"
+    ],
+    "sourceNotes": "Generated from normalized NYC DOHMH inspection records. Popularity and price metadata are unavailable in the official inspection source."
+  },
+  {
+    "id": "50142455",
+    "name": "Cafe 48",
+    "cuisine": "Chinese",
+    "neighborhood": "Queens",
+    "borough": "Queens",
+    "address": "212-09 48 Avenue",
+    "latitude": 40.755302689246,
+    "longitude": -73.768947067302,
+    "rating": 0.0,
+    "reviewCount": 0,
+    "priceLevel": "$$",
+    "grade": "A",
+    "inspectionReliabilityScore": 0,
+    "trajectory": "volatile",
+    "trustGap": 0,
+    "confidence": "high",
+    "sanoLabel": "Recent critical flag",
+    "explanation": "Derived from inspection score burden, critical flags, repeat patterns, volatility, and trend.",
+    "dataAsOf": "2026-07-25",
+    "inspections": [
+      {
+        "id": "50142455-2026-02-19",
+        "date": "2026-02-19",
+        "score": 48,
+        "grade": "Pending",
+        "criticalCount": 3,
+        "violationCodes": [
+          "10F",
+          "08A",
+          "04H",
+          "06F",
+          "04L"
+        ],
+        "violationDescriptions": [
+          "Non-food contact surface or equipment made of unacceptable material, not kept clean, or not properly sealed, raised, spaced or movable to allow accessibility for cleaning on all sides, above and underneath the unit.",
+          "Establishment is not free of harborage or conditions conducive to rodents, insects or other pests.",
+          "Raw, cooked or prepared food is adulterated, contaminated, cross-contaminated, or not discarded in accordance with HACCP plan.",
+          "Wiping cloths not stored clean and dry, or in a sanitizing solution, between uses.",
+          "Evidence of mice or live mice in establishment's food or non-food areas."
+        ],
+        "repeatPattern": true,
+        "note": "Inspection cycle includes a repeated violation-code pattern."
+      },
+      {
+        "id": "50142455-2026-02-24",
+        "date": "2026-02-24",
+        "score": 28,
+        "grade": "Pending",
+        "criticalCount": 2,
+        "violationCodes": [
+          "10H",
+          "10F",
+          "04L",
+          "08A",
+          "06C"
+        ],
+        "violationDescriptions": [
+          "Single service article not provided. Single service article reused or not protected from contamination when transported, stored, dispensed. Drinking straws not completely enclosed in wrapper or dispensed from a sanitary device.",
+          "Non-food contact surface or equipment made of unacceptable material, not kept clean, or not properly sealed, raised, spaced or movable to allow accessibility for cleaning on all sides, above and underneath the unit.",
+          "Evidence of mice or live mice in establishment's food or non-food areas.",
+          "Establishment is not free of harborage or conditions conducive to rodents, insects or other pests.",
+          "Food, supplies, or equipment not protected from potential source of contamination during storage, preparation, transportation, display, service or from customer\u2019s refillable, reusable container. Condiments not in single-service containers or dispensed directly by the vendor."
+        ],
+        "repeatPattern": true,
+        "note": "Inspection cycle includes a repeated violation-code pattern."
+      },
+      {
+        "id": "50142455-2026-02-26",
+        "date": "2026-02-26",
+        "score": 0,
+        "grade": "C",
+        "criticalCount": 0,
+        "violationCodes": [],
+        "violationDescriptions": [],
+        "repeatPattern": false,
+        "note": "Inspection cycle has no repeated pattern in this prepared extract."
+      },
+      {
+        "id": "50142455-2026-05-06",
+        "date": "2026-05-06",
+        "score": 22,
+        "grade": "Pending",
+        "criticalCount": 3,
+        "violationCodes": [
+          "10F",
+          "06D",
+          "02B",
+          "09B",
+          "06C"
+        ],
+        "violationDescriptions": [
+          "Non-food contact surface or equipment made of unacceptable material, not kept clean, or not properly sealed, raised, spaced or movable to allow accessibility for cleaning on all sides, above and underneath the unit.",
+          "Food contact surface not properly washed, rinsed and sanitized after each use and following any activity when contamination may have occurred.",
+          "Hot TCS food item not held at or above 140 \u00b0F.",
+          "Thawing procedure improper.",
+          "Food, supplies, or equipment not protected from potential source of contamination during storage, preparation, transportation, display, service or from customer\u2019s refillable, reusable container. Condiments not in single-service containers or dispensed directly by the vendor."
+        ],
+        "repeatPattern": true,
+        "note": "Inspection cycle includes a repeated violation-code pattern."
+      },
+      {
+        "id": "50142455-2026-06-17",
+        "date": "2026-06-17",
+        "score": 13,
+        "grade": "A",
+        "criticalCount": 1,
+        "violationCodes": [
+          "10F",
+          "02B"
+        ],
+        "violationDescriptions": [
+          "Non-food contact surface or equipment made of unacceptable material, not kept clean, or not properly sealed, raised, spaced or movable to allow accessibility for cleaning on all sides, above and underneath the unit.",
+          "Hot TCS food item not held at or above 140 \u00b0F."
+        ],
+        "repeatPattern": true,
+        "note": "Inspection cycle includes a repeated violation-code pattern."
+      }
+    ],
+    "alternatives": [
+      "50133676",
+      "40510647"
+    ],
+    "sourceNotes": "Generated from normalized NYC DOHMH inspection records. Popularity and price metadata are unavailable in the official inspection source."
+  }
+]
