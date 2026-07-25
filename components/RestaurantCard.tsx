@@ -1,7 +1,12 @@
 "use client";
 
 import Link from "next/link";
-import { confidenceLabel, formatNumber, trajectoryLabel } from "@/lib/format";
+import {
+  confidenceLabel,
+  formatPopularitySummary,
+  hasPopularityMetadata,
+  trajectoryLabel
+} from "@/lib/format";
 import { confidenceTone, scoreTone } from "@/lib/scoring";
 import type { Inspection, Restaurant } from "@/lib/types";
 
@@ -80,6 +85,10 @@ export default function RestaurantCard({
 }: RestaurantCardProps) {
   const bars = timelineBars(restaurant.inspections);
   const meterWidth = `${Math.max(4, restaurant.inspectionReliabilityScore)}%`;
+  const hasPopularity = hasPopularityMetadata(
+    restaurant.rating,
+    restaurant.reviewCount
+  );
 
   return (
     <article
@@ -155,8 +164,12 @@ export default function RestaurantCard({
             <span className="hidden text-ink/30 sm:inline"> · </span>
             <span className="block sm:inline">
               {restaurant.neighborhood}
-              <span className="text-ink/30"> · </span>
-              {restaurant.priceLevel}
+              {hasPopularity ? (
+                <>
+                  <span className="text-ink/30"> · </span>
+                  {restaurant.priceLevel}
+                </>
+              ) : null}
             </span>
           </p>
         </button>
@@ -220,9 +233,7 @@ export default function RestaurantCard({
           </span>
         </div>
         <p className="text-sm font-semibold leading-5 text-ink/60">
-          {restaurant.rating.toFixed(1)} rating
-          <span className="text-ink/30"> · </span>
-          {formatNumber(restaurant.reviewCount)} reviews
+          {formatPopularitySummary(restaurant.rating, restaurant.reviewCount)}
         </p>
       </div>
 

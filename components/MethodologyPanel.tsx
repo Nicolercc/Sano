@@ -17,14 +17,14 @@ export default function MethodologyPanel() {
       </div>
 
       <section className="mt-6 rounded-md border border-amber/30 bg-amber/10 p-4">
-        <h2 className="text-lg font-bold text-ink">Demo data disclosure</h2>
+        <h2 className="text-lg font-bold text-ink">Official data disclosure</h2>
         <p className="mt-2 text-sm leading-6 text-ink/70">
-          The restaurants in this demo are a hand-authored seed shaped to match
-          NYC DOHMH inspection fields (names, grades, violation codes, dates).
-          They are illustrative for product and scoring UX — not live extracts
-          from the official dataset, and not claims about specific real
-          businesses. When live ingestion is wired, this page will describe that
-          source and freshness instead.
+          The restaurants in this demo come from a curated offline extract
+          generated from NYC DOHMH Restaurant Inspection Results. The extract is
+          not live synchronization, not comprehensive citywide coverage, and not
+          an official NYC rating. Sano prepares public inspection records into an
+          app-ready layer and keeps a synthetic fallback only for failure
+          containment.
         </p>
       </section>
 
@@ -34,8 +34,10 @@ export default function MethodologyPanel() {
           <p className="mt-2 text-sm leading-6 text-ink/70">
             Sano is built around NYC DOHMH-style fields: restaurant identity,
             cuisine, borough, inspection dates, scores, grades, violation codes,
-            descriptions, and critical flags. Popularity signals (ratings, review
-            counts) sit beside that history so you can see when the two diverge.
+            descriptions, and critical flags. The official inspection source does
+            not include public rating, review count, or price metadata, so those
+            popularity signals are shown as unavailable unless a separate source
+            is added later.
           </p>
         </section>
 
@@ -65,11 +67,10 @@ export default function MethodologyPanel() {
         <section className="rounded-md bg-oat p-4">
           <h2 className="text-lg font-bold text-ink">Trust gap</h2>
           <p className="mt-2 text-sm leading-6 text-ink/70">
-            Trust gap is the spread between popularity percentile and inspection
-            reliability percentile inside this small demo cohort — not citywide
-            ranking. A high public rating with a weaker inspection trajectory
-            shows a larger gap. Treat it as a directional contrast within the
-            seed, not a statistical claim about NYC restaurants overall.
+            Trust gap compares popularity percentile with inspection reliability
+            percentile only when popularity metadata exists. In the official
+            DOHMH-only mode, Sano treats trust gap as unavailable instead of
+            inventing review or rating signals.
           </p>
         </section>
       </div>

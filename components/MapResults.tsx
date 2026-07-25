@@ -38,7 +38,7 @@ export default function MapResults({
   return (
     <section className="relative overflow-hidden rounded-lg border border-ink/10 bg-[#e7efe8] shadow-sm">
       <div className="absolute left-4 top-3 z-10 rounded-full bg-white/80 px-3 py-1 text-[11px] font-semibold text-ink/55 shadow-sm">
-        Seed coordinates, demo geography only
+        Official record coordinates where available
       </div>
 
       <div className="relative min-h-[13rem] sm:min-h-[11rem]">

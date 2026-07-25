@@ -17,6 +17,18 @@ export function formatTrustGap(value: number) {
   return `${prefix}${value}`;
 }
 
+export function hasPopularityMetadata(rating: number, reviewCount: number) {
+  return rating > 0 || reviewCount > 0;
+}
+
+export function formatPopularitySummary(rating: number, reviewCount: number) {
+  if (!hasPopularityMetadata(rating, reviewCount)) {
+    return "Public rating unavailable";
+  }
+
+  return `${rating.toFixed(1)} rating · ${formatNumber(reviewCount)} reviews`;
+}
+
 export function trajectoryLabel(trajectory: Trajectory) {
   const labels: Record<Trajectory, string> = {
     improving: "Improving",

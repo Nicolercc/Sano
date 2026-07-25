@@ -2,7 +2,11 @@ import Link from "next/link";
 import Alternatives from "@/components/Alternatives";
 import SanoScorePanel from "@/components/SanoScorePanel";
 import TrustTimeline from "@/components/TrustTimeline";
-import { formatDate, formatNumber } from "@/lib/format";
+import {
+  formatDate,
+  formatNumber,
+  hasPopularityMetadata
+} from "@/lib/format";
 import type { Restaurant } from "@/lib/types";
 
 type RestaurantProfileProps = {
@@ -13,6 +17,11 @@ type RestaurantProfileProps = {
 export default function RestaurantProfile({
   restaurant
 }: RestaurantProfileProps) {
+  const hasPopularity = hasPopularityMetadata(
+    restaurant.rating,
+    restaurant.reviewCount
+  );
+
   return (
     <main className="min-h-screen overflow-x-hidden bg-oat">
       <div className="mx-auto flex w-full max-w-6xl flex-col gap-5 px-4 py-5 sm:px-6 lg:px-8">
@@ -52,10 +61,10 @@ export default function RestaurantProfile({
             <div className="grid min-w-64 grid-cols-3 gap-2 text-center">
               <div className="rounded-md bg-oat p-3">
                 <p className="text-xs font-bold uppercase tracking-wide text-ink/50">
-                  Rating
+                  Public rating
                 </p>
                 <p className="mt-1 text-lg font-black text-ink">
-                  {restaurant.rating.toFixed(1)}
+                  {hasPopularity ? restaurant.rating.toFixed(1) : "Unavailable"}
                 </p>
               </div>
               <div className="rounded-md bg-oat p-3">
@@ -63,7 +72,7 @@ export default function RestaurantProfile({
                   Reviews
                 </p>
                 <p className="mt-1 text-lg font-black text-ink">
-                  {formatNumber(restaurant.reviewCount)}
+                  {hasPopularity ? formatNumber(restaurant.reviewCount) : "Unavailable"}
                 </p>
               </div>
               <div className="rounded-md bg-oat p-3">
@@ -76,7 +85,7 @@ export default function RestaurantProfile({
           </div>
           <p className="mt-5 max-w-3xl text-sm leading-6 text-ink/70">
             Sano adds context from inspection history so similar restaurants can be
-            compared with more than rating and current posted grade.
+            compared with more than a single current posted grade.
           </p>
         </header>
 
