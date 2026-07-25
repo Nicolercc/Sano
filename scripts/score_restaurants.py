@@ -7,9 +7,19 @@ import argparse
 import json
 import math
 import sys
-from datetime import date
+from datetime import date, datetime, timezone
 from pathlib import Path
 from typing import Any
+
+
+BOROUGH_COORDINATES = {
+    "Bronx": (40.8448, -73.8648),
+    "Brooklyn": (40.6782, -73.9442),
+    "Manhattan": (40.7831, -73.9712),
+    "Queens": (40.7282, -73.7949),
+    "Staten Island": (40.5795, -74.1502),
+    "Nyc": (40.7128, -74.0060),
+}
 
 
 def clamp(value: float, minimum: int = 0, maximum: int = 100) -> int:
@@ -94,6 +104,24 @@ def repeat_patterns(inspections: list[dict[str, Any]]) -> None:
         )
 
 
+def slug(value: str) -> str:
+    normalized = "".join(
+        character.lower() if character.isalnum() else "-" for character in value.strip()
+    )
+    return "-".join(part for part in normalized.split("-") if part)
+
+
+def coordinates(record: dict[str, Any]) -> tuple[float, float, str]:
+    latitude = record.get("latitude")
+    longitude = record.get("longitude")
+    if latitude is not None and longitude is not None:
+        return float(latitude), float(longitude), "official-record"
+
+    borough = str(record.get("borough") or "Nyc")
+    fallback = BOROUGH_COORDINATES.get(borough, BOROUGH_COORDINATES["Nyc"])
+    return fallback[0], fallback[1], "borough-centroid-fallback"
+
+
 def build_app_record(record: dict[str, Any], data_as_of: str) -> dict[str, Any]:
     inspections = record.get("inspections", [])
     repeat_patterns(inspections)
@@ -109,17 +137,24 @@ def build_app_record(record: dict[str, Any], data_as_of: str) -> dict[str, Any]:
         if inspections
         else "Pending"
     )
+    latitude, longitude, coordinate_source = coordinates(record)
+    source_note = (
+        "Generated from normalized NYC DOHMH inspection records. "
+        "Popularity metadata is unavailable in the official inspection source."
+    )
+    if coordinate_source != "official-record":
+        source_note += " Coordinates use a borough-centroid fallback."
 
     return {
-        "id": str(record["id"]).lower().replace(" ", "-"),
+        "id": slug(str(record["id"])),
         "name": record["name"],
         "cuisine": record.get("cuisine") or "Restaurant",
         "neighborhood": record.get("neighborhood") or "NYC",
         "borough": record.get("borough") or "NYC",
         "address": record.get("address") or "",
-        "latitude": float(record.get("latitude") or 40.7128),
-        "longitude": float(record.get("longitude") or -74.006),
-        "rating": float(record.get("rating") or 4.2),
+        "latitude": latitude,
+        "longitude": longitude,
+        "rating": float(record.get("rating") or 0),
         "reviewCount": int(record.get("reviewCount") or 0),
         "priceLevel": record.get("priceLevel") or "$$",
         "grade": current_grade or "Pending",
@@ -132,8 +167,50 @@ def build_app_record(record: dict[str, Any], data_as_of: str) -> dict[str, Any]:
         "dataAsOf": data_as_of,
         "inspections": inspections,
         "alternatives": record.get("alternatives") or [],
-        "sourceNotes": "Generated from normalized NYC DOHMH inspection records.",
+        "sourceNotes": source_note,
     }
+
+
+def add_alternatives(records: list[dict[str, Any]], count: int = 2) -> None:
+    for record in records:
+        candidates = [
+            candidate
+            for candidate in records
+            if candidate["id"] != record["id"]
+            and (
+                candidate["borough"] == record["borough"]
+                or candidate["cuisine"] == record["cuisine"]
+            )
+        ]
+        ranked = sorted(
+            candidates,
+            key=lambda item: item["inspectionReliabilityScore"],
+            reverse=True,
+        )
+        record["alternatives"] = [candidate["id"] for candidate in ranked[:count]]
+
+
+def write_provenance(
+    path: Path,
+    *,
+    input_path: Path,
+    output_path: Path,
+    input_count: int,
+    output_count: int,
+    data_as_of: str,
+) -> None:
+    provenance = {
+        "sourceName": "NYC DOHMH Restaurant Inspection Results",
+        "source": "normalized-official-records",
+        "inputPath": str(input_path),
+        "outputPath": str(output_path),
+        "scoredAt": datetime.now(timezone.utc).isoformat(),
+        "dataAsOf": data_as_of,
+        "inputRestaurantCount": input_count,
+        "scoredRestaurantCount": output_count,
+    }
+    path.parent.mkdir(parents=True, exist_ok=True)
+    path.write_text(json.dumps(provenance, indent=2), encoding="utf-8")
 
 
 def main() -> int:
@@ -141,23 +218,51 @@ def main() -> int:
     parser.add_argument(
         "--input",
         type=Path,
-        default=Path("data/normalized-inspections.json"),
+        default=Path("data/generated/normalized-inspections.json"),
         help="Normalized restaurant JSON from ingest_nyc_dohmh.py",
     )
     parser.add_argument(
         "--output",
         type=Path,
-        default=Path("data/sample-restaurants.json"),
+        default=Path("data/generated/official-restaurants.json"),
         help="App-ready seed JSON",
     )
+    parser.add_argument(
+        "--provenance-output",
+        type=Path,
+        default=Path("data/generated/scoring-provenance.json"),
+        help="Destination scoring provenance JSON path",
+    )
+    parser.add_argument("--min-inspections", type=int, default=2)
+    parser.add_argument("--limit", type=int, default=25)
     parser.add_argument("--data-as-of", default=date.today().isoformat())
     args = parser.parse_args()
 
     records = json.loads(args.input.read_text(encoding="utf-8"))
-    app_records = [build_app_record(record, args.data_as_of) for record in records]
+    eligible_records = [
+        record
+        for record in records
+        if len(record.get("inspections", [])) >= args.min_inspections
+        and record.get("name")
+        and record.get("address")
+    ]
+    app_records = [
+        build_app_record(record, args.data_as_of)
+        for record in eligible_records[: args.limit]
+    ]
+    add_alternatives(app_records)
     args.output.parent.mkdir(parents=True, exist_ok=True)
     args.output.write_text(json.dumps(app_records, indent=2), encoding="utf-8")
+    write_provenance(
+        args.provenance_output,
+        input_path=args.input,
+        output_path=args.output,
+        input_count=len(records),
+        output_count=len(app_records),
+        data_as_of=args.data_as_of,
+    )
     print(f"Wrote {len(app_records)} scored restaurants to {args.output}")
+    print(f"Wrote scoring provenance to {args.provenance_output}")
     return 0
 
 

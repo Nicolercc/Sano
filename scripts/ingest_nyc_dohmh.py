@@ -14,6 +14,7 @@ import sys
 import urllib.parse
 import urllib.request
 from collections import defaultdict
+from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
 
@@ -33,21 +34,45 @@ def as_int(value: Any, default: int = 0) -> int:
         return default
 
 
+def as_optional_int(value: Any) -> int | None:
+    text = clean(value)
+    if not text:
+        return None
+    try:
+        return int(float(text))
+    except (TypeError, ValueError):
+        return None
+
+
+def as_optional_float(value: Any) -> float | None:
+    text = clean(value)
+    if not text:
+        return None
+    try:
+        return float(text)
+    except (TypeError, ValueError):
+        return None
+
+
 def load_csv(path: Path) -> list[dict[str, Any]]:
     with path.open(newline="", encoding="utf-8-sig") as handle:
         return list(csv.DictReader(handle))
 
 
-def fetch_rows(limit: int, borough: str | None) -> list[dict[str, Any]]:
+def build_fetch_url(limit: int, borough: str | None) -> str:
     params = {
         "$limit": str(limit),
         "$order": "inspection_date DESC",
     }
     if borough:
         params["boro"] = borough
-    url = f"{NYC_DOHMH_ENDPOINT}?{urllib.parse.urlencode(params)}"
+    return f"{NYC_DOHMH_ENDPOINT}?{urllib.parse.urlencode(params)}"
+
+
+def fetch_rows(limit: int, borough: str | None) -> tuple[list[dict[str, Any]], str]:
+    url = build_fetch_url(limit, borough)
     with urllib.request.urlopen(url, timeout=30) as response:
-        return json.loads(response.read().decode("utf-8"))
+        return json.loads(response.read().decode("utf-8")), url
 
 
 def row_value(row: dict[str, Any], *names: str) -> str:
@@ -75,7 +100,7 @@ def normalize(rows: list[dict[str, Any]]) -> list[dict[str, Any]]:
         zipcode = row_value(row, "zipcode", "ZIPCODE")
         cuisine = row_value(row, "cuisine_description", "CUISINE DESCRIPTION")
         inspection_date = row_value(row, "inspection_date", "INSPECTION DATE")[:10]
-        score = as_int(row_value(row, "score", "SCORE"))
+        score = as_optional_int(row_value(row, "score", "SCORE"))
         grade = row_value(row, "grade", "GRADE") or "Pending"
         violation_code = row_value(row, "violation_code", "VIOLATION CODE")
         violation_description = row_value(
@@ -83,6 +108,8 @@ def normalize(rows: list[dict[str, Any]]) -> list[dict[str, Any]]:
         )
         critical_flag = row_value(row, "critical_flag", "CRITICAL FLAG").lower()
         is_critical = "critical" in critical_flag and "not" not in critical_flag
+        latitude = as_optional_float(row_value(row, "latitude", "Latitude"))
+        longitude = as_optional_float(row_value(row, "longitude", "Longitude"))
 
         grouped.setdefault(
             camis,
@@ -94,11 +121,13 @@ def normalize(rows: list[dict[str, Any]]) -> list[dict[str, Any]]:
                 "borough": borough.title(),
                 "address": " ".join(part for part in [building, street.title()] if part),
                 "zipcode": zipcode,
+                "latitude": latitude,
+                "longitude": longitude,
                 "inspections": [],
             },
         )
 
-        if not inspection_date:
+        if not inspection_date or score is None:
             continue
 
         inspection_id = f"{camis}-{inspection_date}"
@@ -127,7 +156,34 @@ def normalize(rows: list[dict[str, Any]]) -> list[dict[str, Any]]:
             inspections.values(), key=lambda item: item["date"]
         )
 
-    return sorted(grouped.values(), key=lambda item: item["name"])
+    return sorted(
+        (record for record in grouped.values() if record["inspections"]),
+        key=lambda item: item["name"],
+    )
+
+
+def write_provenance(
+    path: Path,
+    *,
+    source: str,
+    source_url: str | None,
+    input_path: Path | None,
+    output_path: Path,
+    row_count: int,
+    restaurant_count: int,
+) -> None:
+    provenance = {
+        "sourceName": "NYC DOHMH Restaurant Inspection Results",
+        "source": source,
+        "sourceUrl": source_url,
+        "inputPath": str(input_path) if input_path else None,
+        "outputPath": str(output_path),
+        "fetchedAt": datetime.now(timezone.utc).isoformat(),
+        "inputRowCount": row_count,
+        "normalizedRestaurantCount": restaurant_count,
+    }
+    path.parent.mkdir(parents=True, exist_ok=True)
+    path.write_text(json.dumps(provenance, indent=2), encoding="utf-8")
 
 
 def main() -> int:
@@ -136,8 +192,14 @@ def main() -> int:
     parser.add_argument(
         "--output",
         type=Path,
-        default=Path("data/normalized-inspections.json"),
+        default=Path("data/generated/normalized-inspections.json"),
         help="Destination JSON path",
+    )
+    parser.add_argument(
+        "--provenance-output",
+        type=Path,
+        default=Path("data/generated/provenance.json"),
+        help="Destination provenance JSON path",
     )
     parser.add_argument("--limit", type=int, default=5000)
     parser.add_argument("--borough", help="Optional Socrata borough filter")
@@ -145,13 +207,26 @@ def main() -> int:
 
     if args.input:
         rows = load_csv(args.input)
+        source_url = None
+        source = "local-csv"
     else:
-        rows = fetch_rows(args.limit, args.borough)
+        rows, source_url = fetch_rows(args.limit, args.borough)
+        source = "socrata-api"
 
     normalized = normalize(rows)
     args.output.parent.mkdir(parents=True, exist_ok=True)
     args.output.write_text(json.dumps(normalized, indent=2), encoding="utf-8")
+    write_provenance(
+        args.provenance_output,
+        source=source,
+        source_url=source_url,
+        input_path=args.input,
+        output_path=args.output,
+        row_count=len(rows),
+        restaurant_count=len(normalized),
+    )
     print(f"Wrote {len(normalized)} restaurants to {args.output}")
+    print(f"Wrote provenance to {args.provenance_output}")
     return 0
 
 

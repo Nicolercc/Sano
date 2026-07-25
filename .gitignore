@@ -28,4 +28,8 @@ __pycache__/
 .venv/
 venv/
 
+# generated data artifacts
+data/generated/*.json
+!data/generated/.gitkeep
+
 .vercel
