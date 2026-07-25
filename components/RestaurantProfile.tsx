@@ -14,7 +14,7 @@ export default function RestaurantProfile({
   restaurant
 }: RestaurantProfileProps) {
   return (
-    <main className="min-h-screen bg-oat">
+    <main className="min-h-screen overflow-x-hidden bg-oat">
       <div className="mx-auto flex w-full max-w-6xl flex-col gap-5 px-4 py-5 sm:px-6 lg:px-8">
         <nav className="flex items-center justify-between">
           <Link href="/" className="text-2xl font-black tracking-normal text-ink">
@@ -80,8 +80,8 @@ export default function RestaurantProfile({
           </p>
         </header>
 
-        <div className="grid gap-5 lg:grid-cols-[360px_minmax(0,1fr)]">
-          <div className="flex flex-col gap-5">
+        <div className="grid min-w-0 gap-5 lg:grid-cols-[360px_minmax(0,1fr)]">
+          <div className="min-w-0 flex flex-col gap-5">
             <SanoScorePanel restaurant={restaurant} />
             <section className="rounded-lg border border-ink/10 bg-white p-5 shadow-sm">
               <h2 className="text-lg font-bold text-ink">Source context</h2>
@@ -98,7 +98,7 @@ export default function RestaurantProfile({
             </section>
           </div>
 
-          <div className="flex flex-col gap-5">
+          <div className="min-w-0 flex flex-col gap-5">
             <TrustTimeline inspections={restaurant.inspections} />
             <Alternatives restaurant={restaurant} />
           </div>
