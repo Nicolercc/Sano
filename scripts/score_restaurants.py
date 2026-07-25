@@ -240,13 +240,13 @@ def build_app_record(record: dict[str, Any], data_as_of: str) -> dict[str, Any]:
         "address": record.get("address") or "",
         "latitude": latitude,
         "longitude": longitude,
-        "rating": float(record.get("rating") or 0),
-        "reviewCount": int(record.get("reviewCount") or 0),
-        "priceLevel": record.get("priceLevel") or "$$",
+        "rating": None,
+        "reviewCount": None,
+        "priceLevel": None,
         "grade": current_grade or "Pending",
         "inspectionReliabilityScore": score,
         "trajectory": trend,
-        "trustGap": int(record.get("trustGap") or 0),
+        "trustGap": None,
         "confidence": conf,
         "sanoLabel": label(score, trend, conf, recent_critical),
         "explanation": "Derived from inspection score burden, critical flags, repeat patterns, volatility, and trend.",
@@ -254,6 +254,11 @@ def build_app_record(record: dict[str, Any], data_as_of: str) -> dict[str, Any]:
         "inspections": inspections,
         "alternatives": record.get("alternatives") or [],
         "sourceNotes": source_note,
+        "metadataAvailability": {
+            "popularity": False,
+            "price": False,
+            "trustGap": False,
+        },
     }
 
 

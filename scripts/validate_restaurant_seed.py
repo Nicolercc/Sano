@@ -138,12 +138,18 @@ def validate_record(
         errors.append(f"{label}: longitude must be numeric")
     elif not -180 <= record.get("longitude") <= 180:
         errors.append(f"{label}: longitude must be between -180 and 180")
-    if not is_number(record.get("rating")) or record.get("rating") < 0:
-        errors.append(f"{label}: rating must be a non-negative number")
-    if not isinstance(record.get("reviewCount"), int) or record.get("reviewCount") < 0:
-        errors.append(f"{label}: reviewCount must be a non-negative integer")
-    if record.get("priceLevel") not in PRICE_LEVELS:
-        errors.append(f"{label}: priceLevel must be one of {sorted(PRICE_LEVELS)}")
+    if expected_kind == "official" and record.get("rating") is None:
+        pass
+    elif not is_number(record.get("rating")) or record.get("rating") < 0:
+        errors.append(f"{label}: rating must be null or a non-negative number")
+    if expected_kind == "official" and record.get("reviewCount") is None:
+        pass
+    elif not isinstance(record.get("reviewCount"), int) or record.get("reviewCount") < 0:
+        errors.append(f"{label}: reviewCount must be null or a non-negative integer")
+    if expected_kind == "official" and record.get("priceLevel") is None:
+        pass
+    elif record.get("priceLevel") not in PRICE_LEVELS:
+        errors.append(f"{label}: priceLevel must be null or one of {sorted(PRICE_LEVELS)}")
     if record.get("grade") not in PUBLIC_GRADES:
         errors.append(f"{label}: grade must be one of {sorted(PUBLIC_GRADES)}")
     if (
@@ -153,8 +159,10 @@ def validate_record(
         errors.append(f"{label}: inspectionReliabilityScore must be an integer 0-100")
     if record.get("trajectory") not in TRAJECTORIES:
         errors.append(f"{label}: trajectory must be one of {sorted(TRAJECTORIES)}")
-    if not isinstance(record.get("trustGap"), int):
-        errors.append(f"{label}: trustGap must be an integer")
+    if expected_kind == "official" and record.get("trustGap") is None:
+        pass
+    elif not isinstance(record.get("trustGap"), int):
+        errors.append(f"{label}: trustGap must be null or an integer")
     if record.get("confidence") not in CONFIDENCE_LEVELS:
         errors.append(f"{label}: confidence must be one of {sorted(CONFIDENCE_LEVELS)}")
     if record.get("sanoLabel") not in SANO_LABELS:
@@ -228,15 +236,15 @@ def validate_record(
             errors.append(f"{label}: official seed must disclose generated official provenance")
         if "synthetic demo seed" in lowered_notes:
             errors.append(f"{label}: official seed must not use synthetic seed language")
-        if record.get("rating") != 0:
-            errors.append(f"{label}: official seed rating must be 0 unless a popularity source is added")
-        if record.get("reviewCount") != 0:
+        if record.get("rating") not in (0, 0.0, None):
+            errors.append(f"{label}: official seed rating must be null/0 unless a popularity source is added")
+        if record.get("reviewCount") not in (0, None):
             errors.append(
-                f"{label}: official seed reviewCount must be 0 unless a popularity source is added"
+                f"{label}: official seed reviewCount must be null/0 unless a popularity source is added"
             )
-        if record.get("trustGap") != 0:
+        if record.get("trustGap") not in (0, None):
             errors.append(
-                f"{label}: official seed trustGap must be 0 unless a popularity source is added"
+                f"{label}: official seed trustGap must be null/0 unless a popularity source is added"
             )
 
     return errors

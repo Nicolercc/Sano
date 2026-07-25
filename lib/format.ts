@@ -17,16 +17,24 @@ export function formatTrustGap(value: number) {
   return `${prefix}${value}`;
 }
 
-export function hasPopularityMetadata(rating: number, reviewCount: number) {
-  return rating > 0 || reviewCount > 0;
+export function hasPopularityMetadata(
+  rating: number | null | undefined,
+  reviewCount: number | null | undefined
+) {
+  return Number(rating) > 0 && Number(reviewCount) > 0;
 }
 
-export function formatPopularitySummary(rating: number, reviewCount: number) {
+export function formatPopularitySummary(
+  rating: number | null | undefined,
+  reviewCount: number | null | undefined
+) {
   if (!hasPopularityMetadata(rating, reviewCount)) {
     return "Public rating unavailable";
   }
 
-  return `${rating.toFixed(1)} rating · ${formatNumber(reviewCount)} reviews`;
+  return `${Number(rating).toFixed(1)} rating · ${formatNumber(
+    Number(reviewCount)
+  )} reviews`;
 }
 
 export function trajectoryLabel(trajectory: Trajectory) {

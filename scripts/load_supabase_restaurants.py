@@ -73,19 +73,43 @@ def build_search_text(record: dict[str, Any]) -> str:
     return " ".join(str(part).strip() for part in parts if part)
 
 
+def sanitize_official_metadata(record: dict[str, Any]) -> dict[str, Any]:
+    """Represent unavailable popularity data as null, never as fake zeroes."""
+
+    sanitized = dict(record)
+    sanitized["rating"] = None
+    sanitized["reviewCount"] = None
+    sanitized["priceLevel"] = None
+    sanitized["trustGap"] = None
+    sanitized["metadataAvailability"] = {
+        "popularity": False,
+        "price": False,
+        "trustGap": False,
+    }
+    return sanitized
+
+
 def with_place_metadata(
     record: dict[str, Any],
     metadata_by_restaurant_id: dict[str, dict[str, Any]],
 ) -> dict[str, Any]:
+    record = sanitize_official_metadata(record)
     metadata = metadata_by_restaurant_id.get(str(record.get("id")))
     if not metadata:
         return record
 
     enriched = dict(record)
-    enriched["rating"] = metadata.get("rating") or 0
-    enriched["reviewCount"] = metadata.get("reviewCount") or 0
-    enriched["priceLevel"] = metadata.get("priceLevel") or record.get("priceLevel") or "$$"
+    has_popularity = bool(metadata.get("rating") and metadata.get("reviewCount"))
+    has_price = bool(metadata.get("priceLevel"))
+    enriched["rating"] = metadata.get("rating") if has_popularity else None
+    enriched["reviewCount"] = metadata.get("reviewCount") if has_popularity else None
+    enriched["priceLevel"] = metadata.get("priceLevel") if has_price else None
     enriched["placeMetadata"] = metadata
+    enriched["metadataAvailability"] = {
+        "popularity": has_popularity,
+        "price": has_price,
+        "trustGap": False,
+    }
     enriched["sourceNotes"] = (
         f"{record.get('sourceNotes', '').rstrip()} "
         f"Popularity metadata enriched from {metadata.get('provider')}."

@@ -1,11 +1,5 @@
 import { getRestaurantDataMode } from "@/lib/server/restaurants";
-import type { Restaurant } from "@/lib/types";
-
-type MetadataAvailability = {
-  popularity: boolean;
-  price: boolean;
-  trustGap: boolean;
-};
+import type { MetadataAvailability, Restaurant } from "@/lib/types";
 
 export type PublicRestaurant = Omit<
   Restaurant,
@@ -34,30 +28,43 @@ function syntheticModeMetadataAvailability(): MetadataAvailability {
   };
 }
 
+function officialDerivedMetadataAvailability(
+  restaurant: Restaurant
+): MetadataAvailability {
+  const declared = restaurant.metadataAvailability;
+  const hasPopularity =
+    declared?.popularity ??
+    Boolean(
+      restaurant.placeMetadata &&
+        Number(restaurant.rating) > 0 &&
+        Number(restaurant.reviewCount) > 0
+    );
+  const hasPrice =
+    declared?.price ?? Boolean(restaurant.placeMetadata?.priceLevel);
+  const hasTrustGap =
+    declared?.trustGap ??
+    (typeof restaurant.trustGap === "number" && restaurant.trustGap !== 0);
+
+  return {
+    popularity: hasPopularity,
+    price: hasPrice,
+    trustGap: hasTrustGap
+  };
+}
+
 export function serializeRestaurantForApi(
   restaurant: Restaurant
 ): PublicRestaurant {
-  if (getRestaurantDataMode() === "official-generated-seed") {
-    const hasPopularity = Boolean(
-      restaurant.placeMetadata &&
-        restaurant.rating > 0 &&
-        restaurant.reviewCount > 0
-    );
-    const hasPrice = Boolean(restaurant.placeMetadata?.priceLevel);
-    const hasTrustGap = restaurant.trustGap !== 0;
+  if (getRestaurantDataMode() !== "synthetic-demo-seed") {
+    const availability = officialDerivedMetadataAvailability(restaurant);
 
     return {
       ...restaurant,
-      rating: hasPopularity ? restaurant.rating : null,
-      reviewCount: hasPopularity ? restaurant.reviewCount : null,
-      priceLevel: hasPrice ? restaurant.priceLevel : null,
-      trustGap: hasTrustGap ? restaurant.trustGap : null,
-      metadataAvailability: {
-        ...officialModeMetadataAvailability(),
-        popularity: hasPopularity,
-        price: hasPrice,
-        trustGap: hasTrustGap
-      }
+      rating: availability.popularity ? restaurant.rating : null,
+      reviewCount: availability.popularity ? restaurant.reviewCount : null,
+      priceLevel: availability.price ? restaurant.priceLevel : null,
+      trustGap: availability.trustGap ? restaurant.trustGap : null,
+      metadataAvailability: availability
     };
   }
 

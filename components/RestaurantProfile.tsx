@@ -20,6 +20,14 @@ export default function RestaurantProfile({
     restaurant.rating,
     restaurant.reviewCount
   );
+  const ratingLabel =
+    hasPopularity && restaurant.rating !== null
+      ? restaurant.rating.toFixed(1)
+      : "Unavailable";
+  const reviewCountLabel =
+    hasPopularity && restaurant.reviewCount !== null
+      ? formatNumber(restaurant.reviewCount)
+      : "Unavailable";
 
   return (
     <main className="min-h-screen overflow-x-hidden bg-oat">
@@ -63,7 +71,7 @@ export default function RestaurantProfile({
                   Public rating
                 </p>
                 <p className="mt-1 text-lg font-black text-ink">
-                  {hasPopularity ? restaurant.rating.toFixed(1) : "Unavailable"}
+                  {ratingLabel}
                 </p>
               </div>
               <div className="rounded-md bg-oat p-3">
@@ -71,7 +79,7 @@ export default function RestaurantProfile({
                   Reviews
                 </p>
                 <p className="mt-1 text-lg font-black text-ink">
-                  {hasPopularity ? formatNumber(restaurant.reviewCount) : "Unavailable"}
+                  {reviewCountLabel}
                 </p>
               </div>
               <div className="rounded-md bg-oat p-3">

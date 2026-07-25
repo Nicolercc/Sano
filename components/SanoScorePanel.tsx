@@ -16,7 +16,8 @@ export default function SanoScorePanel({ restaurant }: SanoScorePanelProps) {
     restaurant.rating,
     restaurant.reviewCount
   );
-  const hasTrustGap = restaurant.trustGap !== 0;
+  const hasTrustGap =
+    typeof restaurant.trustGap === "number" && restaurant.trustGap !== 0;
 
   return (
     <section className="rounded-lg border border-ink/10 bg-white p-5 shadow-sm">
@@ -62,7 +63,9 @@ export default function SanoScorePanel({ restaurant }: SanoScorePanelProps) {
             Trust gap
           </p>
           <p className="mt-1 text-sm font-bold text-ink">
-            {hasTrustGap ? formatTrustGap(restaurant.trustGap) : "Unavailable"}
+            {hasTrustGap && restaurant.trustGap !== null
+              ? formatTrustGap(restaurant.trustGap)
+              : "Unavailable"}
           </p>
         </div>
       </div>

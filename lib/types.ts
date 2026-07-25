@@ -28,6 +28,12 @@ export type PlaceMetadata = {
   matchConfidence: "high" | "medium" | "low";
 };
 
+export type MetadataAvailability = {
+  popularity: boolean;
+  price: boolean;
+  trustGap: boolean;
+};
+
 export type Inspection = {
   id: string;
   date: string;
@@ -48,13 +54,13 @@ export type Restaurant = {
   address: string;
   latitude: number;
   longitude: number;
-  rating: number;
-  reviewCount: number;
-  priceLevel: "$" | "$$" | "$$$";
+  rating: number | null;
+  reviewCount: number | null;
+  priceLevel: "$" | "$$" | "$$$" | null;
   grade: PublicGrade;
   inspectionReliabilityScore: number;
   trajectory: Trajectory;
-  trustGap: number;
+  trustGap: number | null;
   confidence: ConfidenceLevel;
   sanoLabel: SanoLabel;
   explanation: string;
@@ -63,6 +69,7 @@ export type Restaurant = {
   alternatives: string[];
   sourceNotes: string;
   placeMetadata?: PlaceMetadata;
+  metadataAvailability?: MetadataAvailability;
 };
 
 export type RestaurantFilters = {
