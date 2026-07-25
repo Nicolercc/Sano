@@ -11,7 +11,6 @@ import type { Restaurant } from "@/lib/types";
 
 type RestaurantProfileProps = {
   restaurant: Restaurant;
-  restaurants: Restaurant[];
 };
 
 export default function RestaurantProfile({

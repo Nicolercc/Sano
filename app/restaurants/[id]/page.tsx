@@ -1,6 +1,6 @@
 import { notFound } from "next/navigation";
 import RestaurantProfile from "@/components/RestaurantProfile";
-import { getRestaurant, restaurants } from "@/lib/server/restaurants";
+import { getRestaurantForApp, restaurants } from "@/lib/server/restaurants";
 
 type RestaurantPageProps = {
   params: {
@@ -12,12 +12,14 @@ export function generateStaticParams() {
   return restaurants.map((restaurant) => ({ id: restaurant.id }));
 }
 
-export default function RestaurantPage({ params }: RestaurantPageProps) {
-  const restaurant = getRestaurant(params.id);
+export const dynamicParams = true;
+
+export default async function RestaurantPage({ params }: RestaurantPageProps) {
+  const restaurant = await getRestaurantForApp(params.id);
 
   if (!restaurant) {
     notFound();
   }
 
-  return <RestaurantProfile restaurant={restaurant} restaurants={restaurants} />;
+  return <RestaurantProfile restaurant={restaurant} />;
 }

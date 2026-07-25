@@ -50,6 +50,8 @@ The MVP is a polished demo of the core Sano experience:
   records, with synthetic fallback for failure containment
 - Google Places-ready enrichment layer for sourced rating and review-count
   metadata when an API key and reviewed matches are available
+- Supabase-ready scale layer that can serve a larger app-ready restaurant set
+  while falling back to committed JSON for demo reliability
 
 ## What We Are Not Building This Week
 

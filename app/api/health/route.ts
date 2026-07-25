@@ -1,14 +1,14 @@
 import { NextResponse } from "next/server";
-import { getRestaurantDataSummary } from "@/lib/server/restaurants";
+import { getRestaurantDataSummaryForApp } from "@/lib/server/restaurants";
 
 export const dynamic = "force-dynamic";
 
-export function GET() {
+export async function GET() {
   return NextResponse.json(
     {
       status: "ok",
       app: "sano",
-      data: getRestaurantDataSummary()
+      data: await getRestaurantDataSummaryForApp()
     },
     {
       headers: {

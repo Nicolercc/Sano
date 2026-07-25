@@ -157,9 +157,48 @@ and matching rules are reviewed.
 
 ### Phase 6: Supabase
 
-If time allows, load app-ready records or normalized records into Supabase.
+Load a larger app-ready record set into Supabase and let the app query Supabase
+first while keeping committed JSON as fallback.
 
-Recommended tables:
+Why this matters:
+
+- The committed official seed is intentionally small and demo-stable.
+- Supabase lets the app search hundreds or thousands of NYC restaurants without
+  shipping a massive JSON file to the browser.
+- The app can still fall back to the 16-record official seed if Supabase is not
+  configured or unavailable.
+
+Current implementation:
+
+- `supabase/schema.sql` defines `restaurant_records`.
+- `scripts/load_supabase_restaurants.py` upserts app-ready records through
+  Supabase REST.
+- `lib/server/restaurants.ts` queries Supabase first when `SUPABASE_URL` and a
+  Supabase key are configured, then falls back to committed JSON.
+- `/api/health` reports `mode = supabase-app-records` when Supabase is active.
+
+Run:
+
+```bash
+npm run generate:supabase-seed
+# Apply supabase/schema.sql in Supabase SQL editor or with psql.
+npm run load:supabase:dry-run
+npm run load:supabase
+npm run check
+SANO_BASE_URL=https://sano-nine.vercel.app npm run acceptance
+```
+
+Required local / Vercel env:
+
+```bash
+SUPABASE_URL=...
+SUPABASE_SERVICE_ROLE_KEY=...
+```
+
+`SUPABASE_ANON_KEY` can be used for read-only app access if row-level security
+policies are configured. The service-role key should stay server-side only.
+
+Future normalized schema:
 
 - `restaurants`
 - `inspections`

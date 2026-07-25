@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { serializeRestaurantForApi } from "@/lib/server/api-serialization";
-import { getRestaurant } from "@/lib/server/restaurants";
+import { getRestaurantForApp } from "@/lib/server/restaurants";
 
 type RestaurantRouteContext = {
   params: {
@@ -8,8 +8,8 @@ type RestaurantRouteContext = {
   };
 };
 
-export function GET(_request: NextRequest, { params }: RestaurantRouteContext) {
-  const restaurant = getRestaurant(params.id);
+export async function GET(_request: NextRequest, { params }: RestaurantRouteContext) {
+  const restaurant = await getRestaurantForApp(params.id);
 
   if (!restaurant) {
     return NextResponse.json({ error: "Restaurant not found" }, { status: 404 });

@@ -10,7 +10,10 @@ import type {
   Trajectory
 } from "@/lib/types";
 
-type DataMode = "official-generated-seed" | "synthetic-demo-seed";
+type DataMode =
+  | "supabase-app-records"
+  | "official-generated-seed"
+  | "synthetic-demo-seed";
 
 type RestaurantDataSource = {
   mode: DataMode;
@@ -20,6 +23,20 @@ type RestaurantDataSource = {
   fallbackAvailable: boolean;
   provenance?: typeof officialProvenance;
 };
+
+type RestaurantDataSummary = {
+  source: string;
+  officialSource: string;
+  mode: DataMode;
+  restaurantCount: number;
+  inspectionCount: number;
+  dataAsOf: string | null;
+  fallbackAvailable: boolean;
+  provenance: Record<string, unknown> | null;
+};
+
+const DEFAULT_SUPABASE_LIMIT = 500;
+const MAX_SUPABASE_LIMIT = 1000;
 
 const syntheticRestaurants = sampleRestaurants as Restaurant[];
 const generatedOfficialRestaurants = officialRestaurants as Restaurant[];
@@ -91,6 +108,7 @@ export type RestaurantQuery = {
   trajectory?: Trajectory | "all" | null;
   confidence?: ConfidenceLevel | "all" | null;
   recentCriticalOnly?: boolean;
+  limit?: number | null;
 };
 
 export function listRestaurants(query: RestaurantQuery = {}) {
@@ -140,7 +158,7 @@ export function getAlternatives(restaurant: Restaurant) {
     .filter((item): item is Restaurant => Boolean(item));
 }
 
-export function getRestaurantDataSummary() {
+function fallbackRestaurantDataSummary(): RestaurantDataSummary {
   const dataAsOfDates = restaurants.map((restaurant) => restaurant.dataAsOf).sort();
   const inspectionCount = restaurants.reduce(
     (total, restaurant) => total + restaurant.inspections.length,
@@ -169,4 +187,222 @@ export function getRestaurantDataSummary() {
           }
         : null
   };
+}
+
+function supabaseConfig() {
+  const url = process.env.SUPABASE_URL?.replace(/\/+$/, "");
+  const key =
+    process.env.SUPABASE_SERVICE_ROLE_KEY ?? process.env.SUPABASE_ANON_KEY;
+
+  if (!url || !key) {
+    return null;
+  }
+
+  return { url, key };
+}
+
+function supabaseHeaders(config: { key: string }) {
+  return {
+    apikey: config.key,
+    authorization: `Bearer ${config.key}`
+  };
+}
+
+function boundedLimit(value?: number | null) {
+  if (!value || !Number.isFinite(value)) {
+    return DEFAULT_SUPABASE_LIMIT;
+  }
+
+  return Math.min(Math.max(Math.floor(value), 1), MAX_SUPABASE_LIMIT);
+}
+
+function escapeSupabaseValue(value: string) {
+  return value.replace(/"/g, '\\"').replace(/\*/g, "\\*");
+}
+
+function buildSupabaseRestaurantUrl(
+  config: { url: string },
+  query: RestaurantQuery = {}
+) {
+  const params = new URLSearchParams({
+    select: "payload",
+    order: "inspection_reliability_score.desc,name.asc",
+    limit: String(boundedLimit(query.limit))
+  });
+
+  const textQuery = query.q?.trim();
+  if (textQuery) {
+    const escaped = escapeSupabaseValue(textQuery);
+    params.set(
+      "or",
+      `(name.ilike.*${escaped}*,cuisine.ilike.*${escaped}*,neighborhood.ilike.*${escaped}*,borough.ilike.*${escaped}*)`
+    );
+  }
+
+  if (query.cuisine && query.cuisine !== "all") {
+    params.set("cuisine", `eq.${query.cuisine}`);
+  }
+  if (query.trajectory && query.trajectory !== "all") {
+    params.set("trajectory", `eq.${query.trajectory}`);
+  }
+  if (query.confidence && query.confidence !== "all") {
+    params.set("confidence", `eq.${query.confidence}`);
+  }
+  if (query.recentCriticalOnly) {
+    params.set("recent_critical", "eq.true");
+  }
+
+  return `${config.url}/rest/v1/restaurant_records?${params.toString()}`;
+}
+
+async function fetchSupabaseRestaurants(query: RestaurantQuery = {}) {
+  const config = supabaseConfig();
+  if (!config) {
+    return null;
+  }
+
+  try {
+    const response = await fetch(buildSupabaseRestaurantUrl(config, query), {
+      headers: supabaseHeaders(config),
+      cache: "no-store"
+    });
+
+    if (!response.ok) {
+      return null;
+    }
+
+    const rows = (await response.json()) as Array<{ payload: Restaurant }>;
+    const records = rows.map((row) => row.payload).filter(Boolean);
+
+    return isUsableSeed(records) ? records : null;
+  } catch {
+    return null;
+  }
+}
+
+async function fetchSupabaseRestaurant(id: string) {
+  const config = supabaseConfig();
+  if (!config) {
+    return null;
+  }
+
+  const params = new URLSearchParams({
+    select: "payload",
+    id: `eq.${id}`,
+    limit: "1"
+  });
+
+  try {
+    const response = await fetch(
+      `${config.url}/rest/v1/restaurant_records?${params.toString()}`,
+      {
+        headers: supabaseHeaders(config),
+        cache: "no-store"
+      }
+    );
+
+    if (!response.ok) {
+      return null;
+    }
+
+    const rows = (await response.json()) as Array<{ payload: Restaurant }>;
+    return rows[0]?.payload ?? null;
+  } catch {
+    return null;
+  }
+}
+
+async function fetchSupabaseSummary(): Promise<RestaurantDataSummary | null> {
+  const config = supabaseConfig();
+  if (!config) {
+    return null;
+  }
+
+  const params = new URLSearchParams({
+    select: "id,inspection_count,data_as_of",
+    limit: "1000"
+  });
+
+  try {
+    const response = await fetch(
+      `${config.url}/rest/v1/restaurant_records?${params.toString()}`,
+      {
+        headers: {
+          ...supabaseHeaders(config),
+          Prefer: "count=exact"
+        },
+        cache: "no-store"
+      }
+    );
+
+    if (!response.ok) {
+      return null;
+    }
+
+    const rows = (await response.json()) as Array<{
+      inspection_count?: number;
+      data_as_of?: string | null;
+    }>;
+    if (!rows.length) {
+      return null;
+    }
+
+    const contentRange = response.headers.get("content-range");
+    const count = Number(contentRange?.split("/")?.[1]);
+    const dataAsOfDates = rows
+      .map((row) => row.data_as_of)
+      .filter((date): date is string => Boolean(date))
+      .sort();
+
+    return {
+      source: "Supabase app-ready records generated from NYC DOHMH Restaurant Inspection Results",
+      officialSource: "NYC DOHMH Restaurant Inspection Results",
+      mode: "supabase-app-records",
+      restaurantCount: Number.isFinite(count) ? count : rows.length,
+      inspectionCount: rows.reduce(
+        (total, row) => total + Number(row.inspection_count ?? 0),
+        0
+      ),
+      dataAsOf: dataAsOfDates[dataAsOfDates.length - 1] ?? null,
+      fallbackAvailable: isUsableSeed(restaurants),
+      provenance: {
+        fallbackMode: selectedDataSource.mode,
+        configured: true
+      }
+    };
+  } catch {
+    return null;
+  }
+}
+
+export async function listRestaurantsForApp(query: RestaurantQuery = {}) {
+  const supabaseRestaurants = await fetchSupabaseRestaurants(query);
+  if (supabaseRestaurants) {
+    return supabaseRestaurants;
+  }
+
+  return listRestaurants(query);
+}
+
+export async function getRestaurantForApp(id: string) {
+  return (await fetchSupabaseRestaurant(id)) ?? getRestaurant(id);
+}
+
+export async function getAlternativesForApp(restaurant: Restaurant) {
+  const supabaseAlternatives = await Promise.all(
+    restaurant.alternatives.map((id) => fetchSupabaseRestaurant(id))
+  );
+  const records = supabaseAlternatives.filter(
+    (item): item is Restaurant => Boolean(item)
+  );
+
+  return records.length ? records : getAlternatives(restaurant);
+}
+
+export function getRestaurantDataSummary() {
+  return fallbackRestaurantDataSummary();
+}
+
+export async function getRestaurantDataSummaryForApp() {
+  return (await fetchSupabaseSummary()) ?? fallbackRestaurantDataSummary();
 }

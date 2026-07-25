@@ -12,7 +12,10 @@
     "check": "npm run validate:official && npm run validate:synthetic && npm run lint && npm run build",
     "acceptance": "node scripts/acceptance.mjs",
     "enrich:google:dry-run": "python3 scripts/enrich_google_places.py --dry-run",
-    "enrich:google": "python3 scripts/enrich_google_places.py"
+    "enrich:google": "python3 scripts/enrich_google_places.py",
+    "generate:supabase-seed": "python3 scripts/score_restaurants.py --input data/generated/normalized-inspections.json --output data/generated/supabase-restaurants.json --provenance-output data/generated/supabase-provenance.json --limit 1000 --min-inspections 2",
+    "load:supabase:dry-run": "python3 scripts/load_supabase_restaurants.py --dry-run",
+    "load:supabase": "python3 scripts/load_supabase_restaurants.py"
   },
   "dependencies": {
     "next": "14.2.5",

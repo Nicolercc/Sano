@@ -27,6 +27,10 @@ The repository keeps `synthetic-demo-seed` as a fallback mode for failure
 containment only. The API response shape should remain stable when the backend
 later moves from committed JSON to Supabase.
 
+When Supabase is configured and contains app-ready records, `/api/health` reports
+`mode = supabase-app-records`. If Supabase is unavailable, the app falls back to
+the committed official seed.
+
 ## Health Response
 
 `GET /api/health` should return JSON similar to:

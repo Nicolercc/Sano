@@ -1,13 +1,13 @@
 import RestaurantCard from "@/components/RestaurantCard";
-import { getAlternatives } from "@/lib/server/restaurants";
+import { getAlternativesForApp } from "@/lib/server/restaurants";
 import type { Restaurant } from "@/lib/types";
 
 type AlternativesProps = {
   restaurant: Restaurant;
 };
 
-export default function Alternatives({ restaurant }: AlternativesProps) {
-  const alternatives = getAlternatives(restaurant);
+export default async function Alternatives({ restaurant }: AlternativesProps) {
+  const alternatives = await getAlternativesForApp(restaurant);
 
   if (!alternatives.length) {
     return null;
