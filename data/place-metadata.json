@@ -1,1 +1,106 @@
-[]
+[
+  {
+    "restaurantId": "50169790",
+    "provider": "google-places",
+    "providerPlaceId": "ChIJM1YOz2ZdwokROSBL6qneogk",
+    "displayName": "Lucky Chix",
+    "formattedAddress": "1533 Myrtle Ave, Brooklyn, NY 11237, USA",
+    "rating": 4.9,
+    "reviewCount": 145,
+    "priceLevel": null,
+    "googleMapsUri": "https://maps.google.com/?cid=694362113930108985&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+    "fetchedAt": "2026-07-25T21:10:49.527497+00:00",
+    "matchConfidence": "medium"
+  },
+  {
+    "restaurantId": "50102562",
+    "provider": "google-places",
+    "providerPlaceId": "ChIJx6xFQ1ZZwokR0xSFCo3b3Yk",
+    "displayName": "Grand Morelos",
+    "formattedAddress": "727 Grand St, Brooklyn, NY 11211, USA",
+    "rating": 4.1,
+    "reviewCount": 883,
+    "priceLevel": "$",
+    "googleMapsUri": "https://maps.google.com/?cid=9934337751862547667&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+    "fetchedAt": "2026-07-25T21:10:49.527497+00:00",
+    "matchConfidence": "medium"
+  },
+  {
+    "restaurantId": "41627217",
+    "provider": "google-places",
+    "providerPlaceId": "ChIJaR391AlZwokR2r3H1Cf4gik",
+    "displayName": "Anjappar Indian Cuisine",
+    "formattedAddress": "116 Lexington Ave, New York, NY 10016, USA",
+    "rating": 4.6,
+    "reviewCount": 6336,
+    "priceLevel": "$$",
+    "googleMapsUri": "https://maps.google.com/?cid=2991225952484703706&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+    "fetchedAt": "2026-07-25T21:10:49.527497+00:00",
+    "matchConfidence": "medium"
+  },
+  {
+    "restaurantId": "50131593",
+    "provider": "google-places",
+    "providerPlaceId": "ChIJJU-UWk1ZwokRklDKrZ_9EZE",
+    "displayName": "Raf's",
+    "formattedAddress": "290 Elizabeth St, New York, NY 10012, USA",
+    "rating": 4.1,
+    "reviewCount": 246,
+    "priceLevel": null,
+    "googleMapsUri": "https://maps.google.com/?cid=10453415072360976530&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+    "fetchedAt": "2026-07-25T21:10:49.527497+00:00",
+    "matchConfidence": "medium"
+  },
+  {
+    "restaurantId": "50000233",
+    "provider": "google-places",
+    "providerPlaceId": "ChIJYaVdffBYwokRCwC_C_S-tbs",
+    "displayName": "The Palm Court",
+    "formattedAddress": "768 5th Ave, New York, NY 10019, USA",
+    "rating": 4,
+    "reviewCount": 1085,
+    "priceLevel": "$$$",
+    "googleMapsUri": "https://maps.google.com/?cid=13525927011255517195&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+    "fetchedAt": "2026-07-25T21:10:49.527497+00:00",
+    "matchConfidence": "medium"
+  },
+  {
+    "restaurantId": "41627341",
+    "provider": "google-places",
+    "providerPlaceId": "ChIJka81nqeMwokR48i5-p70Ztw",
+    "displayName": "Subway",
+    "formattedAddress": "3683 Bruckner Blvd Retail B, Bronx, NY 10461, USA",
+    "rating": 2,
+    "reviewCount": 90,
+    "priceLevel": "$",
+    "googleMapsUri": "https://maps.google.com/?cid=15881650099617122531&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+    "fetchedAt": "2026-07-25T21:10:49.527497+00:00",
+    "matchConfidence": "medium"
+  },
+  {
+    "restaurantId": "40510647",
+    "provider": "google-places",
+    "providerPlaceId": "ChIJJYUrvhBhwokRMtECY66zySM",
+    "displayName": "Roti Corner",
+    "formattedAddress": "180-18 Hillside Ave., Jamaica, NY 11432, USA",
+    "rating": 3.7,
+    "reviewCount": 115,
+    "priceLevel": "$",
+    "googleMapsUri": "https://maps.google.com/?cid=2578789823213130034&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+    "fetchedAt": "2026-07-25T21:10:49.527497+00:00",
+    "matchConfidence": "medium"
+  },
+  {
+    "restaurantId": "50142455",
+    "provider": "google-places",
+    "providerPlaceId": "ChIJ0YTct-dhwokRwWqpEZ6IEIU",
+    "displayName": "Cafe 48 & Restaurant",
+    "formattedAddress": "212-09 48th Ave, Bayside, NY 11364, USA",
+    "rating": 4.1,
+    "reviewCount": 222,
+    "priceLevel": "$",
+    "googleMapsUri": "https://maps.google.com/?cid=9588313819154311873&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+    "fetchedAt": "2026-07-25T21:10:49.527497+00:00",
+    "matchConfidence": "medium"
+  }
+]

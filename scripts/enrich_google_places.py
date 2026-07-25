@@ -45,6 +45,26 @@ PRICE_LEVEL_MAP = {
 }
 
 
+def load_local_env(path: Path = Path(".env")) -> None:
+    """Load simple KEY=value entries from .env when they are not exported.
+
+    This keeps `npm run enrich:google` usable for local development without
+    adding a dotenv dependency. Existing environment variables always win.
+    """
+    if not path.exists():
+        return
+
+    for line in path.read_text(encoding="utf-8").splitlines():
+        stripped = line.strip()
+        if not stripped or stripped.startswith("#") or "=" not in stripped:
+            continue
+        key, value = stripped.split("=", 1)
+        key = key.strip()
+        value = value.strip().strip('"').strip("'")
+        if key and key not in os.environ:
+            os.environ[key] = value
+
+
 def load_restaurants(path: Path) -> list[dict[str, Any]]:
     return json.loads(path.read_text(encoding="utf-8"))
 
@@ -182,6 +202,8 @@ def enrich(
 
 
 def main() -> int:
+    load_local_env()
+
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument(
         "--input",
