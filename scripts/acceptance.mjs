@@ -89,17 +89,21 @@ async function main() {
     "/api/restaurants payload shape is invalid"
   );
   assert(
-    restaurantPayload.restaurants.every(
-      (restaurant) =>
-        restaurant.metadataAvailability?.popularity === false &&
-        restaurant.metadataAvailability?.price === false &&
-        restaurant.metadataAvailability?.trustGap === false &&
-        restaurant.rating === null &&
-        restaurant.reviewCount === null &&
-        restaurant.priceLevel === null &&
-        restaurant.trustGap === null
-    ),
-    "/api/restaurants exposes unavailable official metadata as if it were sourced"
+    restaurantPayload.restaurants.every((restaurant) => {
+      const availability = restaurant.metadataAvailability;
+      const popularityIsConsistent = availability?.popularity
+        ? restaurant.rating !== null && restaurant.reviewCount !== null
+        : restaurant.rating === null && restaurant.reviewCount === null;
+      const priceIsConsistent = availability?.price
+        ? restaurant.priceLevel !== null
+        : restaurant.priceLevel === null;
+      const trustGapIsConsistent = availability?.trustGap
+        ? restaurant.trustGap !== null
+        : restaurant.trustGap === null;
+
+      return popularityIsConsistent && priceIsConsistent && trustGapIsConsistent;
+    }),
+    "/api/restaurants metadata availability flags do not match exposed values"
   );
 
   const showcase = chooseShowcaseRestaurant(restaurantPayload.restaurants);

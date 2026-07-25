@@ -48,6 +48,8 @@ The MVP is a polished demo of the core Sano experience:
 - Methodology and limitations page
 - Clearly disclosed curated official seed generated from NYC DOHMH inspection
   records, with synthetic fallback for failure containment
+- Google Places-ready enrichment layer for sourced rating and review-count
+  metadata when an API key and reviewed matches are available
 
 ## What We Are Not Building This Week
 

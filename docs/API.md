@@ -48,8 +48,8 @@ later moves from committed JSON to Supabase.
 
 Official NYC DOHMH inspection records do not include consumer ratings, review
 counts, price level, or popularity-derived trust gap. In
-`official-generated-seed` mode, the public API returns those unavailable fields
-as `null` and exposes explicit availability flags:
+`official-generated-seed` mode, the public API returns unavailable fields as
+`null` and exposes explicit availability flags:
 
 ```json
 {
@@ -67,6 +67,10 @@ as `null` and exposes explicit availability flags:
 
 This keeps the public API honest while the internal UI model remains stable for
 the current demo.
+
+When `data/place-metadata.json` contains a reviewed Google Places match for a
+restaurant, the API can return sourced rating, review count, and price metadata
+for that restaurant while leaving unmatched restaurants as `null`.
 
 ## Demo Contract
 

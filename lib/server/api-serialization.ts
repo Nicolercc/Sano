@@ -38,13 +38,26 @@ export function serializeRestaurantForApi(
   restaurant: Restaurant
 ): PublicRestaurant {
   if (getRestaurantDataMode() === "official-generated-seed") {
+    const hasPopularity = Boolean(
+      restaurant.placeMetadata &&
+        restaurant.rating > 0 &&
+        restaurant.reviewCount > 0
+    );
+    const hasPrice = Boolean(restaurant.placeMetadata?.priceLevel);
+    const hasTrustGap = restaurant.trustGap !== 0;
+
     return {
       ...restaurant,
-      rating: null,
-      reviewCount: null,
-      priceLevel: null,
-      trustGap: null,
-      metadataAvailability: officialModeMetadataAvailability()
+      rating: hasPopularity ? restaurant.rating : null,
+      reviewCount: hasPopularity ? restaurant.reviewCount : null,
+      priceLevel: hasPrice ? restaurant.priceLevel : null,
+      trustGap: hasTrustGap ? restaurant.trustGap : null,
+      metadataAvailability: {
+        ...officialModeMetadataAvailability(),
+        popularity: hasPopularity,
+        price: hasPrice,
+        trustGap: hasTrustGap
+      }
     };
   }
 

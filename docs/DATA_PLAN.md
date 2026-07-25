@@ -116,7 +116,46 @@ Responsibilities:
 
 Status: complete.
 
-### Phase 5: Supabase
+### Phase 5: Place Metadata Enrichment
+
+Use Google Places as the first enrichment provider for consumer popularity
+metadata.
+
+Why Google first:
+
+- It can provide rating, user rating count, price level, Google Maps URL, and a
+  small bounded set of review data for matched places.
+- It matches the user expectation that restaurant discovery commonly includes
+  Google review context.
+- It is cleaner for this product than scraping and safer than inventing
+  metadata.
+
+Implementation:
+
+- `data/place-metadata.json` stores reviewed enrichment records keyed by Sano
+  restaurant ID.
+- `scripts/enrich_google_places.py` prepares metadata using the Places API when
+  `GOOGLE_PLACES_API_KEY` is available.
+- The repository layer merges metadata into official records.
+- The public API exposes metadata availability flags so unmatched restaurants
+  remain honest.
+
+Run:
+
+```bash
+npm run enrich:google:dry-run
+GOOGLE_PLACES_API_KEY=... npm run enrich:google
+npm run check
+```
+
+Status: scaffolded. Requires a Google Places API key before real metadata can
+be generated.
+
+Yelp remains a viable later provider for rating, review count, price, and up to
+three review excerpts, but it should be added only after provider attribution
+and matching rules are reviewed.
+
+### Phase 6: Supabase
 
 If time allows, load app-ready records or normalized records into Supabase.
 

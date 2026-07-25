@@ -11,6 +11,23 @@ export type SanoLabel =
   | "Recent critical flag"
   | "Limited data";
 
+export type MetadataProvider = "google-places" | "yelp-fusion";
+
+export type PlaceMetadata = {
+  restaurantId: string;
+  provider: MetadataProvider;
+  providerPlaceId: string;
+  displayName: string;
+  formattedAddress: string;
+  rating: number | null;
+  reviewCount: number | null;
+  priceLevel: "$" | "$$" | "$$$" | null;
+  googleMapsUri?: string;
+  yelpUrl?: string;
+  fetchedAt: string;
+  matchConfidence: "high" | "medium" | "low";
+};
+
 export type Inspection = {
   id: string;
   date: string;
@@ -45,6 +62,7 @@ export type Restaurant = {
   inspections: Inspection[];
   alternatives: string[];
   sourceNotes: string;
+  placeMetadata?: PlaceMetadata;
 };
 
 export type RestaurantFilters = {

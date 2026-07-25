@@ -16,6 +16,7 @@ export default function SanoScorePanel({ restaurant }: SanoScorePanelProps) {
     restaurant.rating,
     restaurant.reviewCount
   );
+  const hasTrustGap = restaurant.trustGap !== 0;
 
   return (
     <section className="rounded-lg border border-ink/10 bg-white p-5 shadow-sm">
@@ -61,7 +62,7 @@ export default function SanoScorePanel({ restaurant }: SanoScorePanelProps) {
             Trust gap
           </p>
           <p className="mt-1 text-sm font-bold text-ink">
-            {hasPopularity ? formatTrustGap(restaurant.trustGap) : "Unavailable"}
+            {hasTrustGap ? formatTrustGap(restaurant.trustGap) : "Unavailable"}
           </p>
         </div>
       </div>
@@ -70,8 +71,10 @@ export default function SanoScorePanel({ restaurant }: SanoScorePanelProps) {
       <p className="mt-3 text-xs leading-5 text-ink/50">
         Scores summarize public inspection records for comparison. They do not replace
         official grades, current conditions, or professional judgment.
-        {!hasPopularity
-          ? " Trust gap is unavailable because the official inspection source does not include public rating or review metadata."
+        {!hasTrustGap
+          ? hasPopularity
+            ? " Trust gap is unavailable until popularity metadata is scored against the inspection cohort."
+            : " Trust gap is unavailable because the official inspection source does not include public rating or review metadata."
           : null}
       </p>
     </section>

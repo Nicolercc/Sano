@@ -33,7 +33,8 @@ Sano does not claim:
    - Sano-derived trajectory, confidence, and reliability context.
 5. Point to unavailable public rating, review, and trust-gap fields:
    “The official inspection source does not include popularity metadata, so Sano
-   does not invent it.”
+   does not invent it. Google Places enrichment is the planned provider for
+   sourced ratings and review counts.”
 6. Open Methodology and call out limitations:
    curated offline extract, not live sync, not comprehensive coverage, not an
    official NYC rating, no safety or illness prediction.

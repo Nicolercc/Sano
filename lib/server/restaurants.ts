@@ -1,8 +1,14 @@
 import officialProvenance from "@/data/official-provenance.json";
 import officialRestaurants from "@/data/official-restaurants.json";
+import placeMetadata from "@/data/place-metadata.json";
 import sampleRestaurants from "@/data/sample-restaurants.json";
 import { hasRecentCriticalFlag } from "@/lib/scoring";
-import type { ConfidenceLevel, Restaurant, Trajectory } from "@/lib/types";
+import type {
+  ConfidenceLevel,
+  PlaceMetadata,
+  Restaurant,
+  Trajectory
+} from "@/lib/types";
 
 type DataMode = "official-generated-seed" | "synthetic-demo-seed";
 
@@ -17,6 +23,30 @@ type RestaurantDataSource = {
 
 const syntheticRestaurants = sampleRestaurants as Restaurant[];
 const generatedOfficialRestaurants = officialRestaurants as Restaurant[];
+const generatedPlaceMetadata = placeMetadata as PlaceMetadata[];
+
+function withPlaceMetadata(records: Restaurant[]) {
+  const metadataByRestaurantId = new Map(
+    generatedPlaceMetadata.map((metadata) => [metadata.restaurantId, metadata])
+  );
+
+  return records.map((restaurant) => {
+    const metadata = metadataByRestaurantId.get(restaurant.id);
+
+    if (!metadata) {
+      return restaurant;
+    }
+
+    return {
+      ...restaurant,
+      rating: metadata.rating ?? 0,
+      reviewCount: metadata.reviewCount ?? 0,
+      priceLevel: metadata.priceLevel ?? restaurant.priceLevel,
+      placeMetadata: metadata,
+      sourceNotes: `${restaurant.sourceNotes} Popularity metadata enriched from ${metadata.provider}.`
+    };
+  });
+}
 
 function isUsableSeed(records: Restaurant[]) {
   return (
@@ -32,7 +62,7 @@ function selectRestaurantDataSource(): RestaurantDataSource {
       mode: "official-generated-seed",
       source: "Curated offline extract generated from NYC DOHMH Restaurant Inspection Results",
       officialSource: "NYC DOHMH Restaurant Inspection Results",
-      restaurants: generatedOfficialRestaurants,
+      restaurants: withPlaceMetadata(generatedOfficialRestaurants),
       fallbackAvailable: isUsableSeed(syntheticRestaurants),
       provenance: officialProvenance
     };
