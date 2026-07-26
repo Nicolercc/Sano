@@ -68,6 +68,7 @@ def build_search_text(record: dict[str, Any]) -> str:
         record.get("cuisine"),
         record.get("neighborhood"),
         record.get("borough"),
+        record.get("zipcode"),
         record.get("address"),
     ]
     return " ".join(str(part).strip() for part in parts if part)

@@ -66,8 +66,8 @@ function withPlaceMetadata(records: Restaurant[]) {
 
     return {
       ...restaurant,
-      rating: metadata.rating ?? 0,
-      reviewCount: metadata.reviewCount ?? 0,
+      rating: metadata.rating ?? null,
+      reviewCount: metadata.reviewCount ?? null,
       priceLevel: metadata.priceLevel ?? restaurant.priceLevel,
       placeMetadata: metadata,
       sourceNotes: `${restaurant.sourceNotes} Popularity metadata enriched from ${metadata.provider}.`
@@ -127,7 +127,14 @@ export function listRestaurants(query: RestaurantQuery = {}) {
   return restaurants.filter((restaurant) => {
     const matchesQuery =
       !textQuery ||
-      [restaurant.name, restaurant.cuisine, restaurant.neighborhood, restaurant.borough]
+      [
+        restaurant.name,
+        restaurant.cuisine,
+        restaurant.neighborhood,
+        restaurant.borough,
+        restaurant.zipcode,
+        restaurant.address
+      ]
         .join(" ")
         .toLowerCase()
         .includes(textQuery);
@@ -262,7 +269,7 @@ function buildSupabaseRestaurantUrl(
     const escaped = escapeSupabaseValue(textQuery);
     params.set(
       "or",
-      `(name.ilike.*${escaped}*,cuisine.ilike.*${escaped}*,neighborhood.ilike.*${escaped}*,borough.ilike.*${escaped}*)`
+      `(name.ilike.*${escaped}*,cuisine.ilike.*${escaped}*,neighborhood.ilike.*${escaped}*,borough.ilike.*${escaped}*,search_text.ilike.*${escaped}*)`
     );
   }
 
@@ -280,6 +287,16 @@ function buildSupabaseRestaurantUrl(
   }
 
   return `${config.url}/rest/v1/restaurant_records?${params.toString()}`;
+}
+
+function hasScopedRestaurantQuery(query: RestaurantQuery = {}) {
+  return Boolean(
+    query.q?.trim() ||
+      (query.cuisine && query.cuisine !== "all") ||
+      (query.trajectory && query.trajectory !== "all") ||
+      (query.confidence && query.confidence !== "all") ||
+      query.recentCriticalOnly
+  );
 }
 
 async function fetchSupabaseRestaurants(query: RestaurantQuery = {}) {
@@ -300,6 +317,9 @@ async function fetchSupabaseRestaurants(query: RestaurantQuery = {}) {
 
     const rows = (await response.json()) as Array<{ payload: Restaurant }>;
     const records = rows.map((row) => row.payload).filter(Boolean);
+    if (!records.length) {
+      return hasScopedRestaurantQuery(query) ? [] : null;
+    }
 
     return isUsableSeed(records) ? sortRestaurantsForDefaultView(records) : null;
   } catch {

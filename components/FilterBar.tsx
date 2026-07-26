@@ -59,7 +59,7 @@ export default function FilterBar({
           onChange={(event) =>
             onChange({ ...filters, query: event.target.value })
           }
-          placeholder="Name, cuisine, or neighborhood"
+          placeholder="Name, cuisine, borough, or ZIP"
           className="min-h-9 w-full rounded-md border border-ink/10 bg-white px-3 text-sm font-medium text-ink outline-none transition placeholder:text-ink/40 focus:border-moss"
         />
       </label>

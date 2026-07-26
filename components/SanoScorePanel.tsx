@@ -65,7 +65,7 @@ export default function SanoScorePanel({ restaurant }: SanoScorePanelProps) {
           <p className="mt-1 text-sm font-bold text-ink">
             {hasTrustGap && restaurant.trustGap !== null
               ? formatTrustGap(restaurant.trustGap)
-              : "Unavailable"}
+              : "Not matched yet"}
           </p>
         </div>
       </div>
@@ -76,8 +76,8 @@ export default function SanoScorePanel({ restaurant }: SanoScorePanelProps) {
         official grades, current conditions, or professional judgment.
         {!hasTrustGap
           ? hasPopularity
-            ? " Trust gap is unavailable until popularity metadata is scored against the inspection cohort."
-            : " Trust gap is unavailable because the official inspection source does not include public rating or review metadata."
+            ? " Trust gap stays pending until popularity metadata is scored against the inspection cohort."
+            : " Trust gap stays pending when public rating or review data has not been matched yet."
           : null}
       </p>
     </section>

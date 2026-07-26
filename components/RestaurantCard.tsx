@@ -164,6 +164,7 @@ export default function RestaurantCard({
             <span className="hidden text-ink/30 sm:inline"> · </span>
             <span className="block sm:inline">
               {restaurant.neighborhood}
+              {restaurant.zipcode ? ` ${restaurant.zipcode}` : ""}
               {hasPopularity ? (
                 <>
                   <span className="text-ink/30"> · </span>

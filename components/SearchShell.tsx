@@ -1,15 +1,20 @@
 "use client";
 
 import Link from "next/link";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import FilterBar, { hasActiveFilters } from "@/components/FilterBar";
 import MapResults from "@/components/MapResults";
 import RestaurantCard from "@/components/RestaurantCard";
-import { hasRecentCriticalFlag } from "@/lib/scoring";
 import type { Restaurant, RestaurantFilters } from "@/lib/types";
 
 type SearchShellProps = {
   restaurants: Restaurant[];
+  dataSummary: {
+    mode: string;
+    restaurantCount: number;
+    inspectionCount: number;
+    dataAsOf: string | null;
+  };
 };
 
 const defaultFilters: RestaurantFilters = {
@@ -19,6 +24,10 @@ const defaultFilters: RestaurantFilters = {
   confidence: "all",
   recentCriticalOnly: false
 };
+
+const INITIAL_VISIBLE_COUNT = 12;
+const VISIBLE_INCREMENT = 12;
+const API_RESULT_LIMIT = 80;
 
 function activeFilterSummary(filters: RestaurantFilters) {
   const parts: string[] = [];
@@ -42,8 +51,15 @@ function activeFilterSummary(filters: RestaurantFilters) {
   return parts;
 }
 
-export default function SearchShell({ restaurants }: SearchShellProps) {
+export default function SearchShell({
+  restaurants,
+  dataSummary
+}: SearchShellProps) {
   const [filters, setFilters] = useState(defaultFilters);
+  const [results, setResults] = useState(restaurants);
+  const [visibleCount, setVisibleCount] = useState(INITIAL_VISIBLE_COUNT);
+  const [loading, setLoading] = useState(false);
+  const [loadError, setLoadError] = useState(false);
   const [selectedRestaurant, setSelectedRestaurant] = useState<Restaurant | null>(
     restaurants[0] ?? null
   );
@@ -53,62 +69,133 @@ export default function SearchShell({ restaurants }: SearchShellProps) {
     [restaurants]
   );
 
-  const filteredRestaurants = useMemo(() => {
-    const query = filters.query.trim().toLowerCase();
-
-    return restaurants.filter((restaurant) => {
-      const matchesQuery =
-        !query ||
-        [restaurant.name, restaurant.cuisine, restaurant.neighborhood, restaurant.borough]
-          .join(" ")
-          .toLowerCase()
-          .includes(query);
-      const matchesCuisine =
-        filters.cuisine === "all" || restaurant.cuisine === filters.cuisine;
-      const matchesTrajectory =
-        filters.trajectory === "all" ||
-        restaurant.trajectory === filters.trajectory;
-      const matchesConfidence =
-        filters.confidence === "all" ||
-        restaurant.confidence === filters.confidence;
-      const matchesCritical =
-        !filters.recentCriticalOnly || hasRecentCriticalFlag(restaurant);
-
-      return (
-        matchesQuery &&
-        matchesCuisine &&
-        matchesTrajectory &&
-        matchesConfidence &&
-        matchesCritical
-      );
+  useEffect(() => {
+    const controller = new AbortController();
+    const params = new URLSearchParams({
+      limit: String(API_RESULT_LIMIT)
     });
-  }, [filters, restaurants]);
+
+    if (filters.query.trim()) {
+      params.set("q", filters.query.trim());
+    }
+    if (filters.cuisine !== "all") {
+      params.set("cuisine", filters.cuisine);
+    }
+    if (filters.trajectory !== "all") {
+      params.set("trajectory", filters.trajectory);
+    }
+    if (filters.confidence !== "all") {
+      params.set("confidence", filters.confidence);
+    }
+    if (filters.recentCriticalOnly) {
+      params.set("recentCriticalOnly", "true");
+    }
+
+    setLoading(true);
+    setLoadError(false);
+    setVisibleCount(INITIAL_VISIBLE_COUNT);
+
+    fetch(`/api/restaurants?${params.toString()}`, {
+      headers: { accept: "application/json" },
+      signal: controller.signal
+    })
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error(`Restaurant search failed: ${response.status}`);
+        }
+        return response.json();
+      })
+      .then((payload: { restaurants?: Restaurant[] }) => {
+        const nextResults = Array.isArray(payload.restaurants)
+          ? payload.restaurants
+          : [];
+        setResults(nextResults);
+        setSelectedRestaurant((current) => {
+          if (nextResults.some((restaurant) => restaurant.id === current?.id)) {
+            return current;
+          }
+          return nextResults[0] ?? null;
+        });
+      })
+      .catch((error) => {
+        if (error.name !== "AbortError") {
+          setLoadError(true);
+          setResults([]);
+          setSelectedRestaurant(null);
+        }
+      })
+      .finally(() => {
+        if (!controller.signal.aborted) {
+          setLoading(false);
+        }
+      });
+
+    return () => controller.abort();
+  }, [filters]);
 
   const selectedInResults =
-    filteredRestaurants.find((restaurant) => restaurant.id === selectedRestaurant?.id) ??
-    filteredRestaurants[0] ??
+    results.find((restaurant) => restaurant.id === selectedRestaurant?.id) ??
+    results[0] ??
     null;
 
   const filtersActive = hasActiveFilters(filters);
   const filterParts = activeFilterSummary(filters);
+  const visibleRestaurants = results.slice(0, visibleCount);
+  const hiddenResultCount = Math.max(results.length - visibleRestaurants.length, 0);
+  const zipSearchActive = /^\d{5}$/.test(filters.query.trim());
 
-  const clearFilters = () => setFilters(defaultFilters);
+  const clearFilters = () => {
+    setFilters(defaultFilters);
+    setVisibleCount(INITIAL_VISIBLE_COUNT);
+  };
 
   return (
     <main className="min-h-screen bg-oat text-ink">
       <div className="mx-auto flex w-full max-w-7xl flex-col gap-5 px-4 py-6 sm:px-6 lg:px-8 lg:py-10">
-        <nav className="flex flex-wrap items-start justify-between gap-4">
-          <div>
+        <nav className="flex flex-wrap items-start justify-between gap-4 rounded-2xl border border-ink/10 bg-white p-5 shadow-sm sm:p-7">
+          <div className="max-w-3xl">
             <Link
               href="/"
               className="font-serif text-[2.45rem] font-black leading-none tracking-normal text-ink sm:text-5xl"
             >
               Sano
             </Link>
-            <p className="mt-2 max-w-xl text-sm leading-6 text-ink/65">
-              A restaurant&apos;s inspection history, with popularity shown only
-              when available.
+            <p className="mt-3 text-2xl font-black leading-tight text-ink sm:text-4xl">
+              Find NYC restaurants by inspection history — not vibes alone.
             </p>
+            <p className="mt-3 max-w-2xl text-sm leading-6 text-ink/65 sm:text-base">
+              Sano turns public NYC DOHMH inspection records into a searchable
+              discovery layer. Search by restaurant, cuisine, borough, or ZIP code;
+              popularity appears only when we have a matched public source.
+            </p>
+            <div className="mt-5 grid gap-2 text-sm sm:grid-cols-3">
+              <div className="rounded-lg bg-oat px-4 py-3">
+                <p className="text-xs font-bold uppercase tracking-wide text-ink/45">
+                  Live data mode
+                </p>
+                <p className="mt-1 font-black text-ink">
+                  {dataSummary.mode === "supabase-app-records"
+                    ? "Supabase"
+                    : "Official fallback"}
+                </p>
+              </div>
+              <div className="rounded-lg bg-oat px-4 py-3">
+                <p className="text-xs font-bold uppercase tracking-wide text-ink/45">
+                  Restaurants
+                </p>
+                <p className="mt-1 font-black text-ink">
+                  {dataSummary.restaurantCount.toLocaleString()}
+                </p>
+              </div>
+              <div className="rounded-lg bg-oat px-4 py-3">
+                <p className="text-xs font-bold uppercase tracking-wide text-ink/45">
+                  Inspections
+                </p>
+                <p className="mt-1 font-black text-ink">
+                  {dataSummary.inspectionCount.toLocaleString()}
+                </p>
+              </div>
+            </div>
           </div>
           <Link
             href="/methodology"
@@ -121,13 +208,13 @@ export default function SearchShell({ restaurants }: SearchShellProps) {
         <FilterBar
           filters={filters}
           cuisines={cuisines}
-          resultCount={filteredRestaurants.length}
+          resultCount={results.length}
           onChange={setFilters}
           onClear={clearFilters}
         />
 
         <MapResults
-          restaurants={filteredRestaurants}
+          restaurants={results}
           selectedRestaurant={selectedInResults}
           onSelect={setSelectedRestaurant}
         />
@@ -136,21 +223,31 @@ export default function SearchShell({ restaurants }: SearchShellProps) {
           <div className="flex flex-wrap items-end justify-between gap-3">
             <div>
               <h1 className="text-xl font-bold text-ink">
-                Restaurants in this demo extract
+                Search results
               </h1>
               <p className="mt-1 text-sm text-ink/55">
-                Inspection history context shown next to available public grade fields.
+                Showing a focused slice first. Use search or filters to narrow the
+                full Supabase-backed dataset.
               </p>
             </div>
             <span className="text-sm font-semibold text-ink/55">
-              {filteredRestaurants.length}{" "}
-              {filteredRestaurants.length === 1 ? "match" : "matches"}
+              {loading ? "Searching…" : `${results.length} shown`}
             </span>
           </div>
 
-          {filteredRestaurants.length ? (
+          {loadError ? (
+            <div className="rounded-lg border border-coral/30 bg-white p-8 shadow-sm">
+              <p className="text-lg font-bold text-ink">
+                Restaurant data is temporarily unavailable
+              </p>
+              <p className="mt-2 max-w-lg text-sm leading-6 text-ink/65">
+                The search API did not respond cleanly. Please try again or clear
+                filters.
+              </p>
+            </div>
+          ) : results.length ? (
             <div className="flex flex-col gap-3">
-              {filteredRestaurants.map((restaurant) => (
+              {visibleRestaurants.map((restaurant) => (
                 <RestaurantCard
                   key={restaurant.id}
                   restaurant={restaurant}
@@ -158,16 +255,27 @@ export default function SearchShell({ restaurants }: SearchShellProps) {
                   onSelect={setSelectedRestaurant}
                 />
               ))}
+              {hiddenResultCount > 0 ? (
+                <button
+                  type="button"
+                  onClick={() =>
+                    setVisibleCount((current) => current + VISIBLE_INCREMENT)
+                  }
+                  className="mx-auto mt-2 inline-flex min-h-11 items-center rounded-md border border-ink/15 bg-white px-5 text-sm font-bold text-ink shadow-sm transition hover:border-moss/40 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-moss"
+                >
+                  Show {Math.min(VISIBLE_INCREMENT, hiddenResultCount)} more
+                </button>
+              ) : null}
             </div>
           ) : (
             <div className="rounded-lg border border-ink/10 bg-white p-8 shadow-sm">
               <p className="text-lg font-bold text-ink">
-                No restaurants match right now
+                No restaurants match this search
               </p>
               <p className="mt-2 max-w-lg text-sm leading-6 text-ink/65">
                 {filtersActive ? (
                   <>
-                    Nothing in this demo set fits your current filters
+                    Nothing in the current Supabase-backed extract fits
                     {filterParts.length ? (
                       <>
                         :{" "}
@@ -176,8 +284,9 @@ export default function SearchShell({ restaurants }: SearchShellProps) {
                         </span>
                       </>
                     ) : null}
-                    . Widen a setting above, or clear filters to see all
-                    restaurants in this demo extract again.
+                    . {zipSearchActive
+                      ? "This ZIP may not be represented in the current curated 1,000-record load yet. Try a nearby ZIP, borough, cuisine, or clear filters."
+                      : "Try a ZIP code, borough, cuisine, or clear filters."}
                   </>
                 ) : (
                   <>

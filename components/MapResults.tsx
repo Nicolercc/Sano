@@ -8,112 +8,176 @@ type MapResultsProps = {
   onSelect: (restaurant: Restaurant) => void;
 };
 
+function topCounts(values: string[], limit = 5) {
+  const counts = new Map<string, number>();
+  for (const value of values) {
+    const normalized = value.trim();
+    if (!normalized) {
+      continue;
+    }
+    counts.set(normalized, (counts.get(normalized) ?? 0) + 1);
+  }
+
+  return Array.from(counts.entries())
+    .sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0]))
+    .slice(0, limit);
+}
+
 export default function MapResults({
   restaurants,
   selectedRestaurant,
   onSelect
 }: MapResultsProps) {
-  const mapRestaurants = restaurants.length
-    ? restaurants
-    : selectedRestaurant
-      ? [selectedRestaurant]
-      : [];
-  const lats = mapRestaurants.length
-    ? mapRestaurants.map((restaurant) => restaurant.latitude)
-    : [40.7128];
-  const lngs = mapRestaurants.length
-    ? mapRestaurants.map((restaurant) => restaurant.longitude)
-    : [-74.006];
-  const minLat = Math.min(...lats) - 0.01;
-  const maxLat = Math.max(...lats) + 0.01;
-  const minLng = Math.min(...lngs) - 0.01;
-  const maxLng = Math.max(...lngs) + 0.01;
-
-  function position(restaurant: Restaurant) {
-    const x = ((restaurant.longitude - minLng) / (maxLng - minLng || 1)) * 100;
-    const y = 100 - ((restaurant.latitude - minLat) / (maxLat - minLat || 1)) * 100;
-    return { x, y };
-  }
+  const boroughs = topCounts(restaurants.map((restaurant) => restaurant.borough));
+  const zipcodes = topCounts(
+    restaurants
+      .map((restaurant) => restaurant.zipcode ?? "")
+      .filter(Boolean),
+    6
+  );
+  const strongest = restaurants.slice(0, 4);
 
   return (
-    <section className="relative overflow-hidden rounded-lg border border-ink/10 bg-[#e7efe8] shadow-sm">
-      <div className="absolute left-4 top-3 z-10 rounded-full bg-white/80 px-3 py-1 text-[11px] font-semibold text-ink/55 shadow-sm">
-        Official record coordinates where available
-      </div>
+    <section className="grid gap-4 rounded-2xl border border-ink/10 bg-white p-4 shadow-sm lg:grid-cols-[minmax(0,1fr)_22rem]">
+      <div className="min-w-0">
+        <div className="flex flex-wrap items-start justify-between gap-3">
+          <div>
+            <p className="text-xs font-bold uppercase tracking-wide text-moss">
+              Coverage snapshot
+            </p>
+            <h2 className="mt-1 text-xl font-black text-ink">
+              Search the real inspection-backed dataset
+            </h2>
+            <p className="mt-2 max-w-2xl text-sm leading-6 text-ink/60">
+              This is not a fake map. Sano is currently optimized for searchable
+              official records: restaurant name, cuisine, borough, address, and
+              ZIP code where DOHMH provides it.
+            </p>
+          </div>
+          <span className="rounded-full bg-oat px-3 py-1.5 text-xs font-black text-ink/65">
+            {restaurants.length} loaded results
+          </span>
+        </div>
 
-      <div className="relative min-h-[13rem] sm:min-h-[11rem]">
-        <svg
-          viewBox="0 0 800 190"
-          preserveAspectRatio="none"
-          className="absolute inset-0 h-full w-full"
-          aria-hidden="true"
-        >
-          <rect width="800" height="190" fill="#e7efe8" />
-          <path
-            d="M34 158 C126 122 142 58 254 42 C360 26 478 32 620 54 C574 84 560 119 612 154 C490 142 399 152 312 174 C202 171 118 164 34 158Z"
-            fill="#f6f2ea"
-            stroke="#486b55"
-            strokeOpacity="0.22"
-            strokeWidth="2"
-          />
-          <path
-            d="M74 150 C155 126 214 99 286 62 C358 25 450 44 556 80 C604 96 654 104 736 95"
-            fill="none"
-            stroke="#486b55"
-            strokeOpacity="0.18"
-            strokeWidth="16"
-            strokeLinecap="round"
-          />
-          <path
-            d="M116 75 L706 132 M188 151 L622 54 M278 39 C316 86 316 123 282 171"
-            fill="none"
-            stroke="#17201b"
-            strokeOpacity="0.07"
-            strokeWidth="2"
-          />
-        </svg>
-
-        {mapRestaurants.map((restaurant) => {
-          const { x, y } = position(restaurant);
-          const selected = selectedRestaurant?.id === restaurant.id;
-
-          return (
-            <button
-              key={restaurant.id}
-              type="button"
-              onClick={() => onSelect(restaurant)}
-              className={`absolute z-10 flex h-8 w-8 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full border-2 text-[11px] font-black shadow-soft transition hover:scale-105 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-moss ${
-                selected
-                  ? "border-ink bg-coral text-white"
-                  : "border-white bg-moss text-white"
-              }`}
-              style={{ left: `${x}%`, top: `${y}%` }}
-              aria-label={`Select ${restaurant.name}`}
-              title={restaurant.name}
-            >
-              {restaurant.grade}
-            </button>
-          );
-        })}
-      </div>
-
-      {selectedRestaurant ? (
-        <div className="border-t border-ink/10 bg-white px-4 py-3 sm:absolute sm:bottom-3 sm:right-3 sm:z-10 sm:w-[min(24rem,calc(100%-1.5rem))] sm:rounded-lg sm:border sm:bg-white/95 sm:shadow-sm">
-          <div className="flex items-start justify-between gap-3">
-            <div className="min-w-0">
-              <p className="truncate text-sm font-bold text-ink">
-                {selectedRestaurant.name}
-              </p>
-              <p className="mt-0.5 truncate text-xs text-ink/60">
-                {selectedRestaurant.address}, {selectedRestaurant.borough}
-              </p>
+        <div className="mt-4 grid gap-3 sm:grid-cols-2">
+          <div className="rounded-xl bg-oat p-4">
+            <p className="text-xs font-bold uppercase tracking-wide text-ink/45">
+              Borough mix
+            </p>
+            <div className="mt-3 flex flex-wrap gap-2">
+              {boroughs.length ? (
+                boroughs.map(([borough, count]) => (
+                  <span
+                    key={borough}
+                    className="rounded-full bg-white px-3 py-1.5 text-xs font-bold text-ink shadow-sm"
+                  >
+                    {borough} · {count}
+                  </span>
+                ))
+              ) : (
+                <span className="text-sm font-semibold text-ink/50">
+                  No boroughs in this result set
+                </span>
+              )}
             </div>
-            <span className="shrink-0 rounded-full bg-oat px-2.5 py-1 text-xs font-black text-ink">
-              {restaurants.length} {restaurants.length === 1 ? "result" : "results"}
-            </span>
+          </div>
+
+          <div className="rounded-xl bg-oat p-4">
+            <p className="text-xs font-bold uppercase tracking-wide text-ink/45">
+              ZIPs represented
+            </p>
+            <div className="mt-3 flex flex-wrap gap-2">
+              {zipcodes.length ? (
+                zipcodes.map(([zipcode, count]) => (
+                  <button
+                    key={zipcode}
+                    type="button"
+                    onClick={() => {
+                      const restaurant = restaurants.find(
+                        (item) => item.zipcode === zipcode
+                      );
+                      if (restaurant) {
+                        onSelect(restaurant);
+                      }
+                    }}
+                    className="rounded-full bg-white px-3 py-1.5 text-xs font-bold text-ink shadow-sm transition hover:bg-moss hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-moss"
+                  >
+                    {zipcode} · {count}
+                  </button>
+                ))
+              ) : (
+                <span className="text-sm font-semibold text-ink/50">
+                  ZIP metadata pending for this slice
+                </span>
+              )}
+            </div>
           </div>
         </div>
-      ) : null}
+
+        {strongest.length ? (
+          <div className="mt-4 flex flex-wrap gap-2">
+            {strongest.map((restaurant) => (
+              <button
+                key={restaurant.id}
+                type="button"
+                onClick={() => onSelect(restaurant)}
+                className={`rounded-full border px-3 py-1.5 text-xs font-bold transition focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-moss ${
+                  selectedRestaurant?.id === restaurant.id
+                    ? "border-ink bg-ink text-white"
+                    : "border-ink/10 bg-white text-ink hover:border-moss/40"
+                }`}
+              >
+                {restaurant.name}
+              </button>
+            ))}
+          </div>
+        ) : null}
+      </div>
+
+      <aside className="rounded-xl border border-ink/10 bg-oat p-4">
+        <p className="text-xs font-bold uppercase tracking-wide text-ink/45">
+          Selected restaurant
+        </p>
+        {selectedRestaurant ? (
+          <div className="mt-3">
+            <p className="text-lg font-black leading-tight text-ink">
+              {selectedRestaurant.name}
+            </p>
+            <p className="mt-2 text-sm leading-5 text-ink/60">
+              {selectedRestaurant.address}, {selectedRestaurant.borough}
+              {selectedRestaurant.zipcode ? ` ${selectedRestaurant.zipcode}` : ""}
+            </p>
+            <div className="mt-4 grid grid-cols-3 gap-2 text-center">
+              <div className="rounded-lg bg-white p-3">
+                <p className="text-[10px] font-bold uppercase tracking-wide text-ink/45">
+                  Grade
+                </p>
+                <p className="mt-1 font-black text-ink">{selectedRestaurant.grade}</p>
+              </div>
+              <div className="rounded-lg bg-white p-3">
+                <p className="text-[10px] font-bold uppercase tracking-wide text-ink/45">
+                  Score
+                </p>
+                <p className="mt-1 font-black text-ink">
+                  {selectedRestaurant.inspectionReliabilityScore}
+                </p>
+              </div>
+              <div className="rounded-lg bg-white p-3">
+                <p className="text-[10px] font-bold uppercase tracking-wide text-ink/45">
+                  History
+                </p>
+                <p className="mt-1 font-black text-ink">
+                  {selectedRestaurant.inspections.length}
+                </p>
+              </div>
+            </div>
+          </div>
+        ) : (
+          <p className="mt-3 text-sm leading-6 text-ink/60">
+            Search by ZIP, restaurant, cuisine, or borough to select a record.
+          </p>
+        )}
+      </aside>
     </section>
   );
 }

@@ -151,6 +151,23 @@ async function main() {
     "/api/restaurants recentCriticalOnly filter returned non-critical records"
   );
 
+  const noMatchPayload = await fetchJson(
+    baseUrl,
+    "/api/restaurants?q=sano-guaranteed-no-match-zzzz&limit=10"
+  );
+  assert(
+    noMatchPayload.count === 0 && noMatchPayload.restaurants.length === 0,
+    "/api/restaurants no-match search fell through to fallback results"
+  );
+
+  if (health.data.mode === "supabase-app-records") {
+    const zipPayload = await fetchJson(baseUrl, "/api/restaurants?q=11414&limit=10");
+    assert(
+      zipPayload.restaurants.some((restaurant) => restaurant.zipcode === "11414"),
+      "/api/restaurants ZIP search for 11414 did not return a matching ZIP record"
+    );
+  }
+
   const home = await fetchText(baseUrl, "/");
   assert(
     home.includes(showcase.name) ||
@@ -165,10 +182,23 @@ async function main() {
     profile.includes(showcase.name),
     `Profile page for ${showcase.id} does not include ${showcase.name}`
   );
-  assert(
-    profile.includes("Unavailable") || profile.includes("Public rating unavailable"),
-    "Profile page does not disclose unavailable popularity metadata"
+
+  const unmatchedPopularity = restaurantPayload.restaurants.find(
+    (restaurant) => restaurant.metadataAvailability?.popularity === false
   );
+  if (unmatchedPopularity) {
+    const unmatchedProfile = await fetchText(
+      baseUrl,
+      `/restaurants/${unmatchedPopularity.id}`
+    );
+    assert(
+      unmatchedProfile.includes("Not matched yet") ||
+        unmatchedProfile.includes("No public rating match yet") ||
+        unmatchedProfile.includes("Popularity data pending") ||
+        unmatchedProfile.includes("Review data not matched yet"),
+      "Profile page does not disclose unmatched popularity metadata"
+    );
+  }
 
   for (const forbidden of FORBIDDEN_PROFILE_STRINGS) {
     assert(

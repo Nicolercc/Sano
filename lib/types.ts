@@ -52,6 +52,7 @@ export type Restaurant = {
   neighborhood: string;
   borough: string;
   address: string;
+  zipcode?: string | null;
   latitude: number;
   longitude: number;
   rating: number | null;

@@ -29,7 +29,7 @@ export function formatPopularitySummary(
   reviewCount: number | null | undefined
 ) {
   if (!hasPopularityMetadata(rating, reviewCount)) {
-    return "Public rating unavailable";
+    return "No public rating match yet";
   }
 
   return `${Number(rating).toFixed(1)} rating · ${formatNumber(

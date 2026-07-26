@@ -238,6 +238,7 @@ def build_app_record(record: dict[str, Any], data_as_of: str) -> dict[str, Any]:
         "neighborhood": record.get("neighborhood") or NEIGHBORHOOD_BY_ZIP.get(zipcode) or record.get("borough") or "NYC",
         "borough": record.get("borough") or "NYC",
         "address": record.get("address") or "",
+        "zipcode": zipcode or None,
         "latitude": latitude,
         "longitude": longitude,
         "rating": None,

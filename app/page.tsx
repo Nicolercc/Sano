@@ -1,10 +1,16 @@
 import SearchShell from "@/components/SearchShell";
-import { listRestaurantsForApp } from "@/lib/server/restaurants";
+import {
+  getRestaurantDataSummaryForApp,
+  listRestaurantsForApp
+} from "@/lib/server/restaurants";
 
 export const dynamic = "force-dynamic";
 
 export default async function HomePage() {
-  const restaurants = await listRestaurantsForApp();
+  const [restaurants, dataSummary] = await Promise.all([
+    listRestaurantsForApp({ limit: 48 }),
+    getRestaurantDataSummaryForApp()
+  ]);
 
-  return <SearchShell restaurants={restaurants} />;
+  return <SearchShell restaurants={restaurants} dataSummary={dataSummary} />;
 }

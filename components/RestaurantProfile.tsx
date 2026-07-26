@@ -23,11 +23,11 @@ export default function RestaurantProfile({
   const ratingLabel =
     hasPopularity && restaurant.rating !== null
       ? restaurant.rating.toFixed(1)
-      : "Unavailable";
+      : "Not matched yet";
   const reviewCountLabel =
     hasPopularity && restaurant.reviewCount !== null
       ? formatNumber(restaurant.reviewCount)
-      : "Unavailable";
+      : "Not matched yet";
 
   return (
     <main className="min-h-screen overflow-x-hidden bg-oat">
@@ -63,6 +63,7 @@ export default function RestaurantProfile({
               </h1>
               <p className="mt-2 text-sm text-ink/65">
                 {restaurant.address}, {restaurant.borough}
+                {restaurant.zipcode ? ` ${restaurant.zipcode}` : ""}
               </p>
             </div>
             <div className="grid min-w-64 grid-cols-3 gap-2 text-center">
