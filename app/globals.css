@@ -5,6 +5,14 @@
 :root {
   color-scheme: light;
   scroll-behavior: smooth;
+  --surface-2: #fffaf1;
+  --text-primary: #17201b;
+  --text-secondary: rgba(23, 32, 27, 0.66);
+  --brand-blue: #2563c9;
+  --soft-blue: #6fa3e0;
+  --badge-blue: #9dc0ec;
+  --red-pen: #c22;
+  --grade-gold: #d4af37;
 }
 
 * {

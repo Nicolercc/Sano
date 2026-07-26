@@ -186,6 +186,7 @@ export default function SearchShell({
   const [visibleCount, setVisibleCount] = useState(INITIAL_VISIBLE_COUNT);
   const [loading, setLoading] = useState(false);
   const [loadError, setLoadError] = useState(false);
+  const [heroSearchQuery, setHeroSearchQuery] = useState("");
   const [selectedRestaurant, setSelectedRestaurant] = useState<Restaurant | null>(
     restaurants[0] ?? null
   );
@@ -283,14 +284,29 @@ export default function SearchShell({
       }).format(new Date(`${dataSummary.dataAsOf}T12:00:00`))
     : null;
   const featuredJourney = demoJourneys[0];
+  const featuredRestaurant =
+    restaurants.find((restaurant) => restaurant.id === featuredJourney?.id) ??
+    restaurants[0] ??
+    null;
+  const previewInspections = featuredRestaurant
+    ? [...featuredRestaurant.inspections]
+        .sort((a, b) => a.date.localeCompare(b.date))
+        .slice(-5)
+    : [];
+  const maxPreviewInspectionScore = Math.max(
+    ...previewInspections.map((inspection) => inspection.score),
+    1
+  );
 
   const clearFilters = () => {
     setFilters(defaultFilters);
     setVisibleCount(INITIAL_VISIBLE_COUNT);
   };
 
-  const runPrimaryDemoSearch = () => {
-    setFilters({ ...defaultFilters, query: PRIMARY_DEMO_QUERY });
+  const runHeroSearch = (query: string) => {
+    const nextQuery = query.trim() || PRIMARY_DEMO_QUERY;
+    setHeroSearchQuery(nextQuery);
+    setFilters({ ...defaultFilters, query: nextQuery });
     setVisibleCount(INITIAL_VISIBLE_COUNT);
     window.requestAnimationFrame(() => {
       searchSectionRef.current?.scrollIntoView({
@@ -300,164 +316,253 @@ export default function SearchShell({
     });
   };
 
+  const runPrimaryDemoSearch = () => runHeroSearch(PRIMARY_DEMO_QUERY);
+
   return (
     <main className="min-h-screen overflow-x-hidden bg-oat text-ink">
-      <div className="relative isolate overflow-hidden">
+      <div
+        className="relative isolate overflow-hidden bg-[#1e2a38] text-white"
+        style={{
+          backgroundImage:
+            "radial-gradient(circle at 18% 16%, rgba(37,99,201,0.22), transparent 28%), radial-gradient(circle at 82% 12%, rgba(111,163,224,0.15), transparent 25%), linear-gradient(135deg, #1e2a38 0%, #2c3e50 100%)"
+        }}
+      >
         <div
-          className="pointer-events-none absolute inset-0 -z-10 bg-[radial-gradient(circle_at_18%_18%,rgba(223,243,231,0.95),transparent_28%),radial-gradient(circle_at_85%_8%,rgba(214,157,63,0.22),transparent_24%),linear-gradient(180deg,#fbf7ef_0%,#f6f2ea_72%)]"
+          className="pointer-events-none absolute inset-0 -z-10 opacity-100"
+          style={{
+            backgroundImage:
+              "linear-gradient(rgba(148,168,190,0.09) 1px, transparent 1px), linear-gradient(90deg, rgba(148,168,190,0.09) 1px, transparent 1px)",
+            backgroundSize: "52px 52px"
+          }}
           aria-hidden="true"
         />
         <div
-          className="pointer-events-none absolute right-[-10rem] top-24 -z-10 h-80 w-80 rounded-full border border-moss/10 bg-mint/40 blur-3xl"
+          className="pointer-events-none absolute left-8 top-32 -z-10 h-32 w-32 rotate-[-16deg] opacity-70"
+          aria-hidden="true"
+        >
+          <span className="absolute left-0 top-6 h-24 w-3 rounded-full bg-[rgba(148,168,190,0.1)]" />
+          <span className="absolute left-6 top-0 h-32 w-3 rounded-full bg-[rgba(148,168,190,0.09)]" />
+          <span className="absolute left-16 top-2 h-28 w-8 rounded-full border-[10px] border-[rgba(148,168,190,0.1)]" />
+        </div>
+        <div
+          className="pointer-events-none absolute right-16 top-24 -z-10 h-44 w-44 rounded-full border-[22px] border-[rgba(148,168,190,0.1)]"
+          aria-hidden="true"
+        />
+        <div
+          className="pointer-events-none absolute bottom-[-11rem] left-1/2 -z-10 h-80 w-80 -translate-x-1/2 rounded-full bg-[#2563c9]/20 blur-3xl"
           aria-hidden="true"
         />
         <div className="pt-3">
           <AppNav active="home" />
         </div>
 
-        <div className="mx-auto grid w-full max-w-7xl gap-10 px-4 pb-14 pt-10 sm:px-6 lg:grid-cols-[minmax(0,1.05fr)_minmax(24rem,0.95fr)] lg:px-8 lg:pb-20 lg:pt-16">
-          <header id="landing" className="min-w-0">
-            <div className="inline-flex items-center gap-2 rounded-full border border-moss/15 bg-white/70 px-3 py-2 text-xs font-black uppercase tracking-[0.18em] text-moss shadow-sm backdrop-blur">
-              <span className="h-2 w-2 rounded-full bg-moss" aria-hidden="true" />
-              NYC official inspection data, made readable
+        <div className="mx-auto grid w-full max-w-7xl gap-10 px-4 pb-14 pt-10 sm:px-6 lg:grid-cols-[minmax(0,1.02fr)_minmax(24rem,0.98fr)] lg:px-8 lg:pb-20 lg:pt-16">
+          <header id="landing" className="min-w-0 text-center lg:text-left">
+            <div className="inline-flex items-center gap-2 rounded-full border border-[#6fa3e0]/25 bg-[#2563c9]/15 px-4 py-2 text-xs font-black uppercase tracking-[0.18em] text-[#9dc0ec] shadow-sm backdrop-blur">
+              <span className="h-2 w-2 rounded-full bg-[#6fa3e0]" aria-hidden="true" />
+              Built on NYC DOHMH public inspection records
             </div>
-            <h1 className="mt-6 max-w-5xl font-serif text-[2.75rem] font-black leading-[0.95] tracking-[-0.055em] text-ink sm:text-6xl lg:text-7xl">
-              Every restaurant has a grade. Not every grade tells the same story.
+            <h1 className="mx-auto mt-7 max-w-5xl text-[3rem] font-black leading-[0.96] tracking-[-0.06em] text-white sm:text-6xl lg:mx-0 lg:text-7xl">
+              The grade is on the door.{" "}
+              <span className="block">The story isn’t.</span>
             </h1>
-            <p className="mt-6 max-w-2xl text-lg leading-8 text-ink/72 sm:text-xl sm:leading-9">
-              Sano is a consumer discovery layer for NYC dining: public DOHMH
-              inspection history, translated into clear trajectories, context,
-              and honest limitations before you pick a place.
+            <p className="mx-auto mt-6 max-w-3xl text-lg leading-8 text-white/70 sm:text-xl sm:leading-9 lg:mx-0">
+              Sano turns NYC public restaurant inspection records into clear
+              patterns: recent flags, repeat issues, history depth, and how the
+              current grade got there.
             </p>
-            <div className="mt-8 flex flex-wrap items-center gap-3">
-              <button
-                type="button"
-                onClick={runPrimaryDemoSearch}
-                className="group inline-flex min-h-12 items-center rounded-full bg-ink px-6 text-sm font-black text-white shadow-soft transition hover:-translate-y-0.5 hover:bg-moss focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-moss"
-              >
-                Explore NYC by ZIP
-                <span className="ml-2 transition group-hover:translate-x-0.5" aria-hidden="true">
-                  →
+
+            <form
+              className="mx-auto mt-9 flex max-w-3xl flex-col gap-3 rounded-[1.45rem] border border-white/10 bg-white/10 p-2 shadow-[0_30px_90px_rgba(7,13,22,0.25)] backdrop-blur sm:flex-row lg:mx-0"
+              onSubmit={(event) => {
+                event.preventDefault();
+                runHeroSearch(heroSearchQuery);
+              }}
+            >
+              <label className="min-w-0 flex-1">
+                <span className="sr-only">
+                  Search by restaurant, ZIP, cuisine, or borough
                 </span>
-              </button>
-              <Link
-                href="/methodology"
-                className="inline-flex min-h-12 items-center rounded-full border border-ink/15 bg-white/70 px-5 text-sm font-bold text-ink shadow-sm backdrop-blur transition hover:border-moss/40 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-moss"
+                <input
+                  value={heroSearchQuery}
+                  onChange={(event) => setHeroSearchQuery(event.target.value)}
+                  placeholder="Search by restaurant, ZIP, cuisine, or borough"
+                  className="min-h-14 w-full rounded-[1.05rem] border border-white/10 bg-white/10 px-5 text-base font-semibold text-white outline-none placeholder:text-white/40 focus:border-[#6fa3e0] focus:ring-4 focus:ring-[#2563c9]/25"
+                />
+              </label>
+              <button
+                type="submit"
+                className="inline-flex min-h-14 items-center justify-center rounded-[1.05rem] bg-[#2563c9] px-7 text-base font-black text-white shadow-[0_18px_40px_rgba(37,99,201,0.32)] transition hover:-translate-y-0.5 hover:bg-[#1e56ad] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#6fa3e0]"
               >
-                See the methodology
-              </Link>
+                Search
+              </button>
+            </form>
+
+            <div className="mx-auto mt-4 flex max-w-3xl flex-wrap items-center justify-center gap-2 text-sm lg:mx-0 lg:justify-start">
+              <span className="font-bold text-white/50">Try:</span>
+              {["11414", "Chelsea", "Thai", featuredRestaurant?.name ?? "Lucky Chix"].map(
+                (example) => (
+                  <button
+                    key={example}
+                    type="button"
+                    onClick={() => runHeroSearch(example)}
+                    className="rounded-full border border-[#6fa3e0]/25 bg-[#2563c9]/12 px-3 py-1.5 font-bold text-[#9dc0ec] transition hover:border-[#6fa3e0]/50 hover:bg-[#2563c9]/20 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#6fa3e0]"
+                  >
+                    {example}
+                  </button>
+                )
+              )}
             </div>
 
-            <dl className="mt-10 grid max-w-2xl grid-cols-2 gap-3 sm:grid-cols-4">
-              <div className="rounded-2xl border border-white/70 bg-white/65 p-4 shadow-sm backdrop-blur">
-                <dt className="text-[10px] font-black uppercase tracking-[0.16em] text-ink/45">
-                  Records
+            <dl className="mx-auto mt-9 grid max-w-3xl grid-cols-2 gap-3 text-left sm:grid-cols-4 lg:mx-0">
+              <div className="rounded-2xl border border-white/10 bg-white/10 p-4 backdrop-blur">
+                <dt className="text-[10px] font-black uppercase tracking-[0.16em] text-white/40">
+                  Restaurants
                 </dt>
-                <dd className="mt-2 text-2xl font-black text-ink">
+                <dd className="mt-2 text-2xl font-black text-white">
                   {dataSummary.restaurantCount.toLocaleString()}
                 </dd>
               </div>
-              <div className="rounded-2xl border border-white/70 bg-white/65 p-4 shadow-sm backdrop-blur">
-                <dt className="text-[10px] font-black uppercase tracking-[0.16em] text-ink/45">
+              <div className="rounded-2xl border border-white/10 bg-white/10 p-4 backdrop-blur">
+                <dt className="text-[10px] font-black uppercase tracking-[0.16em] text-white/40">
                   Inspections
                 </dt>
-                <dd className="mt-2 text-2xl font-black text-ink">
+                <dd className="mt-2 text-2xl font-black text-white">
                   {dataSummary.inspectionCount.toLocaleString()}
                 </dd>
               </div>
-              <div className="rounded-2xl border border-white/70 bg-white/65 p-4 shadow-sm backdrop-blur">
-                <dt className="text-[10px] font-black uppercase tracking-[0.16em] text-ink/45">
+              <div className="rounded-2xl border border-white/10 bg-white/10 p-4 backdrop-blur">
+                <dt className="text-[10px] font-black uppercase tracking-[0.16em] text-white/40">
                   Source
                 </dt>
-                <dd className="mt-2 text-sm font-black leading-6 text-ink">
+                <dd className="mt-2 text-sm font-black leading-6 text-white">
                   NYC DOHMH
                 </dd>
               </div>
-              <div className="rounded-2xl border border-white/70 bg-white/65 p-4 shadow-sm backdrop-blur">
-                <dt className="text-[10px] font-black uppercase tracking-[0.16em] text-ink/45">
-                  Freshness
+              <div className="rounded-2xl border border-white/10 bg-white/10 p-4 backdrop-blur">
+                <dt className="text-[10px] font-black uppercase tracking-[0.16em] text-white/40">
+                  Extract
                 </dt>
-                <dd className="mt-2 text-sm font-black leading-6 text-ink">
+                <dd className="mt-2 text-sm font-black leading-6 text-white">
                   {dataAsOfLabel ?? "Published extract"}
                 </dd>
               </div>
             </dl>
+
+            <p className="mx-auto mt-5 max-w-3xl text-sm font-semibold leading-6 text-white/52 lg:mx-0">
+              Sano is not a safety verdict or official NYC rating — it is
+              context from public inspection history.
+            </p>
           </header>
 
           <section
             aria-label="Sano product preview"
-            className="relative min-w-0 rounded-[2rem] border border-white/70 bg-[#fffaf1]/80 p-4 shadow-soft backdrop-blur-xl sm:p-5"
+            className="relative min-w-0 rounded-[2rem] border border-white/10 bg-white/10 p-4 shadow-[0_30px_100px_rgba(7,13,22,0.32)] backdrop-blur-xl sm:p-5"
           >
-            <div className="absolute -right-6 -top-6 h-20 w-20 rounded-full bg-amber/25 blur-2xl" />
-            <div className="rounded-[1.55rem] border border-ink/10 bg-ink p-4 text-white shadow-soft">
-              <div className="flex items-center justify-between gap-3">
+            <div className="absolute -right-6 -top-6 h-24 w-24 rounded-full bg-[#2563c9]/25 blur-2xl" />
+            <div
+              className="overflow-hidden rounded-[1.55rem] border border-white/10 bg-[var(--surface-2)] p-4 text-[var(--text-primary)] shadow-soft"
+              style={{
+                backgroundImage:
+                  "linear-gradient(rgba(80,140,220,0.12) 1px, transparent 1px)",
+                backgroundSize: "100% 28px"
+              }}
+            >
+              <div className="flex items-start justify-between gap-3">
                 <div>
-                  <p className="text-[10px] font-black uppercase tracking-[0.2em] text-mint/70">
-                    Live NYC read
+                  <p className="text-[10px] font-black uppercase tracking-[0.2em] text-[#2563c9]">
+                    Product preview
                   </p>
-                  <p className="mt-1 font-serif text-2xl font-black">
-                    Inspection context before the reservation
+                  <p className="mt-1 font-serif text-2xl font-black leading-tight">
+                    {featuredRestaurant?.name ?? "A real NYC restaurant"}
+                  </p>
+                  <p className="mt-1 text-sm font-semibold text-[var(--text-secondary)]">
+                    {featuredRestaurant?.cuisine ?? "NYC restaurant"} ·{" "}
+                    {featuredRestaurant?.neighborhood ?? "official record"}
                   </p>
                 </div>
-                <div className="grid h-14 w-14 shrink-0 place-items-center rounded-2xl bg-mint font-serif text-3xl font-black text-ink">
-                  A
+                <div className="grid h-16 w-16 shrink-0 place-items-center rounded-2xl border-4 border-[#c22] bg-white font-serif text-4xl font-black text-[#c22] shadow-sm">
+                  {featuredRestaurant?.grade ?? "A"}
                 </div>
               </div>
 
-              <div className="mt-6 overflow-hidden rounded-2xl border border-white/10 bg-white/8 p-4">
-                <div className="mb-4 flex items-center justify-between gap-3">
-                  <p className="text-sm font-bold text-white/80">
-                    {featuredJourney?.name ?? "A real NYC restaurant"}
-                  </p>
-                  <span className="rounded-full bg-mint px-3 py-1 text-xs font-black text-moss">
+              <div className="mt-6 rounded-2xl border border-ink/10 bg-white/104 p-4">
+                <div className="mb-4 flex flex-wrap items-center justify-between gap-3">
+                  <div>
+                    <p className="text-[10px] font-black uppercase tracking-[0.16em] text-[var(--text-secondary)]">
+                      Inspection timeline
+                    </p>
+                    <p className="mt-1 text-sm font-black text-[var(--text-primary)]">
+                      {featuredRestaurant?.sanoLabel ?? "Public record context"}
+                    </p>
+                  </div>
+                  <span className="rounded-full bg-[#2563c9]/10 px-3 py-1 text-xs font-black text-[#2563c9]">
                     Official grade visible
                   </span>
                 </div>
                 <div className="grid h-44 items-end gap-2 sm:grid-cols-5">
-                  {[72, 44, 62, 28, 54].map((height, index) => (
+                  {(previewInspections.length
+                    ? previewInspections
+                    : [
+                        { id: "preview-1", score: 12, grade: "A", criticalCount: 0 },
+                        { id: "preview-2", score: 24, grade: "B", criticalCount: 1 },
+                        { id: "preview-3", score: 9, grade: "A", criticalCount: 0 },
+                        { id: "preview-4", score: 31, grade: "C", criticalCount: 2 },
+                        { id: "preview-5", score: 13, grade: "A", criticalCount: 1 }
+                      ]).map((inspection) => (
                     <div
-                      key={height}
-                      className="relative flex h-full items-end rounded-xl bg-white/7 p-2"
+                      key={inspection.id}
+                      className="relative flex h-full items-end rounded-xl bg-[#2563c9]/10 p-2"
                     >
                       <div
-                        className={`w-full rounded-lg ${
-                          index === 1 || index === 3 ? "bg-coral" : "bg-mint"
-                        }`}
-                        style={{ height: `${height}%` }}
-                      />
+                        className="relative w-full rounded-lg bg-[#2563c9]"
+                        style={{
+                          height: `${Math.max(
+                            12,
+                            (inspection.score / maxPreviewInspectionScore) * 100
+                          )}%`
+                        }}
+                      >
+                        <span className="absolute -top-3 left-1/2 grid h-6 w-6 -translate-x-1/2 place-items-center rounded-full border-2 border-[#c22] bg-white text-[10px] font-black text-[#c22]">
+                          {inspection.grade}
+                        </span>
+                      </div>
                     </div>
                   ))}
                 </div>
-                <div className="mt-4 grid gap-2 sm:grid-cols-3">
-                  <div className="rounded-xl bg-white/10 p-3">
-                    <p className="text-[10px] font-black uppercase tracking-wide text-white/45">
-                      Signal
+                <div className="mt-5 flex items-center justify-between gap-3 rounded-2xl bg-[#1e2a38] p-3 text-white">
+                  <div>
+                    <p className="text-[10px] font-black uppercase tracking-[0.16em] text-white/40">
+                      Inspection reliability
                     </p>
-                    <p className="mt-1 text-sm font-black">Trajectory</p>
+                    <p className="mt-1 text-2xl font-black">
+                      {featuredRestaurant?.inspectionReliabilityScore ?? "—"}
+                    </p>
                   </div>
-                  <div className="rounded-xl bg-white/10 p-3">
-                    <p className="text-[10px] font-black uppercase tracking-wide text-white/45">
-                      Context
+                  <div className="text-right">
+                    <p className="text-[10px] font-black uppercase tracking-[0.16em] text-white/40">
+                      Grade translated
                     </p>
-                    <p className="mt-1 text-sm font-black">Critical flags</p>
-                  </div>
-                  <div className="rounded-xl bg-white/10 p-3">
-                    <p className="text-[10px] font-black uppercase tracking-wide text-white/45">
-                      Honesty
+                    <p className="mt-1 text-lg font-black tracking-widest text-[#d4af37]">
+                      ★★★★★
                     </p>
-                    <p className="mt-1 text-sm font-black">No fake reviews</p>
                   </div>
                 </div>
               </div>
+
+              <p className="mt-4 rounded-2xl border border-ink/10 bg-white/70 p-3 text-xs font-semibold leading-5 text-[var(--text-secondary)]">
+                Data disclosure: public rating metadata appears only when
+                matched. Missing reviews stay blank; Sano does not invent them.
+              </p>
             </div>
             <div className="mt-4 grid grid-cols-3 gap-2">
               {["Manhattan", "Queens", "Brooklyn"].map((borough) => (
                 <div
                   key={borough}
-                  className="rounded-2xl border border-ink/10 bg-white/70 p-3 text-center shadow-sm"
+                  className="rounded-2xl border border-white/10 bg-white/10 p-3 text-center shadow-sm backdrop-blur"
                 >
-                  <p className="text-xs font-black text-ink">{borough}</p>
-                  <p className="mt-1 text-[10px] font-bold uppercase tracking-wide text-ink/40">
+                  <p className="text-xs font-black text-white">{borough}</p>
+                  <p className="mt-1 text-[10px] font-bold uppercase tracking-wide text-white/40">
                     indexed
                   </p>
                 </div>
@@ -469,8 +574,9 @@ export default function SearchShell({
 
       <div className="mx-auto flex w-full max-w-7xl flex-col gap-10 px-4 py-10 sm:px-6 lg:px-8">
         <section
+          id="how-it-works"
           aria-label="How Sano works"
-          className="grid gap-3 rounded-[2rem] border border-ink/10 bg-white p-4 shadow-sm md:grid-cols-3 md:p-5"
+          className="grid scroll-mt-24 gap-3 rounded-[2rem] border border-ink/10 bg-[var(--surface-2)] p-4 shadow-sm md:grid-cols-3 md:p-5"
         >
           {[
             ["01", "Start with official records", "Sano uses NYC DOHMH inspection data as the backbone — not crowd rumors."],
@@ -478,11 +584,15 @@ export default function SearchShell({
             ["03", "Know the limits", "Ratings only appear when matched. Sano does not invent reviews or safety certainty."]
           ].map(([step, title, body]) => (
             <div key={step} className="rounded-3xl bg-oat p-5">
-              <p className="text-xs font-black uppercase tracking-[0.18em] text-moss">
+              <p className="text-xs font-black uppercase tracking-[0.18em] text-[#2563c9]">
                 {step}
               </p>
-              <h2 className="mt-3 text-lg font-black text-ink">{title}</h2>
-              <p className="mt-2 text-sm leading-6 text-ink/65">{body}</p>
+              <h2 className="mt-3 text-lg font-black text-[var(--text-primary)]">
+                {title}
+              </h2>
+              <p className="mt-2 text-sm leading-6 text-[var(--text-secondary)]">
+                {body}
+              </p>
             </div>
           ))}
         </section>

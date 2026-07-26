@@ -180,7 +180,8 @@ async function main() {
 
   const home = await fetchText(baseUrl, "/");
   assert(
-    home.includes("Every restaurant has a grade. Not every grade tells the same story."),
+    home.includes("The grade is on the door.") &&
+      home.includes("The story isn’t."),
     "Home page does not include the demo-ready hero message"
   );
   for (const forbidden of FORBIDDEN_HOME_STRINGS) {
