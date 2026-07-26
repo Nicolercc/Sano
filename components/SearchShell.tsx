@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { useEffect, useMemo, useRef, useState } from "react";
+import AppNav from "@/components/AppNav";
 import FilterBar, { hasActiveFilters } from "@/components/FilterBar";
 import MapResults from "@/components/MapResults";
 import RestaurantCard from "@/components/RestaurantCard";
@@ -281,6 +282,7 @@ export default function SearchShell({
         year: "numeric"
       }).format(new Date(`${dataSummary.dataAsOf}T12:00:00`))
     : null;
+  const featuredJourney = demoJourneys[0];
 
   const clearFilters = () => {
     setFilters(defaultFilters);
@@ -300,87 +302,197 @@ export default function SearchShell({
 
   return (
     <main className="min-h-screen overflow-x-hidden bg-oat text-ink">
-      <div className="mx-auto flex w-full max-w-7xl flex-col gap-8 px-4 py-6 sm:px-6 lg:px-8 lg:py-10">
-        <nav className="flex flex-wrap items-center justify-between gap-3">
-          <Link
-            href="/"
-            className="font-serif text-3xl font-black tracking-tight text-ink sm:text-4xl"
-          >
-            Sano
-          </Link>
-          <Link
-            href="/methodology"
-            className="inline-flex min-h-10 items-center rounded-md border border-ink/15 bg-white px-4 text-sm font-semibold text-ink shadow-sm transition hover:border-moss/40 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-moss"
-          >
-            Methodology
-          </Link>
-        </nav>
+      <div className="relative isolate overflow-hidden">
+        <div
+          className="pointer-events-none absolute inset-0 -z-10 bg-[radial-gradient(circle_at_18%_18%,rgba(223,243,231,0.95),transparent_28%),radial-gradient(circle_at_85%_8%,rgba(214,157,63,0.22),transparent_24%),linear-gradient(180deg,#fbf7ef_0%,#f6f2ea_72%)]"
+          aria-hidden="true"
+        />
+        <div
+          className="pointer-events-none absolute right-[-10rem] top-24 -z-10 h-80 w-80 rounded-full border border-moss/10 bg-mint/40 blur-3xl"
+          aria-hidden="true"
+        />
+        <div className="pt-3">
+          <AppNav active="home" />
+        </div>
 
-        <header className="min-w-0">
-          <p className="text-xs font-black uppercase tracking-[0.22em] text-moss">
-            NYC official inspection data, made readable
-          </p>
-          <h1 className="mt-3 max-w-4xl font-serif text-[2.1rem] font-black leading-[1.05] tracking-tight text-ink sm:text-5xl sm:leading-[1.05]">
-            Every restaurant has a grade. Not every grade tells the same story.
-          </h1>
-          <p className="mt-4 max-w-2xl text-base leading-7 text-ink/70 sm:text-lg sm:leading-8">
-            Sano turns public NYC DOHMH inspection records into a searchable
-            discovery layer. Search by restaurant, cuisine, borough, or ZIP —
-            popularity appears only when a matched public source exists.
-          </p>
-          <div className="mt-6 flex flex-wrap items-center gap-3">
-            <button
-              type="button"
-              onClick={runPrimaryDemoSearch}
-              className="inline-flex min-h-11 items-center rounded-md bg-ink px-5 text-sm font-bold text-white shadow-sm transition hover:bg-moss focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-moss"
-            >
-              See how it works — search ZIP 11414
-            </button>
-            <Link
-              href="/methodology"
-              className="inline-flex min-h-11 items-center px-2 text-sm font-semibold text-ink/70 underline-offset-4 transition hover:text-ink hover:underline focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-moss"
-            >
-              Or read the methodology
-            </Link>
-          </div>
+        <div className="mx-auto grid w-full max-w-7xl gap-10 px-4 pb-14 pt-10 sm:px-6 lg:grid-cols-[minmax(0,1.05fr)_minmax(24rem,0.95fr)] lg:px-8 lg:pb-20 lg:pt-16">
+          <header id="landing" className="min-w-0">
+            <div className="inline-flex items-center gap-2 rounded-full border border-moss/15 bg-white/70 px-3 py-2 text-xs font-black uppercase tracking-[0.18em] text-moss shadow-sm backdrop-blur">
+              <span className="h-2 w-2 rounded-full bg-moss" aria-hidden="true" />
+              NYC official inspection data, made readable
+            </div>
+            <h1 className="mt-6 max-w-5xl font-serif text-[2.75rem] font-black leading-[0.95] tracking-[-0.055em] text-ink sm:text-6xl lg:text-7xl">
+              Every restaurant has a grade. Not every grade tells the same story.
+            </h1>
+            <p className="mt-6 max-w-2xl text-lg leading-8 text-ink/72 sm:text-xl sm:leading-9">
+              Sano is a consumer discovery layer for NYC dining: public DOHMH
+              inspection history, translated into clear trajectories, context,
+              and honest limitations before you pick a place.
+            </p>
+            <div className="mt-8 flex flex-wrap items-center gap-3">
+              <button
+                type="button"
+                onClick={runPrimaryDemoSearch}
+                className="group inline-flex min-h-12 items-center rounded-full bg-ink px-6 text-sm font-black text-white shadow-soft transition hover:-translate-y-0.5 hover:bg-moss focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-moss"
+              >
+                Explore NYC by ZIP
+                <span className="ml-2 transition group-hover:translate-x-0.5" aria-hidden="true">
+                  →
+                </span>
+              </button>
+              <Link
+                href="/methodology"
+                className="inline-flex min-h-12 items-center rounded-full border border-ink/15 bg-white/70 px-5 text-sm font-bold text-ink shadow-sm backdrop-blur transition hover:border-moss/40 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-moss"
+              >
+                See the methodology
+              </Link>
+            </div>
 
-          <div className="mt-6 flex min-w-0 flex-col gap-2 border-t border-ink/10 pt-4 text-sm leading-6 text-ink/65 sm:flex-row sm:flex-wrap sm:items-center sm:gap-x-3 sm:gap-y-1">
-            <p className="min-w-0 font-semibold text-ink/80">
-              Sourced from NYC DOHMH public inspection records
-            </p>
-            <span className="hidden text-ink/25 sm:inline" aria-hidden="true">
-              ·
-            </span>
-            <p>
-              {dataSummary.restaurantCount.toLocaleString()} restaurants indexed
-            </p>
-            <span className="hidden text-ink/25 sm:inline" aria-hidden="true">
-              ·
-            </span>
-            <p>
-              {dataSummary.inspectionCount.toLocaleString()} inspection cycles
-            </p>
-            <span className="hidden text-ink/25 sm:inline" aria-hidden="true">
-              ·
-            </span>
-            <p>
-              Updated from the city’s published data, not real-time
-              {dataAsOfLabel ? ` · as of ${dataAsOfLabel}` : ""}
-            </p>
-            <span className="hidden text-ink/25 sm:inline" aria-hidden="true">
-              ·
-            </span>
-            <Link
-              href="/methodology"
-              className="font-semibold text-moss underline-offset-2 hover:underline"
-            >
-              Methodology
-            </Link>
-          </div>
-        </header>
+            <dl className="mt-10 grid max-w-2xl grid-cols-2 gap-3 sm:grid-cols-4">
+              <div className="rounded-2xl border border-white/70 bg-white/65 p-4 shadow-sm backdrop-blur">
+                <dt className="text-[10px] font-black uppercase tracking-[0.16em] text-ink/45">
+                  Records
+                </dt>
+                <dd className="mt-2 text-2xl font-black text-ink">
+                  {dataSummary.restaurantCount.toLocaleString()}
+                </dd>
+              </div>
+              <div className="rounded-2xl border border-white/70 bg-white/65 p-4 shadow-sm backdrop-blur">
+                <dt className="text-[10px] font-black uppercase tracking-[0.16em] text-ink/45">
+                  Inspections
+                </dt>
+                <dd className="mt-2 text-2xl font-black text-ink">
+                  {dataSummary.inspectionCount.toLocaleString()}
+                </dd>
+              </div>
+              <div className="rounded-2xl border border-white/70 bg-white/65 p-4 shadow-sm backdrop-blur">
+                <dt className="text-[10px] font-black uppercase tracking-[0.16em] text-ink/45">
+                  Source
+                </dt>
+                <dd className="mt-2 text-sm font-black leading-6 text-ink">
+                  NYC DOHMH
+                </dd>
+              </div>
+              <div className="rounded-2xl border border-white/70 bg-white/65 p-4 shadow-sm backdrop-blur">
+                <dt className="text-[10px] font-black uppercase tracking-[0.16em] text-ink/45">
+                  Freshness
+                </dt>
+                <dd className="mt-2 text-sm font-black leading-6 text-ink">
+                  {dataAsOfLabel ?? "Published extract"}
+                </dd>
+              </div>
+            </dl>
+          </header>
+
+          <section
+            aria-label="Sano product preview"
+            className="relative min-w-0 rounded-[2rem] border border-white/70 bg-[#fffaf1]/80 p-4 shadow-soft backdrop-blur-xl sm:p-5"
+          >
+            <div className="absolute -right-6 -top-6 h-20 w-20 rounded-full bg-amber/25 blur-2xl" />
+            <div className="rounded-[1.55rem] border border-ink/10 bg-ink p-4 text-white shadow-soft">
+              <div className="flex items-center justify-between gap-3">
+                <div>
+                  <p className="text-[10px] font-black uppercase tracking-[0.2em] text-mint/70">
+                    Live NYC read
+                  </p>
+                  <p className="mt-1 font-serif text-2xl font-black">
+                    Inspection context before the reservation
+                  </p>
+                </div>
+                <div className="grid h-14 w-14 shrink-0 place-items-center rounded-2xl bg-mint font-serif text-3xl font-black text-ink">
+                  A
+                </div>
+              </div>
+
+              <div className="mt-6 overflow-hidden rounded-2xl border border-white/10 bg-white/8 p-4">
+                <div className="mb-4 flex items-center justify-between gap-3">
+                  <p className="text-sm font-bold text-white/80">
+                    {featuredJourney?.name ?? "A real NYC restaurant"}
+                  </p>
+                  <span className="rounded-full bg-mint px-3 py-1 text-xs font-black text-moss">
+                    Official grade visible
+                  </span>
+                </div>
+                <div className="grid h-44 items-end gap-2 sm:grid-cols-5">
+                  {[72, 44, 62, 28, 54].map((height, index) => (
+                    <div
+                      key={height}
+                      className="relative flex h-full items-end rounded-xl bg-white/7 p-2"
+                    >
+                      <div
+                        className={`w-full rounded-lg ${
+                          index === 1 || index === 3 ? "bg-coral" : "bg-mint"
+                        }`}
+                        style={{ height: `${height}%` }}
+                      />
+                    </div>
+                  ))}
+                </div>
+                <div className="mt-4 grid gap-2 sm:grid-cols-3">
+                  <div className="rounded-xl bg-white/10 p-3">
+                    <p className="text-[10px] font-black uppercase tracking-wide text-white/45">
+                      Signal
+                    </p>
+                    <p className="mt-1 text-sm font-black">Trajectory</p>
+                  </div>
+                  <div className="rounded-xl bg-white/10 p-3">
+                    <p className="text-[10px] font-black uppercase tracking-wide text-white/45">
+                      Context
+                    </p>
+                    <p className="mt-1 text-sm font-black">Critical flags</p>
+                  </div>
+                  <div className="rounded-xl bg-white/10 p-3">
+                    <p className="text-[10px] font-black uppercase tracking-wide text-white/45">
+                      Honesty
+                    </p>
+                    <p className="mt-1 text-sm font-black">No fake reviews</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div className="mt-4 grid grid-cols-3 gap-2">
+              {["Manhattan", "Queens", "Brooklyn"].map((borough) => (
+                <div
+                  key={borough}
+                  className="rounded-2xl border border-ink/10 bg-white/70 p-3 text-center shadow-sm"
+                >
+                  <p className="text-xs font-black text-ink">{borough}</p>
+                  <p className="mt-1 text-[10px] font-bold uppercase tracking-wide text-ink/40">
+                    indexed
+                  </p>
+                </div>
+              ))}
+            </div>
+          </section>
+        </div>
+      </div>
+
+      <div className="mx-auto flex w-full max-w-7xl flex-col gap-10 px-4 py-10 sm:px-6 lg:px-8">
+        <section
+          aria-label="How Sano works"
+          className="grid gap-3 rounded-[2rem] border border-ink/10 bg-white p-4 shadow-sm md:grid-cols-3 md:p-5"
+        >
+          {[
+            ["01", "Start with official records", "Sano uses NYC DOHMH inspection data as the backbone — not crowd rumors."],
+            ["02", "Read the pattern", "The app surfaces trajectory, recent critical flags, repeat patterns, and history depth."],
+            ["03", "Know the limits", "Ratings only appear when matched. Sano does not invent reviews or safety certainty."]
+          ].map(([step, title, body]) => (
+            <div key={step} className="rounded-3xl bg-oat p-5">
+              <p className="text-xs font-black uppercase tracking-[0.18em] text-moss">
+                {step}
+              </p>
+              <h2 className="mt-3 text-lg font-black text-ink">{title}</h2>
+              <p className="mt-2 text-sm leading-6 text-ink/65">{body}</p>
+            </div>
+          ))}
+        </section>
 
         {demoJourneys.length > 0 ? (
-          <section aria-labelledby="demo-journeys-heading" className="min-w-0">
+          <section
+            id="demo"
+            aria-labelledby="demo-journeys-heading"
+            className="min-w-0 scroll-mt-24"
+          >
             <div className="mb-4 max-w-2xl">
               <h2
                 id="demo-journeys-heading"

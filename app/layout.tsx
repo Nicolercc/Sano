@@ -2,8 +2,9 @@ import type { Metadata } from "next";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "Sano",
-  description: "Restaurant discovery with inspection-history context."
+  title: "Sano — NYC restaurant inspection context",
+  description:
+    "Explore NYC restaurants through public inspection history, clear trajectories, and honest data limitations."
 };
 
 export default function RootLayout({
