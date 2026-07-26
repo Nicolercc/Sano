@@ -67,6 +67,13 @@ function chooseShowcaseRestaurant(restaurants) {
   );
 }
 
+function hasRecentCriticalFlag(restaurant) {
+  return [...restaurant.inspections]
+    .sort((a, b) => b.date.localeCompare(a.date))
+    .slice(0, 2)
+    .some((inspection) => inspection.criticalCount > 0);
+}
+
 async function main() {
   const baseUrl = normalizeBaseUrl(process.env.SANO_BASE_URL);
   const health = await fetchJson(baseUrl, "/api/health");
@@ -124,6 +131,25 @@ async function main() {
 
   const showcase = chooseShowcaseRestaurant(restaurantPayload.restaurants);
   assert(showcase?.id && showcase?.name, "No showcase restaurant available");
+
+  const searchPayload = await fetchJson(
+    baseUrl,
+    `/api/restaurants?q=${encodeURIComponent(showcase.name)}&limit=10`
+  );
+  assert(
+    searchPayload.restaurants.some((restaurant) => restaurant.id === showcase.id),
+    `/api/restaurants search did not return showcase restaurant ${showcase.id}`
+  );
+
+  const criticalPayload = await fetchJson(
+    baseUrl,
+    "/api/restaurants?recentCriticalOnly=true&limit=10"
+  );
+  assert(
+    criticalPayload.restaurants.length > 0 &&
+      criticalPayload.restaurants.every(hasRecentCriticalFlag),
+    "/api/restaurants recentCriticalOnly filter returned non-critical records"
+  );
 
   const home = await fetchText(baseUrl, "/");
   assert(

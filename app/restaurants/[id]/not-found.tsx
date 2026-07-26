@@ -24,8 +24,8 @@ export default function RestaurantNotFound() {
             We could not find that restaurant profile.
           </h1>
           <p className="mx-auto mt-4 max-w-xl text-sm leading-6 text-ink/65">
-            The restaurant ID may be missing from the curated demo seed or the link
-            may be outdated. Search the available restaurants and try again.
+            The restaurant ID may be outside the current demo extract, or the
+            link may be outdated. Search the available restaurants and try again.
           </p>
           <Link
             href="/"

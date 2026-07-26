@@ -37,6 +37,16 @@ type RestaurantDataSummary = {
 
 const DEFAULT_SUPABASE_LIMIT = 500;
 const MAX_SUPABASE_LIMIT = 1000;
+const gradeOrder = new Map([
+  ["A", 0],
+  ["B", 1],
+  ["C", 2],
+  ["N", 3],
+  ["NOT YET GRADED", 3],
+  ["P", 3],
+  ["PENDING", 3],
+  ["Z", 4]
+]);
 
 const syntheticRestaurants = sampleRestaurants as Restaurant[];
 const generatedOfficialRestaurants = officialRestaurants as Restaurant[];
@@ -220,13 +230,30 @@ function escapeSupabaseValue(value: string) {
   return value.replace(/"/g, '\\"').replace(/\*/g, "\\*");
 }
 
+function gradeRank(grade: string | null | undefined) {
+  return gradeOrder.get(String(grade ?? "").toUpperCase()) ?? 5;
+}
+
+function compareRestaurantsForDefaultView(a: Restaurant, b: Restaurant) {
+  return (
+    gradeRank(a.grade) - gradeRank(b.grade) ||
+    b.inspectionReliabilityScore - a.inspectionReliabilityScore ||
+    b.dataAsOf.localeCompare(a.dataAsOf) ||
+    a.name.localeCompare(b.name)
+  );
+}
+
+function sortRestaurantsForDefaultView(records: Restaurant[]) {
+  return [...records].sort(compareRestaurantsForDefaultView);
+}
+
 function buildSupabaseRestaurantUrl(
   config: { url: string },
   query: RestaurantQuery = {}
 ) {
   const params = new URLSearchParams({
     select: "payload",
-    order: "inspection_reliability_score.desc,name.asc",
+    order: "grade.asc.nullslast,inspection_reliability_score.desc,name.asc",
     limit: String(boundedLimit(query.limit))
   });
 
@@ -274,7 +301,7 @@ async function fetchSupabaseRestaurants(query: RestaurantQuery = {}) {
     const rows = (await response.json()) as Array<{ payload: Restaurant }>;
     const records = rows.map((row) => row.payload).filter(Boolean);
 
-    return isUsableSeed(records) ? records : null;
+    return isUsableSeed(records) ? sortRestaurantsForDefaultView(records) : null;
   } catch {
     return null;
   }
@@ -381,7 +408,7 @@ export async function listRestaurantsForApp(query: RestaurantQuery = {}) {
     return supabaseRestaurants;
   }
 
-  return listRestaurants(query);
+  return sortRestaurantsForDefaultView(listRestaurants(query));
 }
 
 export async function getRestaurantForApp(id: string) {

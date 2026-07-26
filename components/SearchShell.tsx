@@ -106,7 +106,8 @@ export default function SearchShell({ restaurants }: SearchShellProps) {
               Sano
             </Link>
             <p className="mt-2 max-w-xl text-sm leading-6 text-ink/65">
-              A restaurant&apos;s inspection history, read alongside its popularity.
+              A restaurant&apos;s inspection history, with popularity shown only
+              when available.
             </p>
           </div>
           <Link
@@ -180,8 +181,8 @@ export default function SearchShell({ restaurants }: SearchShellProps) {
                   </>
                 ) : (
                   <>
-                    The demo seed has no restaurants to show yet. Check back once
-                    data is loaded.
+                    No restaurant records are available from the configured demo
+                    extract right now. Check the data connection, then try again.
                   </>
                 )}
               </p>
