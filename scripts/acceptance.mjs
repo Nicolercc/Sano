@@ -10,6 +10,8 @@ const FORBIDDEN_PROFILE_STRINGS = [
   "hand-authored seed",
   "not live extracts"
 ];
+const FORBIDDEN_HOME_STRINGS = ["This is not a fake map"];
+const FORBIDDEN_DEFAULT_RESULT_NAMES = ["Google 5Bb"];
 
 function normalizeBaseUrl(value) {
   const raw = value || DEFAULT_BASE_URL;
@@ -111,6 +113,14 @@ async function main() {
     restaurantPayload.count <= health.data.restaurantCount,
     `/api/restaurants returned ${restaurantPayload.count}, which exceeds health total ${health.data.restaurantCount}`
   );
+  for (const forbiddenName of FORBIDDEN_DEFAULT_RESULT_NAMES) {
+    assert(
+      !restaurantPayload.restaurants.some(
+        (restaurant) => restaurant.name === forbiddenName
+      ),
+      `/api/restaurants default results include demo-hostile record: ${forbiddenName}`
+    );
+  }
   assert(
     restaurantPayload.restaurants.every((restaurant) => {
       const availability = restaurant.metadataAvailability;
@@ -169,6 +179,16 @@ async function main() {
   }
 
   const home = await fetchText(baseUrl, "/");
+  assert(
+    home.includes("Every restaurant has a grade. Not every grade tells the same story."),
+    "Home page does not include the demo-ready hero message"
+  );
+  for (const forbidden of FORBIDDEN_HOME_STRINGS) {
+    assert(
+      !home.includes(forbidden),
+      `Home page contains forbidden demo string: ${forbidden}`
+    );
+  }
   assert(
     home.includes(showcase.name) ||
       restaurantPayload.restaurants.some((restaurant) =>

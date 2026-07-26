@@ -37,6 +37,21 @@ type RestaurantDataSummary = {
 
 const DEFAULT_SUPABASE_LIMIT = 500;
 const MAX_SUPABASE_LIMIT = 1000;
+const DEFAULT_VIEW_OVERFETCH_MULTIPLIER = 3;
+const DEFAULT_VIEW_OVERFETCH_BUFFER = 24;
+const awkwardDemoNamePatterns = [/^google\b/i, /\b5bb\b/i];
+const commonChainNamePatterns = [
+  /\bburger king\b/i,
+  /\bchipotle\b/i,
+  /\bdunkin\b/i,
+  /\bkfc\b/i,
+  /\bmcdonald'?s\b/i,
+  /\bpopeyes\b/i,
+  /\bstarbucks\b/i,
+  /\bsubway\b/i,
+  /\btaco bell\b/i,
+  /\bwendy'?s\b/i
+];
 const gradeOrder = new Map([
   ["A", 0],
   ["B", 1],
@@ -241,9 +256,35 @@ function gradeRank(grade: string | null | undefined) {
   return gradeOrder.get(String(grade ?? "").toUpperCase()) ?? 5;
 }
 
+function isAwkwardDefaultDemoRecord(restaurant: Restaurant) {
+  const name = restaurant.name.trim();
+  return awkwardDemoNamePatterns.some((pattern) => pattern.test(name));
+}
+
+function defaultDemoPenalty(restaurant: Restaurant) {
+  let penalty = 0;
+
+  if (isAwkwardDefaultDemoRecord(restaurant)) {
+    penalty += 1000;
+  }
+  const name = restaurant.name.trim();
+  if (commonChainNamePatterns.some((pattern) => pattern.test(name))) {
+    penalty += 150;
+  }
+  if (!restaurant.zipcode) {
+    penalty += 25;
+  }
+  if (restaurant.confidence === "limited") {
+    penalty += 10;
+  }
+
+  return penalty;
+}
+
 function compareRestaurantsForDefaultView(a: Restaurant, b: Restaurant) {
   return (
     gradeRank(a.grade) - gradeRank(b.grade) ||
+    defaultDemoPenalty(a) - defaultDemoPenalty(b) ||
     b.inspectionReliabilityScore - a.inspectionReliabilityScore ||
     b.dataAsOf.localeCompare(a.dataAsOf) ||
     a.name.localeCompare(b.name)
@@ -258,10 +299,20 @@ function buildSupabaseRestaurantUrl(
   config: { url: string },
   query: RestaurantQuery = {}
 ) {
+  const requestedLimit = boundedLimit(query.limit);
+  const fetchLimit = hasScopedRestaurantQuery(query)
+    ? requestedLimit
+    : Math.min(
+        MAX_SUPABASE_LIMIT,
+        Math.max(
+          requestedLimit * DEFAULT_VIEW_OVERFETCH_MULTIPLIER,
+          requestedLimit + DEFAULT_VIEW_OVERFETCH_BUFFER
+        )
+      );
   const params = new URLSearchParams({
     select: "payload",
     order: "grade.asc.nullslast,inspection_reliability_score.desc,name.asc",
-    limit: String(boundedLimit(query.limit))
+    limit: String(fetchLimit)
   });
 
   const textQuery = query.q?.trim();
@@ -321,7 +372,16 @@ async function fetchSupabaseRestaurants(query: RestaurantQuery = {}) {
       return hasScopedRestaurantQuery(query) ? [] : null;
     }
 
-    return isUsableSeed(records) ? sortRestaurantsForDefaultView(records) : null;
+    if (!isUsableSeed(records)) {
+      return null;
+    }
+
+    const sorted = sortRestaurantsForDefaultView(records);
+    return hasScopedRestaurantQuery(query)
+      ? sorted
+      : sorted
+          .filter((restaurant) => !isAwkwardDefaultDemoRecord(restaurant))
+          .slice(0, boundedLimit(query.limit));
   } catch {
     return null;
   }
@@ -428,7 +488,12 @@ export async function listRestaurantsForApp(query: RestaurantQuery = {}) {
     return supabaseRestaurants;
   }
 
-  return sortRestaurantsForDefaultView(listRestaurants(query));
+  const fallbackRestaurants = sortRestaurantsForDefaultView(listRestaurants(query));
+  return hasScopedRestaurantQuery(query)
+    ? fallbackRestaurants
+    : fallbackRestaurants.filter(
+        (restaurant) => !isAwkwardDefaultDemoRecord(restaurant)
+      );
 }
 
 export async function getRestaurantForApp(id: string) {

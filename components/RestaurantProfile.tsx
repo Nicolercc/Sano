@@ -104,7 +104,7 @@ export default function RestaurantProfile({
               <h2 className="text-lg font-bold text-ink">Source context</h2>
               <dl className="mt-3 grid gap-3 text-sm">
                 <div>
-                  <dt className="font-bold text-ink">Data as of</dt>
+                  <dt className="font-bold text-ink">Extract generated</dt>
                   <dd className="text-ink/65">{formatDate(restaurant.dataAsOf)}</dd>
                 </div>
                 <div>

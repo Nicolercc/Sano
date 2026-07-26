@@ -1,5 +1,6 @@
 "use client";
 
+import { formatCompactInspectionReliabilityScore } from "@/lib/format";
 import type { Restaurant } from "@/lib/types";
 
 type MapResultsProps = {
@@ -46,12 +47,12 @@ export default function MapResults({
               Coverage snapshot
             </p>
             <h2 className="mt-1 text-xl font-black text-ink">
-              Search the real inspection-backed dataset
+              Coverage across boroughs and ZIP codes
             </h2>
             <p className="mt-2 max-w-2xl text-sm leading-6 text-ink/60">
-              This is not a fake map. Sano is currently optimized for searchable
-              official records: restaurant name, cuisine, borough, address, and
-              ZIP code where DOHMH provides it.
+              Sano is optimized for searchable official records: restaurant name,
+              cuisine, borough, address, and ZIP code where DOHMH provides it.
+              The snapshot below updates with your current search.
             </p>
           </div>
           <span className="rounded-full bg-oat px-3 py-1.5 text-xs font-black text-ink/65">
@@ -159,7 +160,9 @@ export default function MapResults({
                   Score
                 </p>
                 <p className="mt-1 font-black text-ink">
-                  {selectedRestaurant.inspectionReliabilityScore}
+                  {formatCompactInspectionReliabilityScore(
+                    selectedRestaurant.inspectionReliabilityScore
+                  )}
                 </p>
               </div>
               <div className="rounded-lg bg-white p-3">

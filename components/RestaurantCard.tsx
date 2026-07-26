@@ -3,8 +3,10 @@
 import Link from "next/link";
 import {
   confidenceLabel,
+  formatCompactInspectionReliabilityScore,
   formatPopularitySummary,
   hasPopularityMetadata,
+  hasLowInspectionReliabilitySignal,
   trajectoryLabel
 } from "@/lib/format";
 import { confidenceTone, scoreTone } from "@/lib/scoring";
@@ -85,6 +87,9 @@ export default function RestaurantCard({
 }: RestaurantCardProps) {
   const bars = timelineBars(restaurant.inspections);
   const meterWidth = `${Math.max(4, restaurant.inspectionReliabilityScore)}%`;
+  const lowInspectionSignal = hasLowInspectionReliabilitySignal(
+    restaurant.inspectionReliabilityScore
+  );
   const hasPopularity = hasPopularityMetadata(
     restaurant.rating,
     restaurant.reviewCount
@@ -195,14 +200,20 @@ export default function RestaurantCard({
           <div className="min-w-0">
             <div className="flex items-baseline justify-between gap-2 lg:gap-3">
               <p className="text-[10px] font-bold uppercase tracking-wide text-ink/45">
-                Reliability
+                Inspection reliability
               </p>
               <p
-                className={`text-base font-black tabular-nums ${scoreTone(
-                  restaurant.inspectionReliabilityScore
-                )}`}
+                className={`text-right text-sm font-black ${
+                  lowInspectionSignal
+                    ? "text-coral"
+                    : `tabular-nums ${scoreTone(
+                        restaurant.inspectionReliabilityScore
+                      )}`
+                }`}
               >
-                {restaurant.inspectionReliabilityScore}
+                {formatCompactInspectionReliabilityScore(
+                  restaurant.inspectionReliabilityScore
+                )}
               </p>
             </div>
             <div className="mt-2 h-1.5 overflow-hidden rounded-full bg-ink/10">

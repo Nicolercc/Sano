@@ -17,6 +17,26 @@ export function formatTrustGap(value: number) {
   return `${prefix}${value}`;
 }
 
+export function hasLowInspectionReliabilitySignal(score: number) {
+  return score < 15;
+}
+
+export function formatInspectionReliabilityScore(score: number) {
+  if (hasLowInspectionReliabilitySignal(score)) {
+    return "Needs review";
+  }
+
+  return String(score);
+}
+
+export function formatCompactInspectionReliabilityScore(score: number) {
+  if (hasLowInspectionReliabilitySignal(score)) {
+    return "Low signal";
+  }
+
+  return String(score);
+}
+
 export function hasPopularityMetadata(
   rating: number | null | undefined,
   reviewCount: number | null | undefined

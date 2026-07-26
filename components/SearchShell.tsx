@@ -160,14 +160,37 @@ export default function SearchShell({
             >
               Sano
             </Link>
-            <p className="mt-3 text-2xl font-black leading-tight text-ink sm:text-4xl">
-              Find NYC restaurants by inspection history — not vibes alone.
+            <p className="mt-4 text-xs font-black uppercase tracking-[0.22em] text-moss">
+              NYC official inspection data, made readable
             </p>
+            <h1 className="mt-2 max-w-4xl text-3xl font-black leading-[1.05] text-ink sm:text-5xl">
+              Every restaurant has a grade. Not every grade tells the same story.
+            </h1>
             <p className="mt-3 max-w-2xl text-sm leading-6 text-ink/65 sm:text-base">
               Sano turns public NYC DOHMH inspection records into a searchable
               discovery layer. Search by restaurant, cuisine, borough, or ZIP code;
               popularity appears only when we have a matched public source.
             </p>
+            <div className="mt-5 flex flex-wrap gap-3">
+              <button
+                type="button"
+                onClick={() =>
+                  setFilters((current) => ({ ...current, query: "11414" }))
+                }
+                className="inline-flex min-h-11 items-center rounded-md bg-ink px-5 text-sm font-bold text-white shadow-sm transition hover:bg-moss focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-moss"
+              >
+                Try ZIP 11414
+              </button>
+              <button
+                type="button"
+                onClick={() =>
+                  setFilters((current) => ({ ...current, query: "Chelsea" }))
+                }
+                className="inline-flex min-h-11 items-center rounded-md border border-ink/15 bg-white px-5 text-sm font-bold text-ink shadow-sm transition hover:border-moss/40 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-moss"
+              >
+                Explore Chelsea
+              </button>
+            </div>
             <div className="mt-5 grid gap-2 text-sm sm:grid-cols-3">
               <div className="rounded-lg bg-oat px-4 py-3">
                 <p className="text-xs font-bold uppercase tracking-wide text-ink/45">
@@ -222,9 +245,9 @@ export default function SearchShell({
         <section className="flex flex-col gap-4">
           <div className="flex flex-wrap items-end justify-between gap-3">
             <div>
-              <h1 className="text-xl font-bold text-ink">
+              <h2 className="text-xl font-bold text-ink">
                 Search results
-              </h1>
+              </h2>
               <p className="mt-1 text-sm text-ink/55">
                 Showing a focused slice first. Use search or filters to narrow the
                 full Supabase-backed dataset.
