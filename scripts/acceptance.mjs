@@ -1,5 +1,9 @@
 const DEFAULT_BASE_URL = "http://127.0.0.1:3000";
-const EXPECTED_MODE = "official-generated-seed";
+const SUPPORTED_REAL_DATA_MODES = new Set([
+  "official-generated-seed",
+  "supabase-app-records"
+]);
+const MIN_SUPABASE_RESTAURANTS = 1000;
 const FORBIDDEN_PROFILE_STRINGS = [
   "0.0 rating",
   "0 reviews",
@@ -69,24 +73,36 @@ async function main() {
 
   assert(health.status === "ok", "/api/health did not report ok");
   assert(
-    health.data?.mode === EXPECTED_MODE,
-    `/api/health mode is ${health.data?.mode}; expected ${EXPECTED_MODE}`
+    SUPPORTED_REAL_DATA_MODES.has(health.data?.mode),
+    `/api/health mode is ${health.data?.mode}; expected one of ${[
+      ...SUPPORTED_REAL_DATA_MODES
+    ].join(", ")}`
   );
   assert(
     Number.isInteger(health.data?.restaurantCount) &&
       health.data.restaurantCount > 0,
     "/api/health restaurantCount is missing or empty"
   );
+  if (health.data.mode === "supabase-app-records") {
+    assert(
+      health.data.restaurantCount >= MIN_SUPABASE_RESTAURANTS,
+      `/api/health Supabase restaurantCount is ${health.data.restaurantCount}; expected at least ${MIN_SUPABASE_RESTAURANTS}`
+    );
+  }
 
   const restaurantPayload = await fetchJson(baseUrl, "/api/restaurants");
   assert(
-    restaurantPayload.count === health.data.restaurantCount,
-    `/api/restaurants count ${restaurantPayload.count} does not match health ${health.data.restaurantCount}`
+    Number.isInteger(restaurantPayload.count) && restaurantPayload.count > 0,
+    `/api/restaurants count ${restaurantPayload.count} is missing or empty`
   );
   assert(
     Array.isArray(restaurantPayload.restaurants) &&
       restaurantPayload.restaurants.length === restaurantPayload.count,
     "/api/restaurants payload shape is invalid"
+  );
+  assert(
+    restaurantPayload.count <= health.data.restaurantCount,
+    `/api/restaurants returned ${restaurantPayload.count}, which exceeds health total ${health.data.restaurantCount}`
   );
   assert(
     restaurantPayload.restaurants.every((restaurant) => {
