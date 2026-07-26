@@ -51,7 +51,10 @@ export default function FilterBar({
   const filtersActive = hasActiveFilters(filters);
 
   return (
-    <section className="flex flex-wrap items-center gap-2 rounded-lg border border-ink/10 bg-white/65 p-2.5 shadow-sm backdrop-blur">
+    <section
+      aria-label="Restaurant filters"
+      className="flex flex-wrap items-center gap-2 rounded-lg border border-ink/10 bg-white/65 p-2.5 shadow-sm backdrop-blur"
+    >
       <label className="min-w-0 flex-1 basis-full sm:basis-64">
         <span className="sr-only">Search</span>
         <input

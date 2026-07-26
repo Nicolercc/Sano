@@ -144,6 +144,18 @@ export function scoreTone(score: number) {
   return "text-coral";
 }
 
+export function scoreMeterTone(score: number) {
+  if (score >= 78) {
+    return "bg-moss";
+  }
+
+  if (score >= 62) {
+    return "bg-amber";
+  }
+
+  return "bg-coral";
+}
+
 export function confidenceTone(confidence: ConfidenceLevel) {
   const tones: Record<ConfidenceLevel, string> = {
     high: "bg-mint text-moss",

@@ -1,7 +1,7 @@
 import Link from "next/link";
 import {
-  confidenceLabel,
   formatCompactInspectionReliabilityScore,
+  historyDepthLabel,
   trajectoryLabel
 } from "@/lib/format";
 import { getAlternativesForApp } from "@/lib/server/restaurants";
@@ -20,68 +20,47 @@ export default async function Alternatives({ restaurant }: AlternativesProps) {
 
   return (
     <section className="rounded-lg border border-ink/10 bg-white p-5 shadow-sm">
-      <div className="mb-4">
+      <div className="mb-3">
         <h2 className="text-lg font-bold text-ink">Nearby alternatives</h2>
         <p className="text-sm text-ink/60">
-          Similar options with stronger inspection trajectory or confidence signals.
+          Compact comparisons from the current index — not endorsements.
         </p>
       </div>
-      <div className="grid gap-3">
+      <ul className="divide-y divide-ink/8">
         {alternatives.map((alternative) => (
-          <article
+          <li
             key={alternative.id}
-            className="rounded-xl border border-ink/10 bg-oat p-4"
+            className="flex min-w-0 flex-wrap items-center justify-between gap-3 py-3 first:pt-0 last:pb-0"
           >
-            <div className="flex flex-wrap items-start justify-between gap-3">
-              <div className="min-w-0">
-                <h3 className="font-serif text-xl font-bold leading-tight text-ink">
-                  {alternative.name}
-                </h3>
-                <p className="mt-1 text-sm leading-5 text-ink/60">
-                  {alternative.cuisine} · {alternative.neighborhood}
-                  {alternative.zipcode ? ` ${alternative.zipcode}` : ""}
-                </p>
-              </div>
-              <Link
-                href={`/restaurants/${alternative.id}`}
-                className="inline-flex min-h-9 items-center rounded-md bg-ink px-3 text-xs font-bold text-white transition hover:bg-moss focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-moss"
-              >
-                Open
-              </Link>
+            <div className="min-w-0 flex-1">
+              <p className="truncate font-serif text-base font-bold text-ink">
+                {alternative.name}
+              </p>
+              <p className="mt-0.5 truncate text-xs text-ink/55">
+                {alternative.cuisine} · {alternative.neighborhood}
+                {alternative.zipcode ? ` ${alternative.zipcode}` : ""}
+                <span className="text-ink/30"> · </span>
+                Grade {alternative.grade}
+                <span className="text-ink/30"> · </span>
+                {formatCompactInspectionReliabilityScore(
+                  alternative.inspectionReliabilityScore
+                )}{" "}
+                reliability
+                <span className="text-ink/30"> · </span>
+                {trajectoryLabel(alternative.trajectory)}
+                <span className="text-ink/30"> · </span>
+                Depth {historyDepthLabel(alternative.confidence)}
+              </p>
             </div>
-            <div className="mt-4 grid grid-cols-3 gap-2 text-sm">
-              <div className="rounded-lg bg-white p-3">
-                <p className="text-[10px] font-bold uppercase tracking-wide text-ink/45">
-                  Grade
-                </p>
-                <p className="mt-1 font-black text-ink">{alternative.grade}</p>
-              </div>
-              <div className="rounded-lg bg-white p-3">
-                <p className="text-[10px] font-bold uppercase tracking-wide text-ink/45">
-                  Reliability
-                </p>
-                <p className="mt-1 font-black text-ink">
-                  {formatCompactInspectionReliabilityScore(
-                    alternative.inspectionReliabilityScore
-                  )}
-                </p>
-              </div>
-              <div className="rounded-lg bg-white p-3">
-                <p className="text-[10px] font-bold uppercase tracking-wide text-ink/45">
-                  History
-                </p>
-                <p className="mt-1 font-black text-ink">
-                  {confidenceLabel(alternative.confidence)}
-                </p>
-              </div>
-            </div>
-            <p className="mt-3 text-sm leading-5 text-ink/65">
-              {trajectoryLabel(alternative.trajectory)} inspection trajectory in
-              the current extract.
-            </p>
-          </article>
+            <Link
+              href={`/restaurants/${alternative.id}`}
+              className="inline-flex min-h-9 shrink-0 items-center rounded-md border border-ink/15 bg-oat px-3 text-xs font-bold text-ink transition hover:border-moss/40 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-moss"
+            >
+              Open
+            </Link>
+          </li>
         ))}
-      </div>
+      </ul>
     </section>
   );
 }
