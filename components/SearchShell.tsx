@@ -574,27 +574,162 @@ export default function SearchShell({
 
       <div className="mx-auto flex w-full max-w-7xl flex-col gap-10 px-4 py-10 sm:px-6 lg:px-8">
         <section
-          id="how-it-works"
-          aria-label="How Sano works"
-          className="grid scroll-mt-24 gap-3 rounded-[2rem] border border-ink/10 bg-[var(--surface-2)] p-4 shadow-sm md:grid-cols-3 md:p-5"
+          aria-labelledby="signal-bridge-heading"
+          className="-mt-16 rounded-[2rem] border border-white/70 bg-[var(--surface-2)] p-4 shadow-[0_24px_80px_rgba(23,32,27,0.12)] sm:p-5 lg:-mt-20"
         >
-          {[
-            ["01", "Start with official records", "Sano uses NYC DOHMH inspection data as the backbone — not crowd rumors."],
-            ["02", "Read the pattern", "The app surfaces trajectory, recent critical flags, repeat patterns, and history depth."],
-            ["03", "Know the limits", "Ratings only appear when matched. Sano does not invent reviews or safety certainty."]
-          ].map(([step, title, body]) => (
-            <div key={step} className="rounded-3xl bg-oat p-5">
-              <p className="text-xs font-black uppercase tracking-[0.18em] text-[#2563c9]">
-                {step}
+          <div className="grid gap-5 lg:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)] lg:items-center">
+            <div className="rounded-[1.5rem] bg-[#1e2a38] p-5 text-white">
+              <p className="text-xs font-black uppercase tracking-[0.2em] text-[#9dc0ec]">
+                From public records to readable signals
               </p>
-              <h2 className="mt-3 text-lg font-black text-[var(--text-primary)]">
-                {title}
+              <h2
+                id="signal-bridge-heading"
+                className="mt-3 font-serif text-3xl font-black leading-tight"
+              >
+                Sano keeps the official grade visible, then shows the pattern
+                underneath.
               </h2>
-              <p className="mt-2 text-sm leading-6 text-[var(--text-secondary)]">
-                {body}
+              <p className="mt-4 text-sm leading-6 text-white/66">
+                The app does not replace NYC inspection records. It turns those
+                records into a clearer path through grade, reliability, history
+                depth, and matched popularity metadata when available.
               </p>
             </div>
-          ))}
+
+            <div className="grid gap-3 sm:grid-cols-3">
+              {[
+                [
+                  "Official grade",
+                  "A",
+                  "The city-posted grade stays first and visually separate.",
+                  "red"
+                ],
+                [
+                  "Inspection reliability",
+                  "0–100",
+                  "A derived comparison signal from inspection history.",
+                  "blue"
+                ],
+                [
+                  "History depth",
+                  "High",
+                  "A plain cue for how much timeline backs the summary.",
+                  "gold"
+                ]
+              ].map(([label, value, body, tone]) => (
+                <article
+                  key={label}
+                  className="relative overflow-hidden rounded-[1.35rem] border border-ink/10 bg-oat p-4"
+                >
+                  <div
+                    className="pointer-events-none absolute inset-0 opacity-70"
+                    style={{
+                      backgroundImage:
+                        "linear-gradient(rgba(80,140,220,0.12) 1px, transparent 1px)",
+                      backgroundSize: "100% 24px"
+                    }}
+                    aria-hidden="true"
+                  />
+                  <div className="relative">
+                    <p className="text-[10px] font-black uppercase tracking-[0.16em] text-ink/45">
+                      {label}
+                    </p>
+                    <p
+                      className={`mt-3 font-serif text-3xl font-black leading-none ${
+                        tone === "red"
+                          ? "text-[#c22]"
+                          : tone === "gold"
+                            ? "text-[#d4af37]"
+                            : "text-[#2563c9]"
+                      }`}
+                    >
+                      {value}
+                    </p>
+                    <p className="mt-4 text-xs font-semibold leading-5 text-ink/60">
+                      {body}
+                    </p>
+                  </div>
+                </article>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        <section
+          id="how-it-works"
+          aria-labelledby="how-it-works-heading"
+          className="scroll-mt-24 rounded-[2rem] border border-ink/10 bg-[var(--surface-2)] p-4 shadow-sm md:p-5"
+        >
+          <div className="mb-5 flex flex-wrap items-end justify-between gap-3">
+            <div>
+              <p className="text-xs font-black uppercase tracking-[0.2em] text-[#2563c9]">
+                How it works
+              </p>
+              <h2
+                id="how-it-works-heading"
+                className="mt-2 font-serif text-3xl font-black leading-tight text-ink"
+              >
+                Three steps, no invented certainty.
+              </h2>
+            </div>
+            <p className="max-w-md text-sm font-semibold leading-6 text-ink/55">
+              Sano translates records into context while keeping source limits
+              visible.
+            </p>
+          </div>
+          <div className="grid gap-3 md:grid-cols-3">
+            {[
+              [
+                "01",
+                "Official records",
+                "Start with NYC DOHMH inspection data — restaurant identity, grade, inspection dates, scores, and violation context.",
+                "A"
+              ],
+              [
+                "02",
+                "Pattern detection",
+                "Read trajectory, recent critical flags, repeat patterns, and history depth instead of treating one letter as the whole story.",
+                "↘"
+              ],
+              [
+                "03",
+                "Honest limitations",
+                "Ratings only appear when matched. Sano does not invent reviews, official endorsement, or safety certainty.",
+                "!"
+              ]
+            ].map(([step, title, body, mark]) => (
+              <article
+                key={step}
+                className="relative overflow-hidden rounded-3xl border border-ink/10 bg-oat p-5"
+              >
+                <div
+                  className="pointer-events-none absolute inset-0 opacity-80"
+                  style={{
+                    backgroundImage:
+                      "linear-gradient(rgba(80,140,220,0.12) 1px, transparent 1px)",
+                    backgroundSize: "100% 26px"
+                  }}
+                  aria-hidden="true"
+                />
+                <div className="relative">
+                  <div className="flex items-start justify-between gap-3">
+                    <p className="text-xs font-black uppercase tracking-[0.18em] text-[#2563c9]">
+                      {step}
+                    </p>
+                    <span className="grid h-9 w-9 place-items-center rounded-full border-2 border-[#c22] bg-white font-serif text-lg font-black text-[#c22]">
+                      {mark}
+                    </span>
+                  </div>
+                  <h3 className="mt-6 text-lg font-black text-[var(--text-primary)]">
+                    {title}
+                  </h3>
+                  <p className="mt-2 text-sm leading-6 text-[var(--text-secondary)]">
+                    {body}
+                  </p>
+                </div>
+              </article>
+            ))}
+          </div>
         </section>
 
         {demoJourneys.length > 0 ? (
