@@ -1,5 +1,6 @@
 import AppNav from "@/components/AppNav";
 import Alternatives from "@/components/Alternatives";
+import MarkerGrade from "@/components/MarkerGrade";
 import SanoScorePanel from "@/components/SanoScorePanel";
 import TrustTimeline from "@/components/TrustTimeline";
 import {
@@ -62,9 +63,7 @@ export default function RestaurantProfile({
                   <p className="text-xs font-bold uppercase tracking-wide text-ink/50">
                     Current grade
                   </p>
-                  <p className="mt-1 font-serif text-3xl font-bold leading-none text-ink">
-                    {restaurant.grade}
-                  </p>
+                  <MarkerGrade grade={restaurant.grade} size="lg" className="mt-2" />
                 </div>
                 <div>
                   <p className="text-xs font-bold uppercase tracking-wide text-ink/50">

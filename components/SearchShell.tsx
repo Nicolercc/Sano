@@ -5,6 +5,7 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import AppNav from "@/components/AppNav";
 import FilterBar, { hasActiveFilters } from "@/components/FilterBar";
 import MapResults from "@/components/MapResults";
+import MarkerGrade from "@/components/MarkerGrade";
 import RestaurantCard from "@/components/RestaurantCard";
 import type { Restaurant, RestaurantFilters } from "@/lib/types";
 
@@ -481,9 +482,7 @@ export default function SearchShell({
                     {featuredRestaurant?.neighborhood ?? "official record"}
                   </p>
                 </div>
-                <div className="grid h-16 w-16 shrink-0 place-items-center rounded-2xl border-4 border-[#c22] bg-white font-serif text-4xl font-black text-[#c22] shadow-sm">
-                  {featuredRestaurant?.grade ?? "A"}
-                </div>
+                <MarkerGrade grade={featuredRestaurant?.grade ?? "A"} size="xl" />
               </div>
 
               <div className="mt-6 rounded-2xl border border-ink/10 bg-white/104 p-4">
@@ -523,8 +522,12 @@ export default function SearchShell({
                           )}%`
                         }}
                       >
-                        <span className="absolute -top-3 left-1/2 grid h-6 w-6 -translate-x-1/2 place-items-center rounded-full border-2 border-[#c22] bg-white text-[10px] font-black text-[#c22]">
-                          {inspection.grade}
+                        <span className="absolute -top-3 left-1/2 -translate-x-1/2">
+                          <MarkerGrade
+                            grade={inspection.grade}
+                            size="xs"
+                            compactPending
+                          />
                         </span>
                       </div>
                     </div>
@@ -716,9 +719,13 @@ export default function SearchShell({
                     <p className="text-xs font-black uppercase tracking-[0.18em] text-[#2563c9]">
                       {step}
                     </p>
-                    <span className="grid h-9 w-9 place-items-center rounded-full border-2 border-[#c22] bg-white font-serif text-lg font-black text-[#c22]">
-                      {mark}
-                    </span>
+                    {mark === "A" ? (
+                      <MarkerGrade grade={mark} size="sm" />
+                    ) : (
+                      <span className="grid h-9 w-9 place-items-center rounded-full border-2 border-[#c22] bg-white text-lg font-black text-[#c22]">
+                        {mark}
+                      </span>
+                    )}
                   </div>
                   <h3 className="mt-6 text-lg font-black text-[var(--text-primary)]">
                     {title}

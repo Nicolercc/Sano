@@ -1,5 +1,6 @@
 "use client";
 
+import MarkerGrade from "@/components/MarkerGrade";
 import { formatCompactInspectionReliabilityScore } from "@/lib/format";
 import type { Restaurant } from "@/lib/types";
 
@@ -153,7 +154,11 @@ export default function MapResults({
                 <p className="text-[10px] font-bold uppercase tracking-wide text-ink/45">
                   Grade
                 </p>
-                <p className="mt-1 font-black text-ink">{selectedRestaurant.grade}</p>
+                <MarkerGrade
+                  grade={selectedRestaurant.grade}
+                  size="sm"
+                  className="mx-auto mt-2"
+                />
               </div>
               <div className="rounded-lg bg-white p-3">
                 <p className="text-[10px] font-bold uppercase tracking-wide text-ink/45">

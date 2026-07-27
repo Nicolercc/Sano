@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import MarkerGrade from "@/components/MarkerGrade";
 import {
   formatCompactInspectionReliabilityScore,
   formatPopularitySummary,
@@ -89,9 +90,7 @@ export default function RestaurantCard({
           <p className="text-[10px] font-bold uppercase tracking-wide text-ink/45">
             Grade
           </p>
-          <p className="mt-1 font-serif text-3xl font-bold leading-none text-ink">
-            {restaurant.grade}
-          </p>
+          <MarkerGrade grade={restaurant.grade} size="md" className="mt-2" />
         </div>
 
         <div className="min-w-0">

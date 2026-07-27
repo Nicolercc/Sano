@@ -2,6 +2,14 @@
 @tailwind components;
 @tailwind utilities;
 
+@font-face {
+  font-family: "Permanent Marker";
+  src: url("/fonts/permanent-marker.ttf") format("truetype");
+  font-display: swap;
+  font-style: normal;
+  font-weight: 400;
+}
+
 :root {
   color-scheme: light;
   scroll-behavior: smooth;
@@ -13,6 +21,7 @@
   --badge-blue: #9dc0ec;
   --red-pen: #c22;
   --grade-gold: #d4af37;
+  --font-marker: "Permanent Marker";
 }
 
 * {
