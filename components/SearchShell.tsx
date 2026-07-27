@@ -354,7 +354,7 @@ export default function SearchShell({
           aria-hidden="true"
         />
         <div className="pt-3">
-          <AppNav active="home" />
+          <AppNav active="home" onCommandSearch={runHeroSearch} />
         </div>
 
         <div className="mx-auto grid w-full max-w-7xl gap-10 px-4 pb-14 pt-10 sm:px-6 lg:grid-cols-[minmax(0,1.02fr)_minmax(24rem,0.98fr)] lg:px-8 lg:pb-20 lg:pt-16">
