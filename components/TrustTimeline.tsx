@@ -145,43 +145,33 @@ export default function TrustTimeline({ inspections }: TrustTimelineProps) {
               const markerY = Math.max(2.2, y - 7.2);
               const gradeY = Math.max(4.8, y - 3.2);
               const gradeTilt = [-2, 1.5, -1, 2][index % 4];
+              const gradeLabel =
+                inspection.grade.toLowerCase() === "pending"
+                  ? "P"
+                  : inspection.grade.slice(0, 1).toUpperCase();
 
               return (
                 <g key={`${inspection.id}-markers`}>
-                  <ellipse
-                    cx={cx}
-                    cy={gradeY - 1}
-                    rx="3.5"
-                    ry="2.6"
-                    fill="#ffffff"
-                    stroke="#c22"
-                    strokeWidth="0.45"
-                    transform={`rotate(${gradeTilt} ${cx} ${gradeY - 1})`}
-                  />
-                  <ellipse
-                    cx={cx}
-                    cy={gradeY - 1}
-                    rx="2.95"
-                    ry="2.15"
+                  <path
+                    d={`M ${cx - 2.35} ${gradeY + 1.25} Q ${cx} ${gradeY + 2.2} ${cx + 2.35} ${gradeY + 1.25}`}
                     fill="none"
                     stroke="#c22"
-                    strokeOpacity="0.62"
-                    strokeWidth="0.24"
-                    transform={`rotate(${-gradeTilt} ${cx} ${gradeY - 1})`}
+                    strokeOpacity="0.74"
+                    strokeWidth="0.35"
+                    strokeLinecap="round"
+                    transform={`rotate(${gradeTilt} ${cx} ${gradeY + 1.25})`}
                   />
                   <text
                     x={cx}
-                    y={gradeY + 0.35}
+                    y={gradeY}
                     textAnchor="middle"
                     fill="#c22"
                     fontFamily="var(--font-marker), ui-rounded, system-ui, sans-serif"
-                    fontSize="3.5"
+                    fontSize={gradeLabel === "P" ? "3.35" : "3.65"}
                     fontWeight="400"
                     transform={`rotate(${gradeTilt} ${cx} ${gradeY})`}
                   >
-                    {inspection.grade.toLowerCase() === "pending"
-                      ? "P"
-                      : inspection.grade.slice(0, 1).toUpperCase()}
+                    {gradeLabel}
                   </text>
 
                   {hasCritical ? (

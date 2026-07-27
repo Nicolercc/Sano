@@ -7,6 +7,7 @@ import FilterBar, { hasActiveFilters } from "@/components/FilterBar";
 import MapResults from "@/components/MapResults";
 import MarkerGrade from "@/components/MarkerGrade";
 import RestaurantCard from "@/components/RestaurantCard";
+import TimelineGradeMark from "@/components/TimelineGradeMark";
 import type { Restaurant, RestaurantFilters } from "@/lib/types";
 
 type SearchShellProps = {
@@ -486,7 +487,7 @@ export default function SearchShell({
               </div>
 
               <div className="mt-6 rounded-2xl border border-ink/10 bg-white/104 p-4">
-                <div className="mb-4 flex flex-wrap items-center justify-between gap-3">
+                <div className="mb-4 flex flex-col items-start gap-2">
                   <div>
                     <p className="text-[10px] font-black uppercase tracking-[0.16em] text-[var(--text-secondary)]">
                       Inspection timeline
@@ -495,8 +496,8 @@ export default function SearchShell({
                       {featuredRestaurant?.sanoLabel ?? "Public record context"}
                     </p>
                   </div>
-                  <span className="rounded-full bg-[#2563c9]/10 px-3 py-1 text-xs font-black text-[#2563c9]">
-                    Official grade visible
+                  <span className="w-fit rounded-full bg-[#2563c9]/10 px-3 py-1 text-xs font-black text-[#2563c9]">
+                    Official grade
                   </span>
                 </div>
                 <div className="grid h-44 items-end gap-2 sm:grid-cols-5">
@@ -511,10 +512,10 @@ export default function SearchShell({
                       ]).map((inspection) => (
                     <div
                       key={inspection.id}
-                      className="relative flex h-full items-end rounded-xl bg-[#2563c9]/10 p-2"
+                      className="relative flex h-full items-end rounded-xl bg-[#2563c9]/8 p-2 pt-7"
                     >
                       <div
-                        className="relative w-full rounded-lg bg-[#2563c9]"
+                        className="relative w-full rounded-lg bg-[#2563c9] shadow-[inset_0_1px_0_rgba(255,255,255,0.18)]"
                         style={{
                           height: `${Math.max(
                             12,
@@ -522,11 +523,10 @@ export default function SearchShell({
                           )}%`
                         }}
                       >
-                        <span className="absolute -top-3 left-1/2 -translate-x-1/2">
-                          <MarkerGrade
+                        <span className="absolute -top-6 left-1/2 -translate-x-1/2">
+                          <TimelineGradeMark
                             grade={inspection.grade}
-                            size="xs"
-                            compactPending
+                            rotation={inspection.grade === "A" ? 1 : -2}
                           />
                         </span>
                       </div>
