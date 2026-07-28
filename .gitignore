@@ -33,3 +33,15 @@ data/generated/*.json
 !data/generated/.gitkeep
 
 .vercel
+.gstack/
+
+# package manager (npm is canonical; ignore other lockfiles)
+pnpm-lock.yaml
+yarn.lock
+
+# debug/build artifacts
+*.tsbuildinfo
+*_dump.html
+*_dump.json
+notfound_dump.html
+restaurants_dump.json
