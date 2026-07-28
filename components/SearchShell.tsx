@@ -5,7 +5,10 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import AppNav from "@/components/AppNav";
 import FilterBar, { hasActiveFilters } from "@/components/FilterBar";
 import MapResults from "@/components/MapResults";
+import MarkerGrade from "@/components/MarkerGrade";
 import RestaurantCard from "@/components/RestaurantCard";
+import TimelineGradeMark from "@/components/TimelineGradeMark";
+import { trajectoryLabel } from "@/lib/format";
 import type { Restaurant, RestaurantFilters } from "@/lib/types";
 
 type SearchShellProps = {
@@ -29,7 +32,8 @@ const defaultFilters: RestaurantFilters = {
 const INITIAL_VISIBLE_COUNT = 12;
 const VISIBLE_INCREMENT = 12;
 const API_RESULT_LIMIT = 80;
-const PRIMARY_DEMO_QUERY = "11414";
+/** Pursuit HQ area — Long Island City / Austell Place */
+const PRIMARY_DEMO_QUERY = "11101";
 
 type DemoJourney = {
   id: string;
@@ -187,9 +191,6 @@ export default function SearchShell({
   const [loading, setLoading] = useState(false);
   const [loadError, setLoadError] = useState(false);
   const [heroSearchQuery, setHeroSearchQuery] = useState("");
-  const [selectedRestaurant, setSelectedRestaurant] = useState<Restaurant | null>(
-    restaurants[0] ?? null
-  );
   const searchSectionRef = useRef<HTMLElement | null>(null);
 
   const cuisines = useMemo(
@@ -243,18 +244,11 @@ export default function SearchShell({
           ? payload.restaurants
           : [];
         setResults(nextResults);
-        setSelectedRestaurant((current) => {
-          if (nextResults.some((restaurant) => restaurant.id === current?.id)) {
-            return current;
-          }
-          return nextResults[0] ?? null;
-        });
       })
       .catch((error) => {
         if (error.name !== "AbortError") {
           setLoadError(true);
           setResults([]);
-          setSelectedRestaurant(null);
         }
       })
       .finally(() => {
@@ -265,11 +259,6 @@ export default function SearchShell({
 
     return () => controller.abort();
   }, [filters]);
-
-  const selectedInResults =
-    results.find((restaurant) => restaurant.id === selectedRestaurant?.id) ??
-    results[0] ??
-    null;
 
   const filtersActive = hasActiveFilters(filters);
   const filterParts = activeFilterSummary(filters);
@@ -320,6 +309,7 @@ export default function SearchShell({
 
   return (
     <main className="min-h-screen overflow-x-hidden bg-oat text-ink">
+      <AppNav active="home" onCommandSearch={runHeroSearch} />
       <div
         className="relative isolate overflow-hidden bg-[#1e2a38] text-white"
         style={{
@@ -352,10 +342,6 @@ export default function SearchShell({
           className="pointer-events-none absolute bottom-[-11rem] left-1/2 -z-10 h-80 w-80 -translate-x-1/2 rounded-full bg-[#2563c9]/20 blur-3xl"
           aria-hidden="true"
         />
-        <div className="pt-3">
-          <AppNav active="home" />
-        </div>
-
         <div className="mx-auto grid w-full max-w-7xl gap-10 px-4 pb-14 pt-10 sm:px-6 lg:grid-cols-[minmax(0,1.02fr)_minmax(24rem,0.98fr)] lg:px-8 lg:pb-20 lg:pt-16">
           <header id="landing" className="min-w-0 text-center lg:text-left">
             <div className="inline-flex items-center gap-2 rounded-full border border-[#6fa3e0]/25 bg-[#2563c9]/15 px-4 py-2 text-xs font-black uppercase tracking-[0.18em] text-[#9dc0ec] shadow-sm backdrop-blur">
@@ -400,7 +386,7 @@ export default function SearchShell({
 
             <div className="mx-auto mt-4 flex max-w-3xl flex-wrap items-center justify-center gap-2 text-sm lg:mx-0 lg:justify-start">
               <span className="font-bold text-white/50">Try:</span>
-              {["11414", "Chelsea", "Thai", featuredRestaurant?.name ?? "Lucky Chix"].map(
+              {["11101", "Long Island City", "Thai", featuredRestaurant?.name ?? "Lucky Chix"].map(
                 (example) => (
                   <button
                     key={example}
@@ -481,13 +467,11 @@ export default function SearchShell({
                     {featuredRestaurant?.neighborhood ?? "official record"}
                   </p>
                 </div>
-                <div className="grid h-16 w-16 shrink-0 place-items-center rounded-2xl border-4 border-[#c22] bg-white font-serif text-4xl font-black text-[#c22] shadow-sm">
-                  {featuredRestaurant?.grade ?? "A"}
-                </div>
+                <MarkerGrade grade={featuredRestaurant?.grade ?? "A"} size="xl" />
               </div>
 
               <div className="mt-6 rounded-2xl border border-ink/10 bg-white/104 p-4">
-                <div className="mb-4 flex flex-wrap items-center justify-between gap-3">
+                <div className="mb-4 flex flex-col items-start gap-2">
                   <div>
                     <p className="text-[10px] font-black uppercase tracking-[0.16em] text-[var(--text-secondary)]">
                       Inspection timeline
@@ -496,8 +480,8 @@ export default function SearchShell({
                       {featuredRestaurant?.sanoLabel ?? "Public record context"}
                     </p>
                   </div>
-                  <span className="rounded-full bg-[#2563c9]/10 px-3 py-1 text-xs font-black text-[#2563c9]">
-                    Official grade visible
+                  <span className="w-fit rounded-full bg-[#2563c9]/10 px-3 py-1 text-xs font-black text-[#2563c9]">
+                    Official grade
                   </span>
                 </div>
                 <div className="grid h-44 items-end gap-2 sm:grid-cols-5">
@@ -512,10 +496,10 @@ export default function SearchShell({
                       ]).map((inspection) => (
                     <div
                       key={inspection.id}
-                      className="relative flex h-full items-end rounded-xl bg-[#2563c9]/10 p-2"
+                      className="relative flex h-full items-end rounded-xl bg-[#2563c9]/8 p-2 pt-7"
                     >
                       <div
-                        className="relative w-full rounded-lg bg-[#2563c9]"
+                        className="relative w-full rounded-lg bg-[#2563c9] shadow-[inset_0_1px_0_rgba(255,255,255,0.18)]"
                         style={{
                           height: `${Math.max(
                             12,
@@ -523,8 +507,11 @@ export default function SearchShell({
                           )}%`
                         }}
                       >
-                        <span className="absolute -top-3 left-1/2 grid h-6 w-6 -translate-x-1/2 place-items-center rounded-full border-2 border-[#c22] bg-white text-[10px] font-black text-[#c22]">
-                          {inspection.grade}
+                        <span className="absolute -top-6 left-1/2 -translate-x-1/2">
+                          <TimelineGradeMark
+                            grade={inspection.grade}
+                            rotation={inspection.grade === "A" ? 1 : -2}
+                          />
                         </span>
                       </div>
                     </div>
@@ -541,10 +528,10 @@ export default function SearchShell({
                   </div>
                   <div className="text-right">
                     <p className="text-[10px] font-black uppercase tracking-[0.16em] text-white/40">
-                      Grade translated
+                      Trend
                     </p>
-                    <p className="mt-1 text-lg font-black tracking-widest text-[#d4af37]">
-                      ★★★★★
+                    <p className="mt-1 text-lg font-black text-[#7fd88f]">
+                      {trajectoryLabel(featuredRestaurant?.trajectory ?? "stable")}
                     </p>
                   </div>
                 </div>
@@ -575,104 +562,80 @@ export default function SearchShell({
       <div className="mx-auto flex w-full max-w-7xl flex-col gap-10 px-4 py-10 sm:px-6 lg:px-8">
         <section
           aria-labelledby="signal-bridge-heading"
-          className="-mt-16 rounded-[2rem] border border-white/70 bg-[var(--surface-2)] p-4 shadow-[0_24px_80px_rgba(23,32,27,0.12)] sm:p-5 lg:-mt-20"
+          className="-mt-8 rounded-[2rem] border border-white/80 bg-white/92 p-5 shadow-[0_24px_90px_rgba(23,32,27,0.11)] backdrop-blur sm:p-6 lg:p-8"
         >
-          <div className="grid gap-5 lg:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)] lg:items-center">
-            <div className="rounded-[1.5rem] bg-[#1e2a38] p-5 text-white">
-              <p className="text-xs font-black uppercase tracking-[0.2em] text-[#9dc0ec]">
-                From public records to readable signals
+          <div className="flex flex-col gap-6">
+            <div className="max-w-3xl">
+              <p className="text-xs font-black uppercase tracking-[0.22em] text-[#2563c9]">
+                Public records, readable context
               </p>
               <h2
                 id="signal-bridge-heading"
-                className="mt-3 font-serif text-3xl font-black leading-tight"
+                className="mt-3 max-w-4xl text-3xl font-black leading-[1.04] tracking-[-0.02em] text-ink sm:text-4xl lg:text-5xl"
               >
-                Sano keeps the official grade visible, then shows the pattern
-                underneath.
+                <span className="block">Keep the grade. </span>
+                <span className="block">Read the pattern. </span>
+                <span className="block">Know the limits.</span>
               </h2>
-              <p className="mt-4 text-sm leading-6 text-white/66">
-                The app does not replace NYC inspection records. It turns those
-                records into a clearer path through grade, reliability, history
-                depth, and matched popularity metadata when available.
+              <p className="mt-4 max-w-2xl text-base leading-7 text-ink/64">
+                Sano keeps official NYC inspection records visible, then
+                summarizes what those records can and cannot tell you.
               </p>
             </div>
+          </div>
 
-            <div className="grid gap-3 sm:grid-cols-3">
-              {[
-                [
-                  "Official grade",
-                  "A",
-                  "The city-posted grade stays first and visually separate.",
-                  "red"
-                ],
-                [
-                  "Inspection reliability",
-                  "0–100",
-                  "A derived comparison signal from inspection history.",
-                  "blue"
-                ],
-                [
-                  "History depth",
-                  "High",
-                  "A plain cue for how much timeline backs the summary.",
-                  "gold"
-                ]
-              ].map(([label, value, body, tone]) => (
-                <article
-                  key={label}
-                  className="relative overflow-hidden rounded-[1.35rem] border border-ink/10 bg-oat p-4"
-                >
-                  <div
-                    className="pointer-events-none absolute inset-0 opacity-70"
-                    style={{
-                      backgroundImage:
-                        "linear-gradient(rgba(80,140,220,0.12) 1px, transparent 1px)",
-                      backgroundSize: "100% 24px"
-                    }}
-                    aria-hidden="true"
-                  />
-                  <div className="relative">
-                    <p className="text-[10px] font-black uppercase tracking-[0.16em] text-ink/45">
-                      {label}
-                    </p>
-                    <p
-                      className={`mt-3 font-serif text-3xl font-black leading-none ${
-                        tone === "red"
-                          ? "text-[#c22]"
-                          : tone === "gold"
-                            ? "text-[#d4af37]"
-                            : "text-[#2563c9]"
-                      }`}
-                    >
-                      {value}
-                    </p>
-                    <p className="mt-4 text-xs font-semibold leading-5 text-ink/60">
-                      {body}
-                    </p>
-                  </div>
-                </article>
-              ))}
-            </div>
+          <div className="mt-6 grid gap-3 md:grid-cols-3">
+            {[
+              [
+                "01",
+                "Official records stay first",
+                "Grades, dates, scores, and violations come from NYC DOHMH public inspection records."
+              ],
+              [
+                "02",
+                "Signals explain the pattern",
+                "Sano summarizes trajectory, recent critical flags, repeat issues, and history depth."
+              ],
+              [
+                "03",
+                "Limitations stay visible",
+                "The app is not a safety verdict, live city rating, or official endorsement."
+              ]
+            ].map(([step, title, body]) => (
+              <article
+                key={step}
+                className="rounded-[1.35rem] border border-ink/10 bg-[#fbf8f1] p-5 shadow-sm"
+              >
+                <p className="text-xs font-black uppercase tracking-[0.18em] text-[#2563c9]">
+                  {step}
+                </p>
+                <h3 className="mt-5 text-lg font-black leading-tight text-ink">
+                  {title}
+                </h3>
+                <p className="mt-3 text-sm leading-6 text-ink/60">{body}</p>
+              </article>
+            ))}
           </div>
         </section>
 
         <section
           id="how-it-works"
           aria-labelledby="how-it-works-heading"
-          className="scroll-mt-24 rounded-[2rem] border border-ink/10 bg-[var(--surface-2)] p-4 shadow-sm md:p-5"
+          className="scroll-mt-24 rounded-[2rem] border border-ink/10 bg-white/90 p-5 shadow-sm sm:p-6 lg:p-8"
         >
-          <div className="mb-5 flex flex-wrap items-end justify-between gap-3">
-            <div>
+          <div className="mb-6 flex max-w-3xl flex-col gap-3">
+            <div className="max-w-2xl">
               <p className="text-xs font-black uppercase tracking-[0.2em] text-[#2563c9]">
                 How it works
               </p>
               <h2
                 id="how-it-works-heading"
-                className="mt-2 font-serif text-3xl font-black leading-tight text-ink"
+                className="mt-2 text-3xl font-black leading-tight tracking-[-0.015em] text-ink sm:text-4xl"
               >
                 Three steps, no invented certainty.
               </h2>
             </div>
-            <p className="max-w-md text-sm font-semibold leading-6 text-ink/55">
+            <p className="max-w-2xl text-sm font-semibold leading-6 text-ink/55">
               Sano translates records into context while keeping source limits
               visible.
             </p>
@@ -681,52 +644,36 @@ export default function SearchShell({
             {[
               [
                 "01",
-                "Official records",
+                "Start with official records",
                 "Start with NYC DOHMH inspection data — restaurant identity, grade, inspection dates, scores, and violation context.",
-                "A"
               ],
               [
                 "02",
-                "Pattern detection",
+                "Read the pattern",
                 "Read trajectory, recent critical flags, repeat patterns, and history depth instead of treating one letter as the whole story.",
-                "↘"
               ],
               [
                 "03",
-                "Honest limitations",
+                "Know the limits",
                 "Ratings only appear when matched. Sano does not invent reviews, official endorsement, or safety certainty.",
-                "!"
               ]
-            ].map(([step, title, body, mark]) => (
+            ].map(([step, title, body]) => (
               <article
                 key={step}
-                className="relative overflow-hidden rounded-3xl border border-ink/10 bg-oat p-5"
+                className="rounded-[1.35rem] border border-ink/10 bg-oat p-5 transition hover:border-[#2563c9]/25"
               >
-                <div
-                  className="pointer-events-none absolute inset-0 opacity-80"
-                  style={{
-                    backgroundImage:
-                      "linear-gradient(rgba(80,140,220,0.12) 1px, transparent 1px)",
-                    backgroundSize: "100% 26px"
-                  }}
-                  aria-hidden="true"
-                />
-                <div className="relative">
-                  <div className="flex items-start justify-between gap-3">
-                    <p className="text-xs font-black uppercase tracking-[0.18em] text-[#2563c9]">
-                      {step}
-                    </p>
-                    <span className="grid h-9 w-9 place-items-center rounded-full border-2 border-[#c22] bg-white font-serif text-lg font-black text-[#c22]">
-                      {mark}
-                    </span>
-                  </div>
-                  <h3 className="mt-6 text-lg font-black text-[var(--text-primary)]">
-                    {title}
-                  </h3>
-                  <p className="mt-2 text-sm leading-6 text-[var(--text-secondary)]">
-                    {body}
-                  </p>
+                <div className="flex items-center gap-3">
+                  <span className="grid h-9 w-9 shrink-0 place-items-center rounded-full bg-[#2563c9] text-xs font-black text-white">
+                    {step}
+                  </span>
+                  <div className="h-px flex-1 bg-ink/10" aria-hidden="true" />
                 </div>
+                <h3 className="mt-6 text-lg font-black text-[var(--text-primary)]">
+                  {title}
+                </h3>
+                <p className="mt-2 text-sm leading-6 text-[var(--text-secondary)]">
+                  {body}
+                </p>
               </article>
             ))}
           </div>
@@ -736,19 +683,24 @@ export default function SearchShell({
           <section
             id="demo"
             aria-labelledby="demo-journeys-heading"
-            className="min-w-0 scroll-mt-24"
+            className="min-w-0 scroll-mt-24 rounded-[2rem] border border-ink/10 bg-white/90 p-5 shadow-sm sm:p-6 lg:p-8"
           >
-            <div className="mb-4 max-w-2xl">
+            <div className="mb-5 flex max-w-3xl flex-col gap-3">
+              <div className="max-w-2xl">
+                <p className="text-xs font-black uppercase tracking-[0.2em] text-[#2563c9]">
+                  Demo paths
+                </p>
               <h2
                 id="demo-journeys-heading"
-                className="text-xl font-bold text-ink sm:text-2xl"
+                  className="mt-2 text-3xl font-black leading-tight tracking-[-0.03em] text-ink sm:text-4xl"
               >
-                Three places to start
+                  Choose the story you want to show.
               </h2>
               <p className="mt-1 text-sm leading-6 text-ink/60">
                 Real restaurant profiles from the current index — useful demo
                 paths, not invented ratings.
               </p>
+              </div>
             </div>
             <div className="grid min-w-0 gap-3 md:grid-cols-3">
               {demoJourneys.map((restaurant) => {
@@ -758,23 +710,23 @@ export default function SearchShell({
                   <Link
                     key={restaurant.id}
                     href={`/restaurants/${restaurant.id}`}
-                    className="min-w-0 rounded-xl border border-ink/10 bg-white p-5 shadow-sm transition hover:border-moss/40 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-moss"
+                    className="group min-w-0 rounded-[1.35rem] border border-ink/10 bg-oat p-5 shadow-sm transition hover:border-[#2563c9]/30 hover:bg-[#fbf8f1] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#6fa3e0]"
                   >
-                    <p className="text-[11px] font-black uppercase tracking-[0.18em] text-moss">
+                    <p className="text-[11px] font-black uppercase tracking-[0.18em] text-[#2563c9]">
                       {copy.eyebrow}
                     </p>
-                    <p className="mt-3 font-serif text-xl font-bold leading-snug text-ink">
+                    <p className="mt-3 text-xl font-black leading-snug text-ink">
                       {copy.title}
                     </p>
                     <p className="mt-2 text-sm font-semibold text-ink/55">
                       {restaurant.name}
                       <span className="text-ink/30"> · </span>
-                      Grade {restaurant.grade}
+                      Official grade {restaurant.grade}
                     </p>
                     <p className="mt-3 text-sm leading-6 text-ink/65">
                       {copy.body}
                     </p>
-                    <p className="mt-4 text-sm font-bold text-ink">
+                    <p className="mt-5 text-sm font-black text-ink transition group-hover:text-[#2563c9]">
                       Open profile →
                     </p>
                   </Link>
@@ -788,16 +740,27 @@ export default function SearchShell({
           ref={searchSectionRef}
           id="search"
           aria-labelledby="search-heading"
-          className="flex min-w-0 scroll-mt-6 flex-col gap-4"
+          className="flex min-w-0 scroll-mt-24 flex-col gap-4 rounded-[2rem] border border-ink/10 bg-white/90 p-5 shadow-sm sm:p-6 lg:p-8"
         >
-          <div>
-            <h2 id="search-heading" className="text-xl font-bold text-ink">
-              Search restaurants
-            </h2>
-            <p className="mt-1 text-sm leading-6 text-ink/60">
-              Filter by name, cuisine, borough, ZIP, trajectory, or confidence.
-              Coverage is growing and is not citywide yet.
-            </p>
+          <div className="flex max-w-3xl flex-col gap-3">
+            <div className="max-w-2xl">
+              <p className="text-xs font-black uppercase tracking-[0.2em] text-[#2563c9]">
+                Search app
+              </p>
+              <h2
+                id="search-heading"
+                className="mt-2 text-3xl font-black leading-tight tracking-[-0.03em] text-ink sm:text-4xl"
+              >
+                Explore the current NYC inspection index.
+              </h2>
+              <p className="mt-2 text-sm leading-6 text-ink/60">
+                Filter by name, cuisine, borough, ZIP, trajectory, or
+                confidence. Coverage is growing and is not citywide yet.
+              </p>
+            </div>
+            <span className="w-fit rounded-full bg-oat px-4 py-2 text-sm font-black text-ink/60">
+              {dataSummary.restaurantCount.toLocaleString()} records indexed
+            </span>
           </div>
 
           <FilterBar
@@ -808,11 +771,7 @@ export default function SearchShell({
             onClear={clearFilters}
           />
 
-          <MapResults
-            restaurants={results}
-            selectedRestaurant={selectedInResults}
-            onSelect={setSelectedRestaurant}
-          />
+          <MapResults restaurants={results} />
 
           <div className="flex flex-col gap-4">
             <div className="flex flex-wrap items-end justify-between gap-3">
@@ -848,12 +807,7 @@ export default function SearchShell({
             ) : results.length ? (
               <div className="flex flex-col gap-3">
                 {visibleRestaurants.map((restaurant) => (
-                  <RestaurantCard
-                    key={restaurant.id}
-                    restaurant={restaurant}
-                    selected={selectedInResults?.id === restaurant.id}
-                    onSelect={setSelectedRestaurant}
-                  />
+                  <RestaurantCard key={restaurant.id} restaurant={restaurant} />
                 ))}
                 {hiddenResultCount > 0 ? (
                   <button

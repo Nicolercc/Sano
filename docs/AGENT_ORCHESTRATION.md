@@ -8,6 +8,12 @@ Use one tool as the source-of-truth editor at a time.
 
 Do not ask multiple agents to rewrite the same file or solve the same architectural decision independently. That creates conflicting versions of the app.
 
+For the desktop decision-cockpit redesign, use
+`docs/DESKTOP_COCKPIT_EXECUTION_PLAN.md` as the active source of truth. The
+older sprint plan still explains the original MVP sequence, but cockpit work
+should follow the newer file ownership, phase order, copy guardrails, and data
+quality gates.
+
 ## Recommended Agent Roles
 
 ### Codex: Repository And Implementation Lead

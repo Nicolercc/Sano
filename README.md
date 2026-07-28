@@ -127,6 +127,7 @@ sano/
 - [Team Operating Model](docs/TEAM_OPERATING_MODEL.md): ownership, branch rules, and conflict avoidance.
 - [Contributing](docs/CONTRIBUTING.md): Git workflow, PR expectations, and coding rules.
 - [Data Plan](docs/DATA_PLAN.md): official data sources, seed strategy, and Supabase plan.
+- [Demo Presentation Guide](docs/DEMO_PRESENTATION_GUIDE.md): comprehensive app walkthrough, demo script, and Prezi prompts.
 - [Task Breakdown](docs/TASK_BREAKDOWN.md): assignable work for the three-person team.
 - [Quality Checklist](docs/QUALITY_CHECKLIST.md): final acceptance criteria.
 - [LLM Guide](docs/LLM_GUIDE.md): how contributors should use AI tools without breaking scope.

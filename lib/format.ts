@@ -49,7 +49,7 @@ export function formatPopularitySummary(
   reviewCount: number | null | undefined
 ) {
   if (!hasPopularityMetadata(rating, reviewCount)) {
-    return "Not matched yet";
+    return "Consumer review data unavailable";
   }
 
   return `${Number(rating).toFixed(1)} rating · ${formatNumber(
@@ -98,10 +98,10 @@ export function formatPopularityGap(
   }
 
   if (hasPopularity) {
-    return "Not scored yet";
+    return "Not enough matched data";
   }
 
-  return "Not matched yet";
+  return "Consumer review data unavailable";
 }
 
 /**
@@ -136,12 +136,8 @@ export function buildStorySoFar(restaurant: Restaurant) {
   const popularityLine = hasPopularity
     ? `Public popularity metadata is matched (${Number(restaurant.rating).toFixed(
         1
-      )} rating · ${formatNumber(Number(restaurant.reviewCount))} reviews). ${
-        typeof restaurant.trustGap === "number" && restaurant.trustGap !== 0
-          ? `Popularity vs. inspection gap: ${formatTrustGap(restaurant.trustGap)}.`
-          : "Popularity vs. inspection gap is not scored yet for this record."
-      }`
-    : "Public rating and review data are not matched yet — Sano leaves those fields empty instead of inventing them.";
+      )} rating · ${formatNumber(Number(restaurant.reviewCount))} reviews). Sano keeps consumer context visually separate from official inspection history.`
+    : "Consumer review data is unavailable for this record, so Sano keeps the profile focused on official inspection history.";
 
   return {
     paragraphs: [lead, standout, reliabilityLine, explanation, popularityLine].filter(

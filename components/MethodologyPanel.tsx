@@ -65,12 +65,12 @@ export default function MethodologyPanel() {
         </section>
 
         <section className="rounded-md bg-oat p-4">
-          <h2 className="text-lg font-bold text-ink">Trust gap</h2>
+          <h2 className="text-lg font-bold text-ink">Review matching</h2>
           <p className="mt-2 text-sm leading-6 text-ink/70">
-            Trust gap compares popularity percentile with inspection reliability
-            percentile only when popularity metadata exists. In the official
-            DOHMH-only mode, Sano treats trust gap as unavailable instead of
-            inventing review or rating signals.
+            Consumer ratings and review counts stay unavailable until a reviewed
+            source is attached to the record. In the official DOHMH-only mode,
+            Sano does not invent popularity signals or blend them into the
+            inspection score.
           </p>
         </section>
       </div>

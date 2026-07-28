@@ -10,11 +10,11 @@ const config: Config = {
     extend: {
       colors: {
         ink: "#17201b",
-        moss: "#486b55",
-        mint: "#dff3e7",
-        oat: "#f6f2ea",
-        coral: "#c8664c",
-        amber: "#d69d3f"
+        moss: "#2563c9",
+        mint: "#eaf2ff",
+        oat: "#f8f4eb",
+        coral: "#c22f2f",
+        amber: "#8a6418"
       },
       boxShadow: {
         soft: "0 18px 50px rgba(23, 32, 27, 0.09)"
