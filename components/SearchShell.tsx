@@ -8,6 +8,7 @@ import MapResults from "@/components/MapResults";
 import MarkerGrade from "@/components/MarkerGrade";
 import RestaurantCard from "@/components/RestaurantCard";
 import TimelineGradeMark from "@/components/TimelineGradeMark";
+import { trajectoryLabel } from "@/lib/format";
 import type { Restaurant, RestaurantFilters } from "@/lib/types";
 
 type SearchShellProps = {
@@ -31,7 +32,8 @@ const defaultFilters: RestaurantFilters = {
 const INITIAL_VISIBLE_COUNT = 12;
 const VISIBLE_INCREMENT = 12;
 const API_RESULT_LIMIT = 80;
-const PRIMARY_DEMO_QUERY = "11414";
+/** Pursuit HQ area — Long Island City / Austell Place */
+const PRIMARY_DEMO_QUERY = "11101";
 
 type DemoJourney = {
   id: string;
@@ -189,9 +191,6 @@ export default function SearchShell({
   const [loading, setLoading] = useState(false);
   const [loadError, setLoadError] = useState(false);
   const [heroSearchQuery, setHeroSearchQuery] = useState("");
-  const [selectedRestaurant, setSelectedRestaurant] = useState<Restaurant | null>(
-    restaurants[0] ?? null
-  );
   const searchSectionRef = useRef<HTMLElement | null>(null);
 
   const cuisines = useMemo(
@@ -245,18 +244,11 @@ export default function SearchShell({
           ? payload.restaurants
           : [];
         setResults(nextResults);
-        setSelectedRestaurant((current) => {
-          if (nextResults.some((restaurant) => restaurant.id === current?.id)) {
-            return current;
-          }
-          return nextResults[0] ?? null;
-        });
       })
       .catch((error) => {
         if (error.name !== "AbortError") {
           setLoadError(true);
           setResults([]);
-          setSelectedRestaurant(null);
         }
       })
       .finally(() => {
@@ -267,11 +259,6 @@ export default function SearchShell({
 
     return () => controller.abort();
   }, [filters]);
-
-  const selectedInResults =
-    results.find((restaurant) => restaurant.id === selectedRestaurant?.id) ??
-    results[0] ??
-    null;
 
   const filtersActive = hasActiveFilters(filters);
   const filterParts = activeFilterSummary(filters);
@@ -322,6 +309,7 @@ export default function SearchShell({
 
   return (
     <main className="min-h-screen overflow-x-hidden bg-oat text-ink">
+      <AppNav active="home" onCommandSearch={runHeroSearch} />
       <div
         className="relative isolate overflow-hidden bg-[#1e2a38] text-white"
         style={{
@@ -354,10 +342,6 @@ export default function SearchShell({
           className="pointer-events-none absolute bottom-[-11rem] left-1/2 -z-10 h-80 w-80 -translate-x-1/2 rounded-full bg-[#2563c9]/20 blur-3xl"
           aria-hidden="true"
         />
-        <div className="pt-3">
-          <AppNav active="home" onCommandSearch={runHeroSearch} />
-        </div>
-
         <div className="mx-auto grid w-full max-w-7xl gap-10 px-4 pb-14 pt-10 sm:px-6 lg:grid-cols-[minmax(0,1.02fr)_minmax(24rem,0.98fr)] lg:px-8 lg:pb-20 lg:pt-16">
           <header id="landing" className="min-w-0 text-center lg:text-left">
             <div className="inline-flex items-center gap-2 rounded-full border border-[#6fa3e0]/25 bg-[#2563c9]/15 px-4 py-2 text-xs font-black uppercase tracking-[0.18em] text-[#9dc0ec] shadow-sm backdrop-blur">
@@ -402,7 +386,7 @@ export default function SearchShell({
 
             <div className="mx-auto mt-4 flex max-w-3xl flex-wrap items-center justify-center gap-2 text-sm lg:mx-0 lg:justify-start">
               <span className="font-bold text-white/50">Try:</span>
-              {["11414", "Chelsea", "Thai", featuredRestaurant?.name ?? "Lucky Chix"].map(
+              {["11101", "Long Island City", "Thai", featuredRestaurant?.name ?? "Lucky Chix"].map(
                 (example) => (
                   <button
                     key={example}
@@ -544,10 +528,10 @@ export default function SearchShell({
                   </div>
                   <div className="text-right">
                     <p className="text-[10px] font-black uppercase tracking-[0.16em] text-white/40">
-                      Grade translated
+                      Trend
                     </p>
-                    <p className="mt-1 text-lg font-black tracking-widest text-[#d4af37]">
-                      ★★★★★
+                    <p className="mt-1 text-lg font-black text-[#7fd88f]">
+                      {trajectoryLabel(featuredRestaurant?.trajectory ?? "stable")}
                     </p>
                   </div>
                 </div>
@@ -787,11 +771,7 @@ export default function SearchShell({
             onClear={clearFilters}
           />
 
-          <MapResults
-            restaurants={results}
-            selectedRestaurant={selectedInResults}
-            onSelect={setSelectedRestaurant}
-          />
+          <MapResults restaurants={results} />
 
           <div className="flex flex-col gap-4">
             <div className="flex flex-wrap items-end justify-between gap-3">
@@ -827,12 +807,7 @@ export default function SearchShell({
             ) : results.length ? (
               <div className="flex flex-col gap-3">
                 {visibleRestaurants.map((restaurant) => (
-                  <RestaurantCard
-                    key={restaurant.id}
-                    restaurant={restaurant}
-                    selected={selectedInResults?.id === restaurant.id}
-                    onSelect={setSelectedRestaurant}
-                  />
+                  <RestaurantCard key={restaurant.id} restaurant={restaurant} />
                 ))}
                 {hiddenResultCount > 0 ? (
                   <button

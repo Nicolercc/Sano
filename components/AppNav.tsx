@@ -13,10 +13,10 @@ type HomeSection = "how-it-works" | "demo" | "search";
 const homeSections: HomeSection[] = ["how-it-works", "demo", "search"];
 
 export default function AppNav({
-  active = "home",
+  active,
   onCommandSearch
 }: AppNavProps) {
-  const [isScrolled, setIsScrolled] = useState(false);
+  const [isPastLanding, setIsPastLanding] = useState(active !== "home");
   const [activeSection, setActiveSection] = useState<HomeSection | null>(null);
   const [query, setQuery] = useState("");
 
@@ -27,23 +27,28 @@ export default function AppNav({
 
     let ticking = false;
 
-    const updateScrolled = () => {
-      setIsScrolled(window.scrollY > 180);
+    const updateNavigationState = () => {
+      const landing = document.getElementById("landing");
+      const landingBottom = landing?.getBoundingClientRect().bottom ?? 0;
+
+      setIsPastLanding(!landing || landingBottom <= 96);
       ticking = false;
     };
 
     const handleScroll = () => {
       if (!ticking) {
-        window.requestAnimationFrame(updateScrolled);
+        window.requestAnimationFrame(updateNavigationState);
         ticking = true;
       }
     };
 
-    updateScrolled();
+    updateNavigationState();
     window.addEventListener("scroll", handleScroll, { passive: true });
+    window.addEventListener("resize", handleScroll);
 
     return () => {
       window.removeEventListener("scroll", handleScroll);
+      window.removeEventListener("resize", handleScroll);
     };
   }, [active]);
 
@@ -92,36 +97,55 @@ export default function AppNav({
     onCommandSearch?.(nextQuery);
   };
 
-  const linkBase =
-    "rounded-full px-3 py-2 text-sm font-bold transition duration-300 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#6fa3e0] motion-reduce:transition-none";
   const isHome = active === "home";
-  const showCommandSearch = Boolean(onCommandSearch && isHome);
+  const isHeroPill = isHome && !isPastLanding;
+  const showCommandSearch = Boolean(onCommandSearch && isHome && !isHeroPill);
   const isSectionActive = (section: HomeSection) =>
     activeSection === section || (!activeSection && section === "search");
+  const focusClass = isHeroPill
+    ? "focus-visible:outline-[#6fa3e0]"
+    : "focus-visible:outline-moss";
+  const linkBase = `rounded-full px-3 py-2 text-sm font-bold transition duration-300 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 ${focusClass} motion-reduce:transition-none`;
+
+  // Hero inactive links need near-white text: white/66 fails readability on #1e2a38.
+  const heroInactiveLink =
+    "text-[#e8eef5] hover:bg-white/15 hover:text-white";
+  const heroActiveLink =
+    "bg-white/18 text-white shadow-[inset_0_0_0_1px_rgba(255,255,255,0.28)]";
+  const lightInactiveLink = "text-ink/80 hover:bg-oat hover:text-ink";
+  const lightActiveLink =
+    "bg-mint text-moss shadow-[inset_0_0_0_1px_rgba(37,99,201,0.12)]";
 
   const homeLinkClass = (section: HomeSection) =>
-    `${linkBase} hidden text-white/66 hover:bg-white/10 hover:text-white sm:inline-flex ${
+    `${linkBase} hidden sm:inline-flex ${
       isHome && isSectionActive(section)
-        ? "bg-white/12 text-white shadow-[inset_0_0_0_1px_rgba(255,255,255,0.08)]"
-        : ""
+        ? isHeroPill
+          ? heroActiveLink
+          : lightActiveLink
+        : isHeroPill
+          ? heroInactiveLink
+          : lightInactiveLink
     }`;
 
   return (
+    <>
     <nav
       aria-label="Primary navigation"
-      className={`sticky top-3 z-30 mx-auto flex w-[calc(100%-2rem)] max-w-7xl items-center justify-between gap-3 overflow-hidden rounded-full border px-3 py-2 backdrop-blur-xl transition-all duration-500 motion-reduce:transition-none sm:px-4 ${
-        isScrolled
-          ? "border-white/16 bg-[#1e2a38]/88 shadow-[0_20px_80px_rgba(7,13,22,0.34)]"
-          : "border-white/10 bg-[#1e2a38]/80 shadow-[0_24px_70px_rgba(7,13,22,0.26)]"
+      className={`fixed left-0 right-0 z-[100] mx-auto flex items-center justify-between gap-3 overflow-hidden border px-3 py-2 backdrop-blur-xl transition-all duration-500 motion-reduce:transition-none sm:px-4 ${
+        isHeroPill
+          ? "top-3 w-[calc(100%-2rem)] max-w-7xl rounded-full border-white/10 bg-[#1e2a38]/80 shadow-[0_24px_70px_rgba(7,13,22,0.26)]"
+          : "top-0 w-full max-w-none rounded-none border-ink/10 bg-[#fffaf1]/95 shadow-[0_14px_44px_rgba(23,32,27,0.08)] supports-[backdrop-filter]:bg-[#fffaf1]/85 lg:px-8"
       }`}
     >
       <Link
         href="/"
-        className="flex min-w-0 shrink-0 items-center gap-2 rounded-full pr-2 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#6fa3e0]"
+        aria-label="Sano home"
+        className={`flex min-w-0 shrink-0 items-center gap-2 rounded-full pr-2 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 ${focusClass}`}
       >
         <span
+          aria-hidden="true"
           className={`grid shrink-0 place-items-center rounded-2xl bg-[#2563c9] font-serif font-black text-white shadow-sm transition-all duration-500 motion-reduce:transition-none ${
-            isScrolled ? "h-8 w-8 text-base" : "h-9 w-9 text-lg"
+            isHeroPill ? "h-9 w-9 text-lg" : "h-8 w-8 text-base"
           }`}
         >
           <span className="text-[#6fa3e0]" aria-hidden="true">
@@ -129,8 +153,8 @@ export default function AppNav({
           </span>
         </span>
         <span
-          className={`font-serif font-black tracking-tight text-white transition-all duration-500 motion-reduce:transition-none ${
-            isScrolled ? "text-xl" : "text-2xl"
+          className={`font-serif font-black tracking-tight transition-all duration-500 motion-reduce:transition-none ${
+            isHeroPill ? "text-2xl text-white" : "text-xl text-ink"
           }`}
         >
           Sano
@@ -140,12 +164,12 @@ export default function AppNav({
       {showCommandSearch ? (
         <form
           onSubmit={submitCommandSearch}
-          className={`mx-auto hidden min-w-0 flex-1 items-center gap-2 rounded-full border border-white/10 bg-white/8 p-1 pl-4 shadow-[inset_0_1px_0_rgba(255,255,255,0.08)] transition-all duration-500 motion-reduce:transition-none lg:flex ${
-            isScrolled
+          className={`mx-auto hidden min-w-0 flex-1 items-center gap-2 rounded-full border border-ink/10 bg-white p-1 pl-4 shadow-[inset_0_1px_0_rgba(255,255,255,0.72)] transition-all duration-500 motion-reduce:transition-none lg:flex ${
+            showCommandSearch
               ? "max-w-xl translate-y-0 opacity-100"
               : "max-w-0 translate-y-1 opacity-0"
           }`}
-          aria-hidden={!isScrolled}
+          aria-hidden={!showCommandSearch}
         >
           <label className="sr-only" htmlFor="nav-command-search">
             Search NYC restaurants
@@ -155,13 +179,13 @@ export default function AppNav({
             value={query}
             onChange={(event) => setQuery(event.target.value)}
             placeholder="Search NYC restaurants, ZIP, cuisine…"
-            tabIndex={isScrolled ? 0 : -1}
-            className="min-w-0 flex-1 bg-transparent text-sm font-semibold text-white outline-none placeholder:text-white/42"
+            tabIndex={showCommandSearch ? 0 : -1}
+            className="min-w-0 flex-1 bg-transparent text-sm font-semibold text-ink outline-none placeholder:text-ink/42"
           />
           <button
             type="submit"
-            tabIndex={isScrolled ? 0 : -1}
-            className="inline-flex min-h-9 shrink-0 items-center rounded-full bg-[#2563c9] px-4 text-sm font-black text-white transition hover:bg-[#1e56ad] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#6fa3e0]"
+            tabIndex={showCommandSearch ? 0 : -1}
+            className="inline-flex min-h-9 shrink-0 items-center rounded-full bg-moss px-4 text-sm font-black text-white transition hover:bg-ink focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-moss"
           >
             Search
           </button>
@@ -192,8 +216,14 @@ export default function AppNav({
         </Link>
         <Link
           href="/methodology"
-          className={`${linkBase} text-white/66 hover:bg-white/10 hover:text-white ${
-            active === "methodology" ? "bg-white/10 text-white" : ""
+          className={`${linkBase} ${
+            active === "methodology"
+              ? isHeroPill
+                ? heroActiveLink
+                : lightActiveLink
+              : isHeroPill
+                ? heroInactiveLink
+                : lightInactiveLink
           }`}
           aria-current={active === "methodology" ? "page" : undefined}
         >
@@ -201,13 +231,21 @@ export default function AppNav({
         </Link>
         <Link
           href="/#search"
-          className={`inline-flex min-h-10 shrink-0 items-center rounded-full bg-[#2563c9] px-4 text-sm font-black text-white shadow-sm transition duration-300 hover:bg-[#1e56ad] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#6fa3e0] motion-reduce:transition-none ${
-            isScrolled && showCommandSearch ? "lg:px-3" : ""
-          }`}
+          aria-label="Try Sano search"
+          className={`inline-flex min-h-10 shrink-0 items-center rounded-full px-4 text-sm font-black shadow-sm transition duration-300 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 ${focusClass} motion-reduce:transition-none ${
+            isHeroPill
+              ? "bg-[#2563c9] text-white hover:bg-[#1e56ad]"
+              : "bg-ink text-white hover:bg-moss"
+          } ${showCommandSearch ? "lg:px-3" : ""}`}
         >
-          {isScrolled && showCommandSearch ? "Try" : "Try Sano"}
+          {showCommandSearch ? "Try" : "Try Sano"}
         </Link>
       </div>
     </nav>
+    <div
+      className={isHome ? "h-[5.25rem] bg-[#1e2a38]" : "h-14"}
+      aria-hidden="true"
+    />
+    </>
   );
 }

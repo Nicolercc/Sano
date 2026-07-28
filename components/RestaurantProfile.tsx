@@ -1,14 +1,10 @@
 import AppNav from "@/components/AppNav";
 import Alternatives from "@/components/Alternatives";
 import MarkerGrade from "@/components/MarkerGrade";
+import ReviewStars from "@/components/ReviewStars";
 import SanoScorePanel from "@/components/SanoScorePanel";
 import TrustTimeline from "@/components/TrustTimeline";
-import {
-  buildStorySoFar,
-  formatDate,
-  formatNumber,
-  hasPopularityMetadata
-} from "@/lib/format";
+import { buildStorySoFar, formatDate } from "@/lib/format";
 import type { Restaurant } from "@/lib/types";
 
 type RestaurantProfileProps = {
@@ -18,17 +14,11 @@ type RestaurantProfileProps = {
 export default function RestaurantProfile({
   restaurant
 }: RestaurantProfileProps) {
-  const hasPopularity = hasPopularityMetadata(
-    restaurant.rating,
-    restaurant.reviewCount
-  );
   const story = buildStorySoFar(restaurant);
 
   return (
     <main className="min-h-screen overflow-x-hidden bg-oat">
-      <div className="pt-3">
-        <AppNav />
-      </div>
+      <AppNav />
       <div className="mx-auto flex w-full max-w-6xl flex-col gap-5 px-4 py-6 sm:px-6 lg:px-8">
 
         <header className="rounded-lg border border-ink/10 bg-white p-5 shadow-sm">
@@ -95,42 +85,19 @@ export default function RestaurantProfile({
                 id="public-popularity-heading"
                 className="text-[11px] font-black uppercase tracking-[0.16em] text-ink/45"
               >
-                Public popularity metadata
+                Consumer review context
               </p>
-              <div className="mt-3 grid grid-cols-2 gap-3">
-                <div>
-                  <p className="text-xs font-bold uppercase tracking-wide text-ink/50">
-                    Public rating
-                  </p>
-                  <p
-                    className={`mt-1 text-lg font-black ${
-                      hasPopularity ? "text-ink" : "text-ink/50"
-                    }`}
-                  >
-                    {hasPopularity && restaurant.rating !== null
-                      ? restaurant.rating.toFixed(1)
-                      : "Not matched yet"}
-                  </p>
-                </div>
-                <div>
-                  <p className="text-xs font-bold uppercase tracking-wide text-ink/50">
-                    Reviews
-                  </p>
-                  <p
-                    className={`mt-1 text-lg font-black ${
-                      hasPopularity ? "text-ink" : "text-ink/50"
-                    }`}
-                  >
-                    {hasPopularity && restaurant.reviewCount !== null
-                      ? formatNumber(restaurant.reviewCount)
-                      : "Not matched yet"}
-                  </p>
-                </div>
-              </div>
+              <ReviewStars
+                rating={restaurant.rating}
+                reviewCount={restaurant.reviewCount}
+                metadata={restaurant.placeMetadata}
+                variant="profile"
+                className="mt-3"
+              />
               <p className="mt-3 text-xs leading-5 text-ink/60">
-                {hasPopularity
-                  ? "Matched from a separate public source when available. Not part of the official grade."
-                  : "Left empty on purpose when no public rating match exists — Sano does not invent reviews."}
+                Google review context is shown only when a reviewed source is
+                attached. It is not part of the official NYC grade or Sano
+                inspection reliability.
               </p>
             </section>
           </div>

@@ -1,8 +1,7 @@
+import ReviewStars from "@/components/ReviewStars";
 import { scoreTone } from "@/lib/scoring";
 import {
   formatInspectionReliabilityScore,
-  formatPopularityGap,
-  hasPopularityMetadata,
   hasLowInspectionReliabilitySignal,
   historyDepthLabel,
   trajectoryLabel
@@ -14,17 +13,11 @@ type SanoScorePanelProps = {
 };
 
 export default function SanoScorePanel({ restaurant }: SanoScorePanelProps) {
-  const hasPopularity = hasPopularityMetadata(
-    restaurant.rating,
-    restaurant.reviewCount
-  );
-  const popularityGap = formatPopularityGap(restaurant.trustGap, hasPopularity);
-  const gapMatched =
-    typeof restaurant.trustGap === "number" && restaurant.trustGap !== 0;
   const lowInspectionSignal = hasLowInspectionReliabilitySignal(
     restaurant.inspectionReliabilityScore
   );
   const inspectionCount = restaurant.inspections.length;
+  const depth = historyDepthLabel(restaurant.confidence);
 
   return (
     <section className="rounded-lg border border-ink/10 bg-white p-5 shadow-sm">
@@ -51,6 +44,12 @@ export default function SanoScorePanel({ restaurant }: SanoScorePanelProps) {
               ? " When the pattern is too weak for a reassuring number, Sano shows Needs review instead of a bare low score."
               : null}
           </p>
+          <ReviewStars
+            rating={restaurant.rating}
+            reviewCount={restaurant.reviewCount}
+            metadata={restaurant.placeMetadata}
+            className="mt-4 max-w-xs"
+          />
         </div>
         <div className="rounded-full border border-ink/10 bg-oat px-3 py-1.5 text-left">
           <p className="text-[10px] font-bold uppercase tracking-wide text-ink/45">
@@ -84,14 +83,11 @@ export default function SanoScorePanel({ restaurant }: SanoScorePanelProps) {
         </div>
         <div className="rounded-md bg-oat p-3">
           <p className="text-xs font-bold uppercase tracking-wide text-ink/50">
-            Popularity vs. inspection gap
+            Data basis
           </p>
-          <p
-            className={`mt-1 text-sm font-bold ${
-              gapMatched ? "text-ink" : "text-ink/55"
-            }`}
-          >
-            {popularityGap}
+          <p className="mt-1 text-sm font-bold text-ink">
+            {inspectionCount} {inspectionCount === 1 ? "cycle" : "cycles"} ·{" "}
+            {depth} depth
           </p>
         </div>
       </div>
@@ -100,11 +96,8 @@ export default function SanoScorePanel({ restaurant }: SanoScorePanelProps) {
       <p className="mt-3 text-xs leading-5 text-ink/50">
         Scores summarize public inspection records for comparison. They do not
         replace official grades, current conditions, or professional judgment.
-        {!gapMatched
-          ? hasPopularity
-            ? " Popularity vs. inspection gap stays pending until popularity is scored against the inspection cohort."
-            : " Popularity vs. inspection gap stays pending when public rating or review data has not been matched yet."
-          : null}
+        Consumer review data stays separate unless a reviewed matching source is
+        attached.
       </p>
     </section>
   );

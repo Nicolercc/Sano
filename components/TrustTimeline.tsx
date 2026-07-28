@@ -8,27 +8,105 @@ type TrustTimelineProps = {
 
 const VIEW_WIDTH = 100;
 const VIEW_HEIGHT = 56;
+const PLOT_LEFT = 3;
+const PLOT_RIGHT = 97;
 const PLOT_BOTTOM = 48;
 const PLOT_HEIGHT = 38;
+const MIN_BAR_WIDTH = 3;
+const MAX_BAR_WIDTH = 8;
+/**
+ * NYC DOHMH scores are practically unbounded, but Sano already treats 0-100
+ * as its comparison ceiling everywhere else (the reliability score). Fixing
+ * the chart to the same ceiling makes any two restaurants' bar heights
+ * directly comparable, instead of each chart rescaling to its own tallest
+ * bar and making a mild record and a severe one look identical in shape.
+ */
+const FIXED_AXIS_MAX_SCORE = 100;
+
+function resolveBarCenters(count: number, times: number[], barWidth: number) {
+  const plotWidth = PLOT_RIGHT - PLOT_LEFT;
+
+  if (count <= 1) {
+    return [PLOT_LEFT + plotWidth / 2];
+  }
+
+  const minTime = times[0];
+  const maxTime = times[times.length - 1];
+  const span = maxTime - minTime;
+
+  const raw = times.map((time, index) =>
+    span === 0
+      ? PLOT_LEFT + (plotWidth * index) / (count - 1)
+      : PLOT_LEFT + ((time - minTime) / span) * plotWidth
+  );
+
+  // Real inspection cycles can land days apart (e.g. a re-inspection shortly
+  // after a failed one). Plotting purely by elapsed time would overlap those
+  // bars, so later points are nudged right just enough to stay legible while
+  // keeping their order and approximate relative spacing.
+  const minGap = barWidth + 1.2;
+  const centers = [...raw];
+  for (let i = 1; i < centers.length; i++) {
+    if (centers[i] - centers[i - 1] < minGap) {
+      centers[i] = centers[i - 1] + minGap;
+    }
+  }
+
+  // If that nudging pushed the sequence past the right edge, pull the whole
+  // run back so the most recent cycle never clips off the chart.
+  const overflow = centers[centers.length - 1] - PLOT_RIGHT;
+  if (overflow > 0) {
+    for (let i = 0; i < centers.length; i++) {
+      centers[i] = Math.max(PLOT_LEFT, centers[i] - overflow);
+    }
+  }
+
+  return centers;
+}
+
+function resolveColumnWidths(centers: number[]) {
+  if (centers.length <= 1) {
+    return [VIEW_WIDTH];
+  }
+
+  const boundaries = [0];
+  for (let i = 0; i < centers.length - 1; i++) {
+    boundaries.push((centers[i] + centers[i + 1]) / 2);
+  }
+  boundaries.push(VIEW_WIDTH);
+
+  return centers.map((_, index) =>
+    Math.max(boundaries[index + 1] - boundaries[index], 0.01)
+  );
+}
 
 export default function TrustTimeline({ inspections }: TrustTimelineProps) {
   const ordered = [...inspections].sort((a, b) => a.date.localeCompare(b.date));
   const trajectory = deriveTrajectory(ordered);
-  const maxScore = Math.max(...ordered.map((inspection) => inspection.score), 1);
   const count = ordered.length;
-
-  const gap = count > 1 ? Math.min(3.5, 18 / count) : 0;
-  const barWidth =
-    count === 0 ? 0 : (VIEW_WIDTH - gap * Math.max(count - 1, 0)) / Math.max(count, 1);
+  const axisMaxScore = Math.max(
+    FIXED_AXIS_MAX_SCORE,
+    ...ordered.map((inspection) => inspection.score)
+  );
+  const times = ordered.map(
+    (inspection) => new Date(`${inspection.date}T12:00:00`).getTime()
+  );
+  const barWidth = count
+    ? Math.max(
+        MIN_BAR_WIDTH,
+        Math.min(MAX_BAR_WIDTH, (PLOT_RIGHT - PLOT_LEFT) / (count * 1.6))
+      )
+    : 0;
+  const centers = count ? resolveBarCenters(count, times, barWidth) : [];
 
   const plotted = ordered.map((inspection, index) => {
-    const x = index * (barWidth + gap);
+    const cx = centers[index];
     const barHeight = Math.max(
       2.5,
-      (inspection.score / maxScore) * PLOT_HEIGHT
+      (inspection.score / axisMaxScore) * PLOT_HEIGHT
     );
     const y = PLOT_BOTTOM - barHeight;
-    const cx = x + barWidth / 2;
+    const x = cx - barWidth / 2;
 
     return { inspection, x, y, barHeight, cx, cy: y };
   });
@@ -38,7 +116,9 @@ export default function TrustTimeline({ inspections }: TrustTimelineProps) {
     .join(" ");
 
   const columnStyle = {
-    gridTemplateColumns: `repeat(${Math.max(count, 1)}, minmax(4.75rem, 1fr))`
+    gridTemplateColumns: resolveColumnWidths(centers)
+      .map((width) => `minmax(4.75rem, ${width}fr)`)
+      .join(" ")
   };
 
   if (!count) {
@@ -118,8 +198,8 @@ export default function TrustTimeline({ inspections }: TrustTimelineProps) {
                   width={barWidth}
                   height={barHeight}
                   rx="0.8"
-                  fill={hasCritical ? "#c8664c" : "#486b55"}
-                  fillOpacity="0.8"
+                  fill={hasCritical ? "#c22f2f" : "#2563c9"}
+                  fillOpacity={hasCritical ? "0.82" : "0.88"}
                 >
                   <title>
                     {`${formatDate(inspection.date)}: score ${inspection.score}, grade ${inspection.grade}`}
@@ -175,7 +255,7 @@ export default function TrustTimeline({ inspections }: TrustTimelineProps) {
                   </text>
 
                   {hasCritical ? (
-                    <circle cx={cx - 1.5} cy={markerY} r="1.05" fill="#c8664c">
+                    <circle cx={cx - 1.5} cy={markerY} r="1.05" fill="#c22f2f">
                       <title>{`${inspection.criticalCount} critical`}</title>
                     </circle>
                   ) : null}
@@ -187,8 +267,8 @@ export default function TrustTimeline({ inspections }: TrustTimelineProps) {
                       width="2"
                       height="2"
                       rx="0.25"
-                      fill="#d69d3f40"
-                      stroke="#d69d3f"
+                      fill="#d4af3740"
+                      stroke="#8a6418"
                       strokeWidth="0.35"
                     >
                       <title>Repeat pattern</title>
