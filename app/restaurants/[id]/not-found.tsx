@@ -4,13 +4,19 @@ export default function RestaurantNotFound() {
   return (
     <main className="min-h-screen bg-oat text-ink">
       <div className="mx-auto flex min-h-screen w-full max-w-3xl flex-col px-4 py-6 sm:px-6 lg:px-8">
-        <nav className="flex items-center justify-between">
-          <Link href="/" className="font-serif text-4xl font-black text-ink">
+        <nav
+          aria-label="Primary navigation"
+          className="flex items-center justify-between"
+        >
+          <Link
+            href="/"
+            className="rounded-md font-serif text-4xl font-black text-ink focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#6fa3e0]"
+          >
             Sano
           </Link>
           <Link
             href="/methodology"
-            className="rounded-md border border-ink/15 bg-white/70 px-4 py-2 text-sm font-semibold text-ink shadow-sm transition hover:border-moss/40"
+            className="rounded-md border border-ink/15 bg-white/70 px-4 py-2 text-sm font-semibold text-ink shadow-sm transition hover:border-moss/40 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#6fa3e0]"
           >
             Methodology
           </Link>
