@@ -25,6 +25,9 @@ const confidenceOptions: Array<"all" | ConfidenceLevel> = [
   "limited"
 ];
 
+const filterControlFocusClass =
+  "focus-visible:border-moss focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-moss";
+
 function label(value: string) {
   return value === "all"
     ? "All"
@@ -63,7 +66,7 @@ export default function FilterBar({
             onChange({ ...filters, query: event.target.value })
           }
           placeholder="Name, cuisine, borough, or ZIP"
-          className="min-h-9 w-full rounded-md border border-ink/10 bg-white px-3 text-sm font-medium text-ink outline-none transition placeholder:text-ink/40 focus:border-moss"
+          className={`min-h-9 w-full rounded-md border border-ink/10 bg-white px-3 text-sm font-medium text-ink outline-none transition placeholder:text-ink/40 ${filterControlFocusClass}`}
         />
       </label>
 
@@ -74,7 +77,7 @@ export default function FilterBar({
           onChange={(event) =>
             onChange({ ...filters, cuisine: event.target.value })
           }
-          className="min-h-9 w-full rounded-md border border-ink/10 bg-white px-2.5 text-sm font-medium text-ink outline-none transition focus:border-moss"
+          className={`min-h-9 w-full rounded-md border border-ink/10 bg-white px-2.5 text-sm font-medium text-ink outline-none transition ${filterControlFocusClass}`}
         >
           <option value="all">All cuisines</option>
           {cuisines.map((cuisine) => (
@@ -95,7 +98,7 @@ export default function FilterBar({
               trajectory: event.target.value as RestaurantFilters["trajectory"]
             })
           }
-          className="min-h-9 w-full rounded-md border border-ink/10 bg-white px-2.5 text-sm font-medium text-ink outline-none transition focus:border-moss"
+          className={`min-h-9 w-full rounded-md border border-ink/10 bg-white px-2.5 text-sm font-medium text-ink outline-none transition ${filterControlFocusClass}`}
         >
           <option value="all">All trajectories</option>
           {trajectoryOptions
@@ -118,7 +121,7 @@ export default function FilterBar({
               confidence: event.target.value as RestaurantFilters["confidence"]
             })
           }
-          className="min-h-9 w-full rounded-md border border-ink/10 bg-white px-2.5 text-sm font-medium text-ink outline-none transition focus:border-moss"
+          className={`min-h-9 w-full rounded-md border border-ink/10 bg-white px-2.5 text-sm font-medium text-ink outline-none transition ${filterControlFocusClass}`}
         >
           <option value="all">All confidence</option>
           {confidenceOptions
