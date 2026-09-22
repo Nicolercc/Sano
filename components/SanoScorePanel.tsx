@@ -30,13 +30,13 @@ export default function SanoScorePanel({ restaurant }: SanoScorePanelProps) {
     <section className="rounded-lg border border-ink/10 bg-white p-5 shadow-sm">
       <div className="flex flex-wrap items-start justify-between gap-4">
         <div className="min-w-0">
-          <p className="text-xs font-bold uppercase tracking-wide text-ink/50">
+          <p className="text-xs font-bold uppercase tracking-wide text-ink/65">
             Inspection reliability
           </p>
           <p
             className={`mt-1 font-black leading-none ${
               lowInspectionSignal
-                ? "text-3xl text-coral"
+                ? "text-3xl text-coralText"
                 : `text-5xl ${scoreTone(restaurant.inspectionReliabilityScore)}`
             }`}
           >
@@ -44,7 +44,7 @@ export default function SanoScorePanel({ restaurant }: SanoScorePanelProps) {
               restaurant.inspectionReliabilityScore
             )}
           </p>
-          <p className="mt-2 max-w-xs text-xs font-semibold leading-5 text-ink/55">
+          <p className="mt-2 max-w-xs text-xs font-semibold leading-5 text-ink/65">
             Summarizes inspection history for comparison — not a live safety
             rating.
             {lowInspectionSignal
@@ -53,12 +53,12 @@ export default function SanoScorePanel({ restaurant }: SanoScorePanelProps) {
           </p>
         </div>
         <div className="rounded-full border border-ink/10 bg-oat px-3 py-1.5 text-left">
-          <p className="text-[10px] font-bold uppercase tracking-wide text-ink/45">
+          <p className="text-[10px] font-bold uppercase tracking-wide text-ink/65">
             History depth
           </p>
           <p className="mt-0.5 text-xs font-bold text-ink">
             {historyDepthLabel(restaurant.confidence)}
-            <span className="font-semibold text-ink/50">
+            <span className="font-semibold text-ink/65">
               {" "}
               · {inspectionCount}{" "}
               {inspectionCount === 1 ? "cycle" : "cycles"}
@@ -69,13 +69,13 @@ export default function SanoScorePanel({ restaurant }: SanoScorePanelProps) {
 
       <div className="mt-5 grid gap-3 sm:grid-cols-3">
         <div className="rounded-md bg-oat p-3">
-          <p className="text-xs font-bold uppercase tracking-wide text-ink/50">
+          <p className="text-xs font-bold uppercase tracking-wide text-ink/65">
             What stands out
           </p>
           <p className="mt-1 text-sm font-bold text-ink">{restaurant.sanoLabel}</p>
         </div>
         <div className="rounded-md bg-oat p-3">
-          <p className="text-xs font-bold uppercase tracking-wide text-ink/50">
+          <p className="text-xs font-bold uppercase tracking-wide text-ink/65">
             Trajectory
           </p>
           <p className="mt-1 text-sm font-bold text-ink">
@@ -83,12 +83,12 @@ export default function SanoScorePanel({ restaurant }: SanoScorePanelProps) {
           </p>
         </div>
         <div className="rounded-md bg-oat p-3">
-          <p className="text-xs font-bold uppercase tracking-wide text-ink/50">
+          <p className="text-xs font-bold uppercase tracking-wide text-ink/65">
             Popularity vs. inspection gap
           </p>
           <p
             className={`mt-1 text-sm font-bold ${
-              gapMatched ? "text-ink" : "text-ink/55"
+              gapMatched ? "text-ink" : "text-ink/65"
             }`}
           >
             {popularityGap}
@@ -97,7 +97,7 @@ export default function SanoScorePanel({ restaurant }: SanoScorePanelProps) {
       </div>
 
       <p className="mt-4 text-sm leading-6 text-ink/70">{restaurant.explanation}</p>
-      <p className="mt-3 text-xs leading-5 text-ink/50">
+      <p className="mt-3 text-xs leading-5 text-ink/65">
         Scores summarize public inspection records for comparison. They do not
         replace official grades, current conditions, or professional judgment.
         {!gapMatched

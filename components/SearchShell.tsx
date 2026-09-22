@@ -412,7 +412,7 @@ export default function SearchShell({
             </form>
 
             <div className="mx-auto mt-4 flex max-w-3xl flex-wrap items-center justify-center gap-2 text-sm lg:mx-0 lg:justify-start">
-              <span className="font-bold text-white/50">Try:</span>
+              <span className="font-bold text-white/72">Try:</span>
               {["11414", "Chelsea", "Thai", featuredRestaurant?.name ?? "Lucky Chix"].map(
                 (example) => (
                   <button
@@ -429,7 +429,7 @@ export default function SearchShell({
 
             <dl className="mx-auto mt-9 grid max-w-3xl grid-cols-2 gap-3 text-left sm:grid-cols-4 lg:mx-0">
               <div className="rounded-2xl border border-white/10 bg-white/10 p-4 backdrop-blur">
-                <dt className="text-[10px] font-black uppercase tracking-[0.16em] text-white/40">
+                <dt className="text-[10px] font-black uppercase tracking-[0.16em] text-white/72">
                   Restaurants
                 </dt>
                 <dd className="mt-2 text-2xl font-black text-white">
@@ -437,7 +437,7 @@ export default function SearchShell({
                 </dd>
               </div>
               <div className="rounded-2xl border border-white/10 bg-white/10 p-4 backdrop-blur">
-                <dt className="text-[10px] font-black uppercase tracking-[0.16em] text-white/40">
+                <dt className="text-[10px] font-black uppercase tracking-[0.16em] text-white/72">
                   Inspections
                 </dt>
                 <dd className="mt-2 text-2xl font-black text-white">
@@ -445,7 +445,7 @@ export default function SearchShell({
                 </dd>
               </div>
               <div className="rounded-2xl border border-white/10 bg-white/10 p-4 backdrop-blur">
-                <dt className="text-[10px] font-black uppercase tracking-[0.16em] text-white/40">
+                <dt className="text-[10px] font-black uppercase tracking-[0.16em] text-white/72">
                   Source
                 </dt>
                 <dd className="mt-2 text-sm font-black leading-6 text-white">
@@ -453,7 +453,7 @@ export default function SearchShell({
                 </dd>
               </div>
               <div className="rounded-2xl border border-white/10 bg-white/10 p-4 backdrop-blur">
-                <dt className="text-[10px] font-black uppercase tracking-[0.16em] text-white/40">
+                <dt className="text-[10px] font-black uppercase tracking-[0.16em] text-white/72">
                   Extract
                 </dt>
                 <dd className="mt-2 text-sm font-black leading-6 text-white">
@@ -462,7 +462,7 @@ export default function SearchShell({
               </div>
             </dl>
 
-            <p className="mx-auto mt-5 max-w-3xl text-sm font-semibold leading-6 text-white/52 lg:mx-0">
+            <p className="mx-auto mt-5 max-w-3xl text-sm font-semibold leading-6 text-white/72 lg:mx-0">
               Sano is not a safety verdict or official NYC rating — it is
               context from public inspection history.
             </p>
@@ -545,7 +545,7 @@ export default function SearchShell({
                 </div>
                 <div className="mt-5 flex items-center justify-between gap-3 rounded-2xl bg-[#1e2a38] p-3 text-white">
                   <div>
-                    <p className="text-[10px] font-black uppercase tracking-[0.16em] text-white/40">
+                    <p className="text-[10px] font-black uppercase tracking-[0.16em] text-white/72">
                       Inspection reliability
                     </p>
                     <p className="mt-1 text-2xl font-black">
@@ -553,7 +553,7 @@ export default function SearchShell({
                     </p>
                   </div>
                   <div className="text-right">
-                    <p className="text-[10px] font-black uppercase tracking-[0.16em] text-white/40">
+                    <p className="text-[10px] font-black uppercase tracking-[0.16em] text-white/72">
                       Grade translated
                     </p>
                     <p className="mt-1 text-lg font-black tracking-widest text-[#d4af37]">
@@ -575,7 +575,7 @@ export default function SearchShell({
                   className="rounded-2xl border border-white/10 bg-white/10 p-3 text-center shadow-sm backdrop-blur"
                 >
                   <p className="text-xs font-black text-white">{borough}</p>
-                  <p className="mt-1 text-[10px] font-bold uppercase tracking-wide text-white/40">
+                  <p className="mt-1 text-[10px] font-bold uppercase tracking-wide text-white/72">
                     indexed
                   </p>
                 </div>
@@ -644,7 +644,7 @@ export default function SearchShell({
                     aria-hidden="true"
                   />
                   <div className="relative">
-                    <p className="text-[10px] font-black uppercase tracking-[0.16em] text-ink/45">
+                    <p className="text-[10px] font-black uppercase tracking-[0.16em] text-ink/65">
                       {label}
                     </p>
                     <p
@@ -658,7 +658,7 @@ export default function SearchShell({
                     >
                       {value}
                     </p>
-                    <p className="mt-4 text-xs font-semibold leading-5 text-ink/60">
+                    <p className="mt-4 text-xs font-semibold leading-5 text-ink/65">
                       {body}
                     </p>
                   </div>
@@ -685,7 +685,7 @@ export default function SearchShell({
                 Three steps, no invented certainty.
               </h2>
             </div>
-            <p className="max-w-md text-sm font-semibold leading-6 text-ink/55">
+            <p className="max-w-md text-sm font-semibold leading-6 text-ink/65">
               Sano translates records into context while keeping source limits
               visible.
             </p>
@@ -758,7 +758,7 @@ export default function SearchShell({
               >
                 Three places to start
               </h2>
-              <p className="mt-1 text-sm leading-6 text-ink/60">
+              <p className="mt-1 text-sm leading-6 text-ink/65">
                 Real restaurant profiles from the current index — useful demo
                 paths, not invented ratings.
               </p>
@@ -779,7 +779,7 @@ export default function SearchShell({
                     <p className="mt-3 font-serif text-xl font-bold leading-snug text-ink">
                       {copy.title}
                     </p>
-                    <p className="mt-2 text-sm font-semibold text-ink/55">
+                    <p className="mt-2 text-sm font-semibold text-ink/65">
                       {restaurant.name}
                       <span className="text-ink/30"> · </span>
                       Grade {restaurant.grade}
@@ -812,7 +812,7 @@ export default function SearchShell({
             >
               Search restaurants
             </h2>
-            <p className="mt-1 text-sm leading-6 text-ink/60">
+            <p className="mt-1 text-sm leading-6 text-ink/65">
               Filter by name, cuisine, borough, ZIP, trajectory, or confidence.
               Coverage is growing and is not citywide yet.
             </p>
@@ -845,12 +845,12 @@ export default function SearchShell({
             <div className="flex flex-wrap items-end justify-between gap-3">
               <div className="min-w-0">
                 <h2 className="text-xl font-bold text-ink">Search results</h2>
-                <p className="mt-1 text-sm text-ink/55">
+                <p className="mt-1 text-sm text-ink/65">
                   Showing a focused slice first. Narrow with search or filters to
                   explore more of the current index.
                 </p>
               </div>
-              <span className="text-sm font-semibold text-ink/55">
+              <span className="text-sm font-semibold text-ink/65">
                 {loading ? "Searching…" : `${results.length} shown`}
               </span>
             </div>
@@ -962,7 +962,7 @@ export default function SearchShell({
           </div>
         </section>
 
-        <footer className="min-w-0 border-t border-ink/10 pt-6 text-sm leading-6 text-ink/60">
+        <footer className="min-w-0 border-t border-ink/10 pt-6 text-sm leading-6 text-ink/65">
           <p className="max-w-3xl">
             Sano is an independent tool built on NYC DOHMH’s public inspection
             dataset. It is not affiliated with or endorsed by the City of New

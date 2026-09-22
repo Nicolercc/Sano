@@ -59,7 +59,7 @@ export default function RestaurantProfile({
               </p>
               <div className="mt-3 flex flex-wrap items-end gap-6">
                 <div>
-                  <p className="text-xs font-bold uppercase tracking-wide text-ink/50">
+                  <p className="text-xs font-bold uppercase tracking-wide text-ink/65">
                     Current grade
                   </p>
                   <p className="mt-1 font-serif text-3xl font-bold leading-none text-ink">
@@ -67,7 +67,7 @@ export default function RestaurantProfile({
                   </p>
                 </div>
                 <div>
-                  <p className="text-xs font-bold uppercase tracking-wide text-ink/50">
+                  <p className="text-xs font-bold uppercase tracking-wide text-ink/65">
                     Cycles on file
                   </p>
                   <p className="mt-1 text-lg font-black text-ink">
@@ -75,7 +75,7 @@ export default function RestaurantProfile({
                   </p>
                 </div>
                 <div>
-                  <p className="text-xs font-bold uppercase tracking-wide text-ink/50">
+                  <p className="text-xs font-bold uppercase tracking-wide text-ink/65">
                     Extract as of
                   </p>
                   <p className="mt-1 text-sm font-bold text-ink">
@@ -83,7 +83,7 @@ export default function RestaurantProfile({
                   </p>
                 </div>
               </div>
-              <p className="mt-3 text-xs leading-5 text-ink/60">
+              <p className="mt-3 text-xs leading-5 text-ink/65">
                 Sourced from NYC DOHMH public inspection records. Not real-time.
               </p>
             </section>
@@ -94,18 +94,18 @@ export default function RestaurantProfile({
             >
               <p
                 id="public-popularity-heading"
-                className="text-[11px] font-black uppercase tracking-[0.16em] text-ink/45"
+                className="text-[11px] font-black uppercase tracking-[0.16em] text-ink/65"
               >
                 Public popularity metadata
               </p>
               <div className="mt-3 grid grid-cols-2 gap-3">
                 <div>
-                  <p className="text-xs font-bold uppercase tracking-wide text-ink/50">
+                  <p className="text-xs font-bold uppercase tracking-wide text-ink/65">
                     Public rating
                   </p>
                   <p
                     className={`mt-1 text-lg font-black ${
-                      hasPopularity ? "text-ink" : "text-ink/50"
+                      hasPopularity ? "text-ink" : "text-ink/65"
                     }`}
                   >
                     {hasPopularity && restaurant.rating !== null
@@ -114,12 +114,12 @@ export default function RestaurantProfile({
                   </p>
                 </div>
                 <div>
-                  <p className="text-xs font-bold uppercase tracking-wide text-ink/50">
+                  <p className="text-xs font-bold uppercase tracking-wide text-ink/65">
                     Reviews
                   </p>
                   <p
                     className={`mt-1 text-lg font-black ${
-                      hasPopularity ? "text-ink" : "text-ink/50"
+                      hasPopularity ? "text-ink" : "text-ink/65"
                     }`}
                   >
                     {hasPopularity && restaurant.reviewCount !== null
@@ -128,7 +128,7 @@ export default function RestaurantProfile({
                   </p>
                 </div>
               </div>
-              <p className="mt-3 text-xs leading-5 text-ink/60">
+              <p className="mt-3 text-xs leading-5 text-ink/65">
                 {hasPopularity
                   ? "Matched from a separate public source when available. Not part of the official grade."
                   : "Left empty on purpose when no public rating match exists — Sano does not invent reviews."}
@@ -147,7 +147,7 @@ export default function RestaurantProfile({
           >
             The story so far
           </h2>
-          <p className="mt-1 text-sm text-ink/55">
+          <p className="mt-1 text-sm text-ink/65">
             A plain-language read of this restaurant’s existing Sano fields —
             not a safety verdict.
           </p>

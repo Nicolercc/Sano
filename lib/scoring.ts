@@ -138,10 +138,10 @@ export function scoreTone(score: number) {
   }
 
   if (score >= 62) {
-    return "text-amber";
+    return "text-amberText";
   }
 
-  return "text-coral";
+  return "text-coralText";
 }
 
 export function scoreMeterTone(score: number) {
@@ -159,8 +159,8 @@ export function scoreMeterTone(score: number) {
 export function confidenceTone(confidence: ConfidenceLevel) {
   const tones: Record<ConfidenceLevel, string> = {
     high: "bg-mint text-moss",
-    medium: "bg-amber/15 text-amber",
-    limited: "bg-coral/10 text-coral"
+    medium: "bg-amber/15 text-amberText",
+    limited: "bg-coral/10 text-coralText"
   };
 
   return tones[confidence];

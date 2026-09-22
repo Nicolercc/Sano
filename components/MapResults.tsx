@@ -49,7 +49,7 @@ export default function MapResults({
             <h2 className="mt-1 text-xl font-black text-ink">
               Coverage across boroughs and ZIP codes
             </h2>
-            <p className="mt-2 max-w-2xl text-sm leading-6 text-ink/60">
+            <p className="mt-2 max-w-2xl text-sm leading-6 text-ink/65">
               Sano is optimized for searchable official records: restaurant name,
               cuisine, borough, address, and ZIP code where DOHMH provides it.
               The snapshot below updates with your current search.
@@ -62,7 +62,7 @@ export default function MapResults({
 
         <div className="mt-4 grid gap-3 sm:grid-cols-2">
           <div className="rounded-xl bg-oat p-4">
-            <p className="text-xs font-bold uppercase tracking-wide text-ink/45">
+            <p className="text-xs font-bold uppercase tracking-wide text-ink/65">
               Borough mix
             </p>
             <div className="mt-3 flex flex-wrap gap-2">
@@ -76,7 +76,7 @@ export default function MapResults({
                   </span>
                 ))
               ) : (
-                <span className="text-sm font-semibold text-ink/50">
+                <span className="text-sm font-semibold text-ink/65">
                   No boroughs in this result set
                 </span>
               )}
@@ -84,7 +84,7 @@ export default function MapResults({
           </div>
 
           <div className="rounded-xl bg-oat p-4">
-            <p className="text-xs font-bold uppercase tracking-wide text-ink/45">
+            <p className="text-xs font-bold uppercase tracking-wide text-ink/65">
               ZIPs represented
             </p>
             <div className="mt-3 flex flex-wrap gap-2">
@@ -107,7 +107,7 @@ export default function MapResults({
                   </button>
                 ))
               ) : (
-                <span className="text-sm font-semibold text-ink/50">
+                <span className="text-sm font-semibold text-ink/65">
                   ZIP metadata pending for this slice
                 </span>
               )}
@@ -136,7 +136,7 @@ export default function MapResults({
       </div>
 
       <aside className="rounded-xl border border-ink/10 bg-oat p-4">
-        <p className="text-xs font-bold uppercase tracking-wide text-ink/45">
+        <p className="text-xs font-bold uppercase tracking-wide text-ink/65">
           Selected restaurant
         </p>
         {selectedRestaurant ? (
@@ -144,19 +144,19 @@ export default function MapResults({
             <p className="text-lg font-black leading-tight text-ink">
               {selectedRestaurant.name}
             </p>
-            <p className="mt-2 text-sm leading-5 text-ink/60">
+            <p className="mt-2 text-sm leading-5 text-ink/65">
               {selectedRestaurant.address}, {selectedRestaurant.borough}
               {selectedRestaurant.zipcode ? ` ${selectedRestaurant.zipcode}` : ""}
             </p>
             <div className="mt-4 grid grid-cols-3 gap-2 text-center">
               <div className="rounded-lg bg-white p-3">
-                <p className="text-[10px] font-bold uppercase tracking-wide text-ink/45">
+                <p className="text-[10px] font-bold uppercase tracking-wide text-ink/65">
                   Grade
                 </p>
                 <p className="mt-1 font-black text-ink">{selectedRestaurant.grade}</p>
               </div>
               <div className="rounded-lg bg-white p-3">
-                <p className="text-[10px] font-bold uppercase tracking-wide text-ink/45">
+                <p className="text-[10px] font-bold uppercase tracking-wide text-ink/65">
                   Score
                 </p>
                 <p className="mt-1 font-black text-ink">
@@ -166,7 +166,7 @@ export default function MapResults({
                 </p>
               </div>
               <div className="rounded-lg bg-white p-3">
-                <p className="text-[10px] font-bold uppercase tracking-wide text-ink/45">
+                <p className="text-[10px] font-bold uppercase tracking-wide text-ink/65">
                   History
                 </p>
                 <p className="mt-1 font-black text-ink">
@@ -176,7 +176,7 @@ export default function MapResults({
             </div>
           </div>
         ) : (
-          <p className="mt-3 text-sm leading-6 text-ink/60">
+          <p className="mt-3 text-sm leading-6 text-ink/65">
             Search by ZIP, restaurant, cuisine, or borough to select a record.
           </p>
         )}
