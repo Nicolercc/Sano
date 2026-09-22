@@ -191,6 +191,7 @@ export default function SearchShell({
     restaurants[0] ?? null
   );
   const searchSectionRef = useRef<HTMLElement | null>(null);
+  const searchRegionFocusRef = useRef<HTMLHeadingElement | null>(null);
 
   const cuisines = useMemo(
     () => Array.from(new Set(restaurants.map((restaurant) => restaurant.cuisine))).sort(),
@@ -313,6 +314,7 @@ export default function SearchShell({
         behavior: "smooth",
         block: "start"
       });
+      searchRegionFocusRef.current?.focus({ preventScroll: true });
     });
   };
 
@@ -788,10 +790,15 @@ export default function SearchShell({
           ref={searchSectionRef}
           id="search"
           aria-labelledby="search-heading"
-          className="flex min-w-0 scroll-mt-6 flex-col gap-4"
+          className="flex min-w-0 scroll-mt-24 flex-col gap-4"
         >
           <div>
-            <h2 id="search-heading" className="text-xl font-bold text-ink">
+            <h2
+              ref={searchRegionFocusRef}
+              id="search-heading"
+              tabIndex={-1}
+              className="rounded-md text-xl font-bold text-ink focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-moss"
+            >
               Search restaurants
             </h2>
             <p className="mt-1 text-sm leading-6 text-ink/60">
