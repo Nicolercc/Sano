@@ -22,7 +22,7 @@ export default async function Alternatives({ restaurant }: AlternativesProps) {
     <section className="rounded-lg border border-ink/10 bg-white p-5 shadow-sm">
       <div className="mb-3">
         <h2 className="text-lg font-bold text-ink">Nearby alternatives</h2>
-        <p className="text-sm text-ink/60">
+        <p className="text-sm text-ink/65">
           Compact comparisons from the current index — not endorsements.
         </p>
       </div>
@@ -36,7 +36,7 @@ export default async function Alternatives({ restaurant }: AlternativesProps) {
               <p className="truncate font-serif text-base font-bold text-ink">
                 {alternative.name}
               </p>
-              <p className="mt-0.5 truncate text-xs text-ink/55">
+              <p className="mt-0.5 truncate text-xs text-ink/65">
                 {alternative.cuisine} · {alternative.neighborhood}
                 {alternative.zipcode ? ` ${alternative.zipcode}` : ""}
                 <span className="text-ink/30"> · </span>

@@ -158,7 +158,7 @@ export default function FilterBar({
 
       <span
         className={`ml-auto hidden whitespace-nowrap px-2 text-xs font-semibold sm:inline ${
-          resultCount === 0 && filtersActive ? "text-amber" : "text-ink/50"
+          resultCount === 0 && filtersActive ? "text-amberText" : "text-ink/65"
         }`}
       >
         {resultCount} {resultCount === 1 ? "match" : "matches"}

@@ -45,7 +45,7 @@ export default function TrustTimeline({ inspections }: TrustTimelineProps) {
     return (
       <section className="rounded-lg border border-ink/10 bg-white p-5 shadow-sm">
         <h2 className="text-lg font-bold text-ink">Inspection timeline</h2>
-        <p className="mt-2 text-sm text-ink/60">
+        <p className="mt-2 text-sm text-ink/65">
           No inspection cycles are available for this restaurant yet.
         </p>
       </section>
@@ -57,7 +57,7 @@ export default function TrustTimeline({ inspections }: TrustTimelineProps) {
       <div className="flex flex-wrap items-start justify-between gap-3">
         <div>
           <h2 className="text-lg font-bold text-ink">Inspection timeline</h2>
-          <p className="mt-1 text-sm text-ink/60">
+          <p className="mt-1 text-sm text-ink/65">
             Lower scores generally indicate fewer recorded inspection points.
           </p>
         </div>
@@ -71,14 +71,14 @@ export default function TrustTimeline({ inspections }: TrustTimelineProps) {
         </div>
       </div>
 
-      <div className="mt-4 flex flex-wrap gap-3 text-xs text-ink/60">
+      <div className="mt-4 flex flex-wrap gap-3 text-xs text-ink/65">
         <span className="inline-flex items-center gap-1.5">
           <span className="h-2.5 w-2.5 rounded-full bg-coral" aria-hidden />
           Critical flag
         </span>
         <span className="inline-flex items-center gap-1.5">
           <span
-            className="h-2.5 w-2.5 rounded-sm border-2 border-amber bg-amber/20"
+            className="h-2.5 w-2.5 rounded-sm border-2 border-amberText bg-amber/20"
             aria-hidden
           />
           Repeat pattern
@@ -118,7 +118,7 @@ export default function TrustTimeline({ inspections }: TrustTimelineProps) {
                   width={barWidth}
                   height={barHeight}
                   rx="0.8"
-                  fill={hasCritical ? "#c8664c" : "#486b55"}
+                  fill={hasCritical ? "#9f3f29" : "#486b55"}
                   fillOpacity="0.8"
                 >
                   <title>
@@ -158,7 +158,7 @@ export default function TrustTimeline({ inspections }: TrustTimelineProps) {
                   </text>
 
                   {hasCritical ? (
-                    <circle cx={cx - 1.5} cy={markerY} r="1.05" fill="#c8664c">
+                    <circle cx={cx - 1.5} cy={markerY} r="1.05" fill="#9f3f29">
                       <title>{`${inspection.criticalCount} critical`}</title>
                     </circle>
                   ) : null}
@@ -171,7 +171,7 @@ export default function TrustTimeline({ inspections }: TrustTimelineProps) {
                       height="2"
                       rx="0.25"
                       fill="#d69d3f40"
-                      stroke="#d69d3f"
+                      stroke="#7a4f08"
                       strokeWidth="0.35"
                     >
                       <title>Repeat pattern</title>
@@ -196,7 +196,7 @@ export default function TrustTimeline({ inspections }: TrustTimelineProps) {
             {ordered.map((inspection) => (
               <li key={inspection.id} className="min-w-0 text-center">
                 <p className="text-sm font-black text-ink">{inspection.score}</p>
-                <p className="mt-0.5 text-[11px] font-semibold uppercase tracking-wide text-ink/45">
+                <p className="mt-0.5 text-[11px] font-semibold uppercase tracking-wide text-ink/65">
                   Raw score
                 </p>
                 <p className="mt-2 text-xs font-semibold text-ink/70">
@@ -207,17 +207,17 @@ export default function TrustTimeline({ inspections }: TrustTimelineProps) {
                     Grade {inspection.grade}
                   </span>
                   {inspection.criticalCount > 0 ? (
-                    <span className="rounded-full bg-coral/10 px-2 py-0.5 text-[11px] font-bold text-coral">
+                    <span className="rounded-full bg-coral/10 px-2 py-0.5 text-[11px] font-bold text-coralText">
                       {inspection.criticalCount} critical
                     </span>
                   ) : null}
                   {inspection.repeatPattern ? (
-                    <span className="rounded-full bg-amber/15 px-2 py-0.5 text-[11px] font-bold text-amber">
+                    <span className="rounded-full bg-amber/15 px-2 py-0.5 text-[11px] font-bold text-amberText">
                       Repeat
                     </span>
                   ) : null}
                 </div>
-                <p className="mt-2 hidden text-left text-xs leading-5 text-ink/60 lg:block">
+                <p className="mt-2 hidden text-left text-xs leading-5 text-ink/65 lg:block">
                   {inspection.note}
                 </p>
               </li>
