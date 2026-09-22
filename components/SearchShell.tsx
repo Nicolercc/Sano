@@ -30,6 +30,7 @@ const INITIAL_VISIBLE_COUNT = 12;
 const VISIBLE_INCREMENT = 12;
 const API_RESULT_LIMIT = 80;
 const PRIMARY_DEMO_QUERY = "11414";
+const LIVE_STATUS_QUERY_DEBOUNCE_MS = 500;
 
 type DemoJourney = {
   id: string;
@@ -187,11 +188,19 @@ export default function SearchShell({
   const [loading, setLoading] = useState(false);
   const [loadError, setLoadError] = useState(false);
   const [heroSearchQuery, setHeroSearchQuery] = useState("");
+  const [announcedSearchStatusMessage, setAnnouncedSearchStatusMessage] =
+    useState(
+      () =>
+        `${restaurants.length} ${
+          restaurants.length === 1 ? "restaurant" : "restaurants"
+        } shown.`
+    );
   const [selectedRestaurant, setSelectedRestaurant] = useState<Restaurant | null>(
     restaurants[0] ?? null
   );
   const searchSectionRef = useRef<HTMLElement | null>(null);
   const searchRegionFocusRef = useRef<HTMLHeadingElement | null>(null);
+  const liveStatusQueryRef = useRef(defaultFilters.query);
 
   const cuisines = useMemo(
     () => Array.from(new Set(restaurants.map((restaurant) => restaurant.cuisine))).sort(),
@@ -288,6 +297,18 @@ export default function SearchShell({
         : filtersActive
           ? "No matching restaurants in the current index."
           : "No restaurants available right now.";
+
+  useEffect(() => {
+    const queryChanged = filters.query !== liveStatusQueryRef.current;
+    const delay = queryChanged ? LIVE_STATUS_QUERY_DEBOUNCE_MS : 0;
+    const timeout = window.setTimeout(() => {
+      liveStatusQueryRef.current = filters.query;
+      setAnnouncedSearchStatusMessage(searchStatusMessage);
+    }, delay);
+
+    return () => window.clearTimeout(timeout);
+  }, [filters.query, searchStatusMessage]);
+
   const dataAsOfLabel = dataSummary.dataAsOf
     ? new Intl.DateTimeFormat("en", {
         month: "short",
@@ -823,7 +844,7 @@ export default function SearchShell({
               aria-atomic="true"
               className="sr-only"
             >
-              {searchStatusMessage}
+              {announcedSearchStatusMessage}
             </p>
           </div>
 

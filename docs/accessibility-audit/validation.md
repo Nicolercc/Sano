@@ -18,7 +18,7 @@ Run these before merging Phase 2 work:
 | `npm run validate:official` | Validates committed official generated seed shape. | Passed on 2026-09-22. |
 | `npm run validate:synthetic` | Validates synthetic fallback seed shape. | Passed on 2026-09-22. |
 | `npm run lint` | Catches framework, TypeScript, and JSX issues. | Passed on 2026-09-22. |
-| `npm run a11y:regression` | Source-level guard for filter focus styling, hero-search focus handoff, and exactly one search status live region. | Passed on 2026-09-22. |
+| `npm run a11y:regression` | Source-level guard for filter focus styling, hero-search focus handoff, exactly one search status live region across `app/` and `components/`, and a 500ms query debounce before live-status announcements. | Passed on 2026-09-22 after `fix(a11y): debounce search status announcements`. |
 | `npm run a11y:contrast` | Recalculates audited contrast pairs and blocks known risky meaningful-text classes unless allowlisted. | Passed on 2026-09-22. |
 | `npm run build` | Verifies production build and route generation. | Passed on 2026-09-22. |
 | `npm run check` | Runs validation, lint, accessibility checks, and build together. | Passed on 2026-09-22. |
@@ -64,7 +64,7 @@ These checks still require a human pass with keyboard, browser rendering, and as
 2. Keyboard focus: tab from the browser chrome into navigation, landing search, sample buttons, filters, result actions, profile links, and methodology link.
 3. Hero search focus handoff: from fresh `/`, submit a hero search with `Enter`; verify focus lands visibly on the search/results heading and is not hidden under the sticky nav.
 4. Filters: verify query input and select controls show a stronger focus indicator than border-color-only.
-5. Search status announcements: with a screen reader active, submit a hero search, change filters, trigger empty results, and trigger an error; confirm the polite status message is announced without duplicate chatter.
+5. Search status announcements: with a screen reader active, submit a hero search, type a multi-character filter query, change filters, trigger empty results, and trigger an error; confirm the polite status message is announced after query typing settles and without duplicate chatter.
 6. Search/filter state: apply query, trajectory, confidence, and recent critical filters. Verify all control labels, current values, result counts, and clear action are visible and understandable.
 7. Results state: inspect selected card, map/coverage summary, result cards, reliability bars, and open-profile actions.
 8. Empty, loading, and error states: verify text is perceivable and recovery actions are keyboard reachable.
@@ -80,4 +80,5 @@ These checks still require a human pass with keyboard, browser rendering, and as
 - Keyboard focus is visibly styled throughout the critical journey.
 - Reviewed task-critical text no longer uses the audited risky low-contrast meaningful-text tokens.
 - Search loading, result counts, empty state, and error state have one polite status region.
+- Query typing does not cause live-region chatter on every keystroke.
 - Timeline/status meaning is supported by text, not color alone.
