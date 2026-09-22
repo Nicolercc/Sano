@@ -29,7 +29,8 @@ const defaultFilters: RestaurantFilters = {
 const INITIAL_VISIBLE_COUNT = 12;
 const VISIBLE_INCREMENT = 12;
 const API_RESULT_LIMIT = 80;
-const PRIMARY_DEMO_QUERY = "11414";
+const PRIMARY_DEMO_QUERY = "Brooklyn";
+const DEMO_QUERY_CHIPS = ["Brooklyn", "Coffee", "Korean"];
 const LIVE_STATUS_QUERY_DEBOUNCE_MS = 500;
 
 type DemoJourney = {
@@ -434,7 +435,7 @@ export default function SearchShell({
 
             <div className="mx-auto mt-4 flex max-w-3xl flex-wrap items-center justify-center gap-2 text-sm lg:mx-0 lg:justify-start">
               <span className="font-bold text-white/72">Try:</span>
-              {["11414", "Chelsea", "Thai", featuredRestaurant?.name ?? "Lucky Chix"].map(
+              {[...DEMO_QUERY_CHIPS, featuredRestaurant?.name ?? "Lucky Chix"].map(
                 (example) => (
                   <button
                     key={example}
