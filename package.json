@@ -9,6 +9,7 @@
     "lint": "next lint",
     "validate:official": "python3 scripts/validate_restaurant_seed.py data/official-restaurants.json --kind official",
     "validate:synthetic": "python3 scripts/validate_restaurant_seed.py data/sample-restaurants.json --kind synthetic",
+    "a11y:regression": "node scripts/a11y-regression-check.mjs",
     "check": "npm run validate:official && npm run validate:synthetic && npm run lint && npm run build",
     "acceptance": "node scripts/acceptance.mjs",
     "enrich:google:dry-run": "python3 scripts/enrich_google_places.py --dry-run",
