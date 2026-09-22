@@ -27,12 +27,18 @@ export default function SanoScorePanel({ restaurant }: SanoScorePanelProps) {
   const inspectionCount = restaurant.inspections.length;
 
   return (
-    <section className="rounded-lg border border-ink/10 bg-white p-5 shadow-sm">
+    <section
+      aria-labelledby="inspection-reliability-heading"
+      className="rounded-lg border border-ink/10 bg-white p-5 shadow-sm"
+    >
       <div className="flex flex-wrap items-start justify-between gap-4">
         <div className="min-w-0">
-          <p className="text-xs font-bold uppercase tracking-wide text-ink/65">
+          <h2
+            id="inspection-reliability-heading"
+            className="text-xs font-bold uppercase tracking-wide text-ink/65"
+          >
             Inspection reliability
-          </p>
+          </h2>
           <p
             className={`mt-1 font-black leading-none ${
               lowInspectionSignal
