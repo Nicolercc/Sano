@@ -277,6 +277,17 @@ export default function SearchShell({
   const visibleRestaurants = results.slice(0, visibleCount);
   const hiddenResultCount = Math.max(results.length - visibleRestaurants.length, 0);
   const zipSearchActive = /^\d{5}$/.test(filters.query.trim());
+  const searchStatusMessage = loadError
+    ? "Search failed. Try again or clear filters."
+    : loading
+      ? "Searching restaurants."
+      : results.length
+        ? `${results.length} ${
+            results.length === 1 ? "restaurant" : "restaurants"
+          } shown.`
+        : filtersActive
+          ? "No matching restaurants in the current index."
+          : "No restaurants available right now.";
   const dataAsOfLabel = dataSummary.dataAsOf
     ? new Intl.DateTimeFormat("en", {
         month: "short",
@@ -804,6 +815,15 @@ export default function SearchShell({
             <p className="mt-1 text-sm leading-6 text-ink/60">
               Filter by name, cuisine, borough, ZIP, trajectory, or confidence.
               Coverage is growing and is not citywide yet.
+            </p>
+            <p
+              id="search-status"
+              role="status"
+              aria-live="polite"
+              aria-atomic="true"
+              className="sr-only"
+            >
+              {searchStatusMessage}
             </p>
           </div>
 
