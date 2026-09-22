@@ -6,6 +6,7 @@ Validation should prove that the critical journey improved without expanding sco
 
 - Keep all files in `docs/accessibility-audit/screenshots/baseline/` unchanged.
 - Keep `docs/accessibility-audit/phase1-browser-audit.json` and `docs/accessibility-audit/screenshots/phase1-keyboard/` as before-fix evidence.
+- Keep `docs/accessibility-audit/phase2-rendered-validation.md` and `docs/accessibility-audit/screenshots/phase2-after/` as Phase 2 after-fix evidence.
 - Link each fixed issue back to the row in `findings.md`.
 - Include implementation commits or pull-request links beside the relevant before/after evidence.
 
@@ -23,6 +24,17 @@ Run these before merging Phase 2 work:
 | `npm run build` | Verifies production build and route generation. | Passed on 2026-09-22. |
 | `npm run check` | Runs validation, lint, accessibility checks, and build together. | Passed on 2026-09-22. |
 | `SANO_BASE_URL=http://127.0.0.1:4176 npm run acceptance` | Exercises health, search API, homepage, profile, not-found, and methodology routes. | Passed on 2026-09-22 after allowing Node to connect to the local dev server. |
+
+## Rendered Browser Checks
+
+`phase2-rendered-validation.md` records the first rendered after-pass in real Chrome.
+
+| Check | Latest result |
+| --- | --- |
+| Hero search focus handoff | Passed in Chrome on 2026-09-22; focus moved to `Search restaurants`. |
+| Filter focus next step | Passed in Chrome on 2026-09-22; Tab moved into the filter query input with the query selected. |
+| Settled live-status empty state | Passed in Chrome on 2026-09-22; status text exposed `No matching restaurants in the current index.` after the ZIP search settled. |
+| Screen-reader announcement timing | Still pending; requires VoiceOver/NVDA-style assistive technology, not only browser accessibility tree inspection. |
 
 ## Contrast Validation
 
