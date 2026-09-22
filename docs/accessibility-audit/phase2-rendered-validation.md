@@ -19,6 +19,10 @@ This pass verifies selected Phase 2 fixes in a rendered browser after the automa
 | Mobile profile top viewport at 390 x 844 | `screenshots/phase2-after/09-mobile-profile-top.png` |
 | Mobile profile score/source viewport at 390 x 844 | `screenshots/phase2-after/10-mobile-profile-score-source.png` |
 | Mobile inspection timeline viewport at 390 x 844 | `screenshots/phase2-after/11-mobile-profile-timeline.png` |
+| Desktop hero after demo-chip fix (Brooklyn/Coffee/Korean chips visible) | `screenshots/phase2-after/12-desktop-hero-final.png` |
+| Desktop profile: inspection reliability heading + timeline in one viewport | `screenshots/phase2-after/13-desktop-profile-score-heading.png` |
+| Mobile hero after demo-chip fix | `screenshots/phase2-after/14-mobile-hero-final.png` |
+| Mobile inspection timeline viewport | `screenshots/phase2-after/15-mobile-profile-timeline-final.png` |
 
 ## Evidence Correction (2026-09-22)
 
@@ -41,18 +45,19 @@ Full-page reflow evidence is therefore **not available as a single image** for t
 | Profile score semantics | Chrome exposed `Inspection reliability` as an `h2` in the restaurant profile flow. |
 | Not-found navigation | Chrome exposed the not-found route local nav as `Primary navigation` with recovery links to Sano and Methodology. |
 | Mobile profile viewports | At 390 x 844, the profile top, score/source region, and timeline chart viewport each render once and remain readable. |
+| Demo chip fix rendered correctly | `12-desktop-hero-final.png` and `14-mobile-hero-final.png` confirm the "Try:" row now reads Brooklyn / Coffee / Korean / Lucky Chix, matching the `fix(demo)` commit. |
+| **Live-status debounce, measured directly (2026-09-22)** | Drove `http://127.0.0.1:4176` with gstack's headless browser (`browse` CLI). Baseline `#search-status` read `"16 restaurants shown."`. Clicked the filter query input and sent keystrokes `c`, `h`, `i`, `x` individually with ~120ms between presses (typing finished at t=0.72s from the first keystroke). Polled `#search-status` every ~150ms for 5s after. The value stayed at `"16 restaurants shown."` through t=1.005s, changed exactly once to `"1 restaurant shown."` between t=1.005s and t=1.229s (~500ms after the last keystroke, matching `LIVE_STATUS_QUERY_DEBOUNCE_MS`), then held that exact string for the remaining ~4.7s of polling — 24 samples total, one distinct value change. This directly confirms the debounce fix: the region does not fire once per keystroke, and it settles on the correct final count ("chix" matches exactly one seed restaurant, Lucky Chix). Console errors on the page: none. |
 
 ## Limits Of This Pass
 
-- The in-app browser rendered the page but did not reliably exercise the hydrated Next.js interaction path, so the interactive smoke pass was performed in real Chrome through macOS accessibility controls.
-- This pass did not run VoiceOver. The live-region implementation still needs a true screen-reader check to confirm announcement timing and duplicate-chatter behavior.
+- The debounce/announcement check (above) verified the DOM-level `aria-live` contract programmatically: the correct text appears in the live region exactly once, at the right time. This is a strong proxy for screen-reader behavior but is not the same as a human listening to VoiceOver — a real screen reader could theoretically batch or split announcements differently than the DOM mutation count implies. Treat this as "verified at the ARIA contract level," not "confirmed by ear."
 - This pass did not cover 400% zoom, reduced motion, or the full timeline perceptual review.
-- Full-page reflow was checked via manual viewport-height slices, not a single stitched screenshot (see Evidence Correction above). A reliable full-page capture tool is still needed if that evidence format is required later.
+- Full-page reflow was checked via individual clean viewport screenshots (hero and timeline, desktop and mobile), not a single stitched full-page image — the original stitching tool had a duplication defect (see Evidence Correction above) and was abandoned rather than fixed, since per-viewport screenshots give the same visual assurance without the defect.
 - The mobile timeline chart still benefits from visual refinement at narrow widths; the textual inspection list remains present as the non-chart fallback.
 
 ## Remaining Human Checks
 
-- Run VoiceOver with Chrome or Safari and confirm query typing does not announce on every keystroke.
+- Do one real VoiceOver (or NVDA) pass as a final confirmation before presenting this publicly — the DOM-level measurement above is strong evidence but isn't a substitute for actually hearing it.
 - Repeat the full no-mouse journey from landing through profile and methodology.
 - Decide whether to refine the mobile timeline chart now or explicitly defer it to the next visual polish phase.
-- If full-page reflow screenshots are needed for the case study, re-capture with a tool that does not duplicate content on scroll-stitch (do not reuse the original capture method without fixing that defect first).
+- 400% zoom / reflow and reduced-motion checks remain untested and out of scope for this pass.
