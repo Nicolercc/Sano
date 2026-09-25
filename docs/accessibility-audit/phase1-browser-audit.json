@@ -1,0 +1,1546 @@
+{
+  "generatedAt": "2026-09-22T02:46:44.016Z",
+  "baseUrl": "http://127.0.0.1:4176",
+  "semanticRoutes": [
+    "/",
+    "/restaurants/50114980",
+    "/methodology",
+    "/restaurants/not-a-real-id"
+  ],
+  "semantics": [
+    {
+      "route": "/",
+      "title": "Sano — NYC restaurant inspection context",
+      "mains": 1,
+      "navs": [
+        {
+          "label": "Primary navigation",
+          "linkCount": 6
+        }
+      ],
+      "headers": 1,
+      "footers": 1,
+      "sections": [
+        {
+          "label": "Sano product preview",
+          "ariaLabel": "Sano product preview",
+          "ariaLabelledby": null,
+          "heading": ""
+        },
+        {
+          "label": "Sano keeps the official grade visible, then shows the pattern underneath.",
+          "ariaLabel": null,
+          "ariaLabelledby": "signal-bridge-heading",
+          "heading": "Sano keeps the official grade visible, then shows the pattern underneath."
+        },
+        {
+          "label": "Three steps, no invented certainty.",
+          "ariaLabel": null,
+          "ariaLabelledby": "how-it-works-heading",
+          "heading": "Three steps, no invented certainty."
+        },
+        {
+          "label": "Three places to start",
+          "ariaLabel": null,
+          "ariaLabelledby": "demo-journeys-heading",
+          "heading": "Three places to start"
+        },
+        {
+          "label": "Search restaurants",
+          "ariaLabel": null,
+          "ariaLabelledby": "search-heading",
+          "heading": "Search restaurants"
+        },
+        {
+          "label": "Restaurant filters",
+          "ariaLabel": "Restaurant filters",
+          "ariaLabelledby": null,
+          "heading": ""
+        },
+        {
+          "label": "Coverage across boroughs and ZIP codes",
+          "ariaLabel": null,
+          "ariaLabelledby": null,
+          "heading": "Coverage across boroughs and ZIP codes"
+        }
+      ],
+      "unlabeledSections": 0,
+      "headings": [
+        {
+          "level": 1,
+          "text": "The grade is on the door. The story isn’t."
+        },
+        {
+          "level": 2,
+          "text": "Sano keeps the official grade visible, then shows the pattern underneath."
+        },
+        {
+          "level": 2,
+          "text": "Three steps, no invented certainty."
+        },
+        {
+          "level": 3,
+          "text": "Official records"
+        },
+        {
+          "level": 3,
+          "text": "Pattern detection"
+        },
+        {
+          "level": 3,
+          "text": "Honest limitations"
+        },
+        {
+          "level": 2,
+          "text": "Three places to start"
+        },
+        {
+          "level": 2,
+          "text": "Search restaurants"
+        },
+        {
+          "level": 2,
+          "text": "Coverage across boroughs and ZIP codes"
+        },
+        {
+          "level": 2,
+          "text": "Search results"
+        },
+        {
+          "level": 2,
+          "text": "Lucky Chix"
+        },
+        {
+          "level": 2,
+          "text": "Current Coffee"
+        },
+        {
+          "level": 2,
+          "text": "Roti Corner Restaurant"
+        },
+        {
+          "level": 2,
+          "text": "Raf'S"
+        },
+        {
+          "level": 2,
+          "text": "787 Coffee"
+        },
+        {
+          "level": 2,
+          "text": "Anjappar"
+        },
+        {
+          "level": 2,
+          "text": "Cafe 48"
+        },
+        {
+          "level": 2,
+          "text": "Dark Matter Coffee - Adios Amigos"
+        },
+        {
+          "level": 2,
+          "text": "Grand Morelos"
+        },
+        {
+          "level": 2,
+          "text": "Palm Court"
+        },
+        {
+          "level": 2,
+          "text": "Cutwater Cocktail Bar"
+        },
+        {
+          "level": 2,
+          "text": "Dish Food & Events"
+        }
+      ],
+      "links": [
+        {
+          "text": "SSano",
+          "href": "/"
+        },
+        {
+          "text": "How it works",
+          "href": "/#how-it-works"
+        },
+        {
+          "text": "Search",
+          "href": "/#search"
+        },
+        {
+          "text": "Demo",
+          "href": "/#demo"
+        },
+        {
+          "text": "Methodology",
+          "href": "/methodology"
+        },
+        {
+          "text": "Try Sano",
+          "href": "/#search"
+        },
+        {
+          "text": "Compare the patternSame letter, different historyLucky Chix · Grade ALucky Chix currently shows grade A, but the inspection timeline swings. Open the profile to see the record behind the sticker.Open profile →",
+          "href": "/restaurants/50169790"
+        },
+        {
+          "text": "Start with a calm recordA steadier inspection pathCutwater Cocktail Bar · Grade PendingCutwater Cocktail Bar is a clear demo of a consistent record — useful when you want to show history without a punitive tone.Open profile →",
+          "href": "/restaurants/50006959"
+        },
+        {
+          "text": "Read the recent flagContext before conclusionsRaf'S · Grade ARaf'S surfaces a recent critical flag beside the current grade. The profile keeps the official record and Sano’s limits visible.Open profile →",
+          "href": "/restaurants/50131593"
+        },
+        {
+          "text": "Open profile",
+          "href": "/restaurants/50169790"
+        },
+        {
+          "text": "Open profile",
+          "href": "/restaurants/50171997"
+        },
+        {
+          "text": "Open profile",
+          "href": "/restaurants/40510647"
+        },
+        {
+          "text": "Open profile",
+          "href": "/restaurants/50131593"
+        },
+        {
+          "text": "Open profile",
+          "href": "/restaurants/50114980"
+        },
+        {
+          "text": "Open profile",
+          "href": "/restaurants/41627217"
+        },
+        {
+          "text": "Open profile",
+          "href": "/restaurants/50142455"
+        },
+        {
+          "text": "Open profile",
+          "href": "/restaurants/50161777"
+        },
+        {
+          "text": "Open profile",
+          "href": "/restaurants/50102562"
+        },
+        {
+          "text": "Open profile",
+          "href": "/restaurants/50000233"
+        },
+        {
+          "text": "Open profile",
+          "href": "/restaurants/50006959"
+        },
+        {
+          "text": "Open profile",
+          "href": "/restaurants/50133676"
+        },
+        {
+          "text": "Full methodology",
+          "href": "/methodology"
+        }
+      ],
+      "emptyLinkNames": 0,
+      "lists": [],
+      "controls": [
+        {
+          "tag": "input",
+          "type": null,
+          "name": "Search by restaurant, ZIP, cuisine, or borough",
+          "disabled": false
+        },
+        {
+          "tag": "button",
+          "type": "submit",
+          "name": "Search",
+          "disabled": false
+        },
+        {
+          "tag": "button",
+          "type": "button",
+          "name": "11414",
+          "disabled": false
+        },
+        {
+          "tag": "button",
+          "type": "button",
+          "name": "Chelsea",
+          "disabled": false
+        },
+        {
+          "tag": "button",
+          "type": "button",
+          "name": "Thai",
+          "disabled": false
+        },
+        {
+          "tag": "button",
+          "type": "button",
+          "name": "Lucky Chix",
+          "disabled": false
+        },
+        {
+          "tag": "input",
+          "type": null,
+          "name": "Search",
+          "disabled": false
+        },
+        {
+          "tag": "select",
+          "type": null,
+          "name": "CuisineAll cuisinesAmericanCaribbeanChineseCoffee/TeaFrozen DessertsFusionIndianKoreanMexicanNew FrenchSandwichesSpanishVegetarian",
+          "disabled": false
+        },
+        {
+          "tag": "select",
+          "type": null,
+          "name": "TrajectoryAll trajectoriesImprovingStableVolatileDeclining",
+          "disabled": false
+        },
+        {
+          "tag": "select",
+          "type": null,
+          "name": "ConfidenceAll confidenceHighMediumLimited",
+          "disabled": false
+        },
+        {
+          "tag": "input",
+          "type": "checkbox",
+          "name": "Recent criticals",
+          "disabled": false
+        },
+        {
+          "tag": "button",
+          "type": "button",
+          "name": "Lucky Chix",
+          "disabled": false
+        },
+        {
+          "tag": "button",
+          "type": "button",
+          "name": "Current Coffee",
+          "disabled": false
+        },
+        {
+          "tag": "button",
+          "type": "button",
+          "name": "Roti Corner Restaurant",
+          "disabled": false
+        },
+        {
+          "tag": "button",
+          "type": "button",
+          "name": "Raf'S",
+          "disabled": false
+        },
+        {
+          "tag": "button",
+          "type": "button",
+          "name": "Selected",
+          "disabled": false
+        },
+        {
+          "tag": "button",
+          "type": "button",
+          "name": "Select",
+          "disabled": false
+        },
+        {
+          "tag": "button",
+          "type": "button",
+          "name": "Select",
+          "disabled": false
+        },
+        {
+          "tag": "button",
+          "type": "button",
+          "name": "Select",
+          "disabled": false
+        },
+        {
+          "tag": "button",
+          "type": "button",
+          "name": "Select",
+          "disabled": false
+        },
+        {
+          "tag": "button",
+          "type": "button",
+          "name": "Select",
+          "disabled": false
+        },
+        {
+          "tag": "button",
+          "type": "button",
+          "name": "Select",
+          "disabled": false
+        },
+        {
+          "tag": "button",
+          "type": "button",
+          "name": "Select",
+          "disabled": false
+        },
+        {
+          "tag": "button",
+          "type": "button",
+          "name": "Select",
+          "disabled": false
+        },
+        {
+          "tag": "button",
+          "type": "button",
+          "name": "Select",
+          "disabled": false
+        },
+        {
+          "tag": "button",
+          "type": "button",
+          "name": "Select",
+          "disabled": false
+        },
+        {
+          "tag": "button",
+          "type": "button",
+          "name": "Select",
+          "disabled": false
+        },
+        {
+          "tag": "button",
+          "type": "button",
+          "name": "Show 4 more",
+          "disabled": false
+        }
+      ]
+    },
+    {
+      "route": "/restaurants/50114980",
+      "title": "Sano — NYC restaurant inspection context",
+      "mains": 1,
+      "navs": [
+        {
+          "label": "Primary navigation",
+          "linkCount": 6
+        }
+      ],
+      "headers": 1,
+      "footers": 0,
+      "sections": [
+        {
+          "label": "Official inspection data",
+          "ariaLabel": null,
+          "ariaLabelledby": "official-inspection-heading",
+          "heading": ""
+        },
+        {
+          "label": "Public popularity metadata",
+          "ariaLabel": null,
+          "ariaLabelledby": "public-popularity-heading",
+          "heading": ""
+        },
+        {
+          "label": "The story so far",
+          "ariaLabel": null,
+          "ariaLabelledby": "story-so-far-heading",
+          "heading": "The story so far"
+        },
+        {
+          "label": "",
+          "ariaLabel": null,
+          "ariaLabelledby": null,
+          "heading": ""
+        },
+        {
+          "label": "Source context",
+          "ariaLabel": null,
+          "ariaLabelledby": null,
+          "heading": "Source context"
+        },
+        {
+          "label": "Inspection timeline",
+          "ariaLabel": null,
+          "ariaLabelledby": null,
+          "heading": "Inspection timeline"
+        },
+        {
+          "label": "Nearby alternatives",
+          "ariaLabel": null,
+          "ariaLabelledby": null,
+          "heading": "Nearby alternatives"
+        }
+      ],
+      "unlabeledSections": 1,
+      "headings": [
+        {
+          "level": 1,
+          "text": "787 Coffee"
+        },
+        {
+          "level": 2,
+          "text": "The story so far"
+        },
+        {
+          "level": 2,
+          "text": "Source context"
+        },
+        {
+          "level": 2,
+          "text": "Inspection timeline"
+        },
+        {
+          "level": 2,
+          "text": "Nearby alternatives"
+        }
+      ],
+      "links": [
+        {
+          "text": "SSano",
+          "href": "/"
+        },
+        {
+          "text": "How it works",
+          "href": "/#how-it-works"
+        },
+        {
+          "text": "Search",
+          "href": "/#search"
+        },
+        {
+          "text": "Demo",
+          "href": "/#demo"
+        },
+        {
+          "text": "Methodology",
+          "href": "/methodology"
+        },
+        {
+          "text": "Try Sano",
+          "href": "/#search"
+        },
+        {
+          "text": "Open",
+          "href": "/restaurants/50171997"
+        },
+        {
+          "text": "Open",
+          "href": "/restaurants/50000233"
+        }
+      ],
+      "emptyLinkNames": 0,
+      "lists": [
+        {
+          "tag": "ol",
+          "items": 5
+        },
+        {
+          "tag": "ul",
+          "items": 5
+        },
+        {
+          "tag": "ul",
+          "items": 2
+        }
+      ],
+      "controls": []
+    },
+    {
+      "route": "/methodology",
+      "title": "Sano — NYC restaurant inspection context",
+      "mains": 1,
+      "navs": [
+        {
+          "label": "Primary navigation",
+          "linkCount": 6
+        }
+      ],
+      "headers": 0,
+      "footers": 0,
+      "sections": [
+        {
+          "label": "Official data disclosure",
+          "ariaLabel": null,
+          "ariaLabelledby": null,
+          "heading": "Official data disclosure"
+        },
+        {
+          "label": "What the fields mean",
+          "ariaLabel": null,
+          "ariaLabelledby": null,
+          "heading": "What the fields mean"
+        },
+        {
+          "label": "Reliability score",
+          "ariaLabel": null,
+          "ariaLabelledby": null,
+          "heading": "Reliability score"
+        },
+        {
+          "label": "Confidence",
+          "ariaLabel": null,
+          "ariaLabelledby": null,
+          "heading": "Confidence"
+        },
+        {
+          "label": "Trust gap",
+          "ariaLabel": null,
+          "ariaLabelledby": null,
+          "heading": "Trust gap"
+        },
+        {
+          "label": "How to read alternatives",
+          "ariaLabel": null,
+          "ariaLabelledby": null,
+          "heading": "How to read alternatives"
+        },
+        {
+          "label": "What Sano does not claim",
+          "ariaLabel": null,
+          "ariaLabelledby": null,
+          "heading": "What Sano does not claim"
+        }
+      ],
+      "unlabeledSections": 0,
+      "headings": [
+        {
+          "level": 1,
+          "text": "How Sano turns inspection history into plain-language context"
+        },
+        {
+          "level": 2,
+          "text": "Official data disclosure"
+        },
+        {
+          "level": 2,
+          "text": "What the fields mean"
+        },
+        {
+          "level": 2,
+          "text": "Reliability score"
+        },
+        {
+          "level": 2,
+          "text": "Confidence"
+        },
+        {
+          "level": 2,
+          "text": "Trust gap"
+        },
+        {
+          "level": 2,
+          "text": "How to read alternatives"
+        },
+        {
+          "level": 2,
+          "text": "What Sano does not claim"
+        }
+      ],
+      "links": [
+        {
+          "text": "SSano",
+          "href": "/"
+        },
+        {
+          "text": "How it works",
+          "href": "/#how-it-works"
+        },
+        {
+          "text": "Search",
+          "href": "/#search"
+        },
+        {
+          "text": "Demo",
+          "href": "/#demo"
+        },
+        {
+          "text": "Methodology",
+          "href": "/methodology"
+        },
+        {
+          "text": "Try Sano",
+          "href": "/#search"
+        }
+      ],
+      "emptyLinkNames": 0,
+      "lists": [
+        {
+          "tag": "ul",
+          "items": 5
+        }
+      ],
+      "controls": []
+    },
+    {
+      "route": "/restaurants/not-a-real-id",
+      "title": "Sano — NYC restaurant inspection context",
+      "mains": 1,
+      "navs": [
+        {
+          "label": "",
+          "linkCount": 2
+        }
+      ],
+      "headers": 0,
+      "footers": 0,
+      "sections": [
+        {
+          "label": "We could not find that restaurant profile.",
+          "ariaLabel": null,
+          "ariaLabelledby": null,
+          "heading": "We could not find that restaurant profile."
+        }
+      ],
+      "unlabeledSections": 0,
+      "headings": [
+        {
+          "level": 1,
+          "text": "We could not find that restaurant profile."
+        }
+      ],
+      "links": [
+        {
+          "text": "Sano",
+          "href": "/"
+        },
+        {
+          "text": "Methodology",
+          "href": "/methodology"
+        },
+        {
+          "text": "Back to restaurant search",
+          "href": "/"
+        }
+      ],
+      "emptyLinkNames": 0,
+      "lists": [],
+      "controls": []
+    }
+  ],
+  "keyboard": {
+    "sequence": [
+      {
+        "step": 1,
+        "tag": "a",
+        "type": null,
+        "role": null,
+        "id": null,
+        "href": "/",
+        "name": "S Sano",
+        "visibleText": "S Sano",
+        "rect": {
+          "x": 97,
+          "y": 23,
+          "width": 111,
+          "height": 36
+        },
+        "inViewport": true,
+        "obscured": false,
+        "focusStyle": {
+          "outlineStyle": "solid",
+          "outlineWidth": "2px",
+          "outlineColor": "rgb(111, 163, 224)",
+          "boxShadow": "none",
+          "borderColor": "rgb(229, 231, 235)"
+        },
+        "url": "/"
+      },
+      {
+        "step": 2,
+        "tag": "a",
+        "type": null,
+        "role": null,
+        "id": null,
+        "href": "/#how-it-works",
+        "name": "How it works",
+        "visibleText": "How it works",
+        "rect": {
+          "x": 868,
+          "y": 23,
+          "width": 113,
+          "height": 36
+        },
+        "inViewport": true,
+        "obscured": false,
+        "focusStyle": {
+          "outlineStyle": "solid",
+          "outlineWidth": "2px",
+          "outlineColor": "rgb(111, 163, 224)",
+          "boxShadow": "none",
+          "borderColor": "rgb(229, 231, 235)"
+        },
+        "url": "/"
+      },
+      {
+        "step": 3,
+        "tag": "a",
+        "type": null,
+        "role": null,
+        "id": null,
+        "href": "/#search",
+        "name": "Search",
+        "visibleText": "Search",
+        "rect": {
+          "x": 985,
+          "y": 23,
+          "width": 72,
+          "height": 36
+        },
+        "inViewport": true,
+        "obscured": false,
+        "focusStyle": {
+          "outlineStyle": "solid",
+          "outlineWidth": "2px",
+          "outlineColor": "rgb(111, 163, 224)",
+          "boxShadow": "none",
+          "borderColor": "rgb(229, 231, 235)"
+        },
+        "url": "/"
+      },
+      {
+        "step": 4,
+        "tag": "a",
+        "type": null,
+        "role": null,
+        "id": null,
+        "href": "/#demo",
+        "name": "Demo",
+        "visibleText": "Demo",
+        "rect": {
+          "x": 1061,
+          "y": 23,
+          "width": 64,
+          "height": 36
+        },
+        "inViewport": true,
+        "obscured": false,
+        "focusStyle": {
+          "outlineStyle": "solid",
+          "outlineWidth": "2px",
+          "outlineColor": "rgb(111, 163, 224)",
+          "boxShadow": "none",
+          "borderColor": "rgb(229, 231, 235)"
+        },
+        "url": "/"
+      },
+      {
+        "step": 5,
+        "tag": "a",
+        "type": null,
+        "role": null,
+        "id": null,
+        "href": "/methodology",
+        "name": "Methodology",
+        "visibleText": "Methodology",
+        "rect": {
+          "x": 1129,
+          "y": 23,
+          "width": 115,
+          "height": 36
+        },
+        "inViewport": true,
+        "obscured": false,
+        "focusStyle": {
+          "outlineStyle": "solid",
+          "outlineWidth": "2px",
+          "outlineColor": "rgb(111, 163, 224)",
+          "boxShadow": "none",
+          "borderColor": "rgb(229, 231, 235)"
+        },
+        "url": "/"
+      },
+      {
+        "step": 6,
+        "tag": "a",
+        "type": null,
+        "role": null,
+        "id": null,
+        "href": "/#search",
+        "name": "Try Sano",
+        "visibleText": "Try Sano",
+        "rect": {
+          "x": 1248,
+          "y": 21,
+          "width": 95,
+          "height": 40
+        },
+        "inViewport": true,
+        "obscured": false,
+        "focusStyle": {
+          "outlineStyle": "solid",
+          "outlineWidth": "2px",
+          "outlineColor": "rgb(111, 163, 224)",
+          "boxShadow": "rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0.05) 0px 1px 2px 0px",
+          "borderColor": "rgb(229, 231, 235)"
+        },
+        "url": "/"
+      },
+      {
+        "step": 7,
+        "tag": "input",
+        "type": null,
+        "role": null,
+        "id": null,
+        "href": null,
+        "name": "Search by restaurant, ZIP, cuisine, or borough",
+        "visibleText": "",
+        "rect": {
+          "x": 121,
+          "y": 589,
+          "width": 457,
+          "height": 56
+        },
+        "inViewport": true,
+        "obscured": false,
+        "focusStyle": {
+          "outlineStyle": "solid",
+          "outlineWidth": "2px",
+          "outlineColor": "rgba(0, 0, 0, 0)",
+          "boxShadow": "rgb(255, 255, 255) 0px 0px 0px 0px, rgba(37, 99, 201, 0.25) 0px 0px 0px 4px, rgba(0, 0, 0, 0) 0px 0px 0px 0px",
+          "borderColor": "rgb(111, 163, 224)"
+        },
+        "url": "/"
+      },
+      {
+        "step": 8,
+        "tag": "button",
+        "type": "submit",
+        "role": null,
+        "id": null,
+        "href": null,
+        "name": "Search",
+        "visibleText": "Search",
+        "rect": {
+          "x": 590,
+          "y": 589,
+          "width": 113,
+          "height": 56
+        },
+        "inViewport": true,
+        "obscured": false,
+        "focusStyle": {
+          "outlineStyle": "solid",
+          "outlineWidth": "2px",
+          "outlineColor": "rgb(111, 163, 224)",
+          "boxShadow": "rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(37, 99, 201, 0.32) 0px 18px 40px 0px",
+          "borderColor": "rgb(229, 231, 235)"
+        },
+        "url": "/"
+      },
+      {
+        "step": 9,
+        "tag": "button",
+        "type": "button",
+        "role": null,
+        "id": null,
+        "href": null,
+        "name": "11414",
+        "visibleText": "11414",
+        "rect": {
+          "x": 147,
+          "y": 670,
+          "width": 66,
+          "height": 34
+        },
+        "inViewport": true,
+        "obscured": false,
+        "focusStyle": {
+          "outlineStyle": "solid",
+          "outlineWidth": "2px",
+          "outlineColor": "rgb(111, 163, 224)",
+          "boxShadow": "none",
+          "borderColor": "rgba(111, 163, 224, 0.25)"
+        },
+        "url": "/"
+      },
+      {
+        "step": 10,
+        "tag": "button",
+        "type": "button",
+        "role": null,
+        "id": null,
+        "href": null,
+        "name": "Chelsea",
+        "visibleText": "Chelsea",
+        "rect": {
+          "x": 221,
+          "y": 670,
+          "width": 81,
+          "height": 34
+        },
+        "inViewport": true,
+        "obscured": false,
+        "focusStyle": {
+          "outlineStyle": "solid",
+          "outlineWidth": "2px",
+          "outlineColor": "rgb(111, 163, 224)",
+          "boxShadow": "none",
+          "borderColor": "rgba(111, 163, 224, 0.25)"
+        },
+        "url": "/"
+      },
+      {
+        "step": 11,
+        "tag": "button",
+        "type": "button",
+        "role": null,
+        "id": null,
+        "href": null,
+        "name": "Thai",
+        "visibleText": "Thai",
+        "rect": {
+          "x": 310,
+          "y": 670,
+          "width": 56,
+          "height": 34
+        },
+        "inViewport": true,
+        "obscured": false,
+        "focusStyle": {
+          "outlineStyle": "solid",
+          "outlineWidth": "2px",
+          "outlineColor": "rgb(111, 163, 224)",
+          "boxShadow": "none",
+          "borderColor": "rgba(111, 163, 224, 0.25)"
+        },
+        "url": "/"
+      },
+      {
+        "step": 12,
+        "tag": "button",
+        "type": "button",
+        "role": null,
+        "id": null,
+        "href": null,
+        "name": "Lucky Chix",
+        "visibleText": "Lucky Chix",
+        "rect": {
+          "x": 374,
+          "y": 670,
+          "width": 102,
+          "height": 34
+        },
+        "inViewport": true,
+        "obscured": false,
+        "focusStyle": {
+          "outlineStyle": "solid",
+          "outlineWidth": "2px",
+          "outlineColor": "rgb(111, 163, 224)",
+          "boxShadow": "none",
+          "borderColor": "rgba(111, 163, 224, 0.25)"
+        },
+        "url": "/"
+      },
+      {
+        "step": 13,
+        "tag": "a",
+        "type": null,
+        "role": null,
+        "id": null,
+        "href": "/restaurants/50169790",
+        "name": "COMPARE THE PATTERN Same letter, different history Lucky Chix · Grade A Lucky Chix currently shows grade A, but the inspection timeline swings. Open the profile to see the record behind the sticker. Open profile →",
+        "visibleText": "COMPARE THE PATTERN Same letter, different history Lucky Chix · Grade A Lucky Chix currently shows grade A, but the inspection timeline swings. Open the profile to see the record behind the sticker. Open profile →",
+        "rect": {
+          "x": 112,
+          "y": 1737,
+          "width": 397,
+          "height": 246
+        },
+        "inViewport": false,
+        "obscured": false,
+        "focusStyle": {
+          "outlineStyle": "solid",
+          "outlineWidth": "2px",
+          "outlineColor": "rgb(72, 107, 85)",
+          "boxShadow": "rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0.05) 0px 1px 2px 0px",
+          "borderColor": "rgba(23, 32, 27, 0.1)"
+        },
+        "url": "/"
+      },
+      {
+        "step": 14,
+        "tag": "a",
+        "type": null,
+        "role": null,
+        "id": null,
+        "href": "/restaurants/50006959",
+        "name": "START WITH A CALM RECORD A steadier inspection path Cutwater Cocktail Bar · Grade Pending Cutwater Cocktail Bar is a clear demo of a consistent record — useful when you want to show history without a punitive tone. Open profile →",
+        "visibleText": "START WITH A CALM RECORD A steadier inspection path Cutwater Cocktail Bar · Grade Pending Cutwater Cocktail Bar is a clear demo of a consistent record — useful when you want to show history without a punitive tone. Open profile →",
+        "rect": {
+          "x": 521,
+          "y": 1737,
+          "width": 397,
+          "height": 246
+        },
+        "inViewport": false,
+        "obscured": false,
+        "focusStyle": {
+          "outlineStyle": "solid",
+          "outlineWidth": "2px",
+          "outlineColor": "rgb(72, 107, 85)",
+          "boxShadow": "rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0.05) 0px 1px 2px 0px",
+          "borderColor": "rgba(23, 32, 27, 0.1)"
+        },
+        "url": "/"
+      },
+      {
+        "step": 15,
+        "tag": "a",
+        "type": null,
+        "role": null,
+        "id": null,
+        "href": "/restaurants/50131593",
+        "name": "READ THE RECENT FLAG Context before conclusions Raf'S · Grade A Raf'S surfaces a recent critical flag beside the current grade. The profile keeps the official record and Sano’s limits visible. Open profile →",
+        "visibleText": "READ THE RECENT FLAG Context before conclusions Raf'S · Grade A Raf'S surfaces a recent critical flag beside the current grade. The profile keeps the official record and Sano’s limits visible. Open profile →",
+        "rect": {
+          "x": 931,
+          "y": 1737,
+          "width": 397,
+          "height": 246
+        },
+        "inViewport": false,
+        "obscured": false,
+        "focusStyle": {
+          "outlineStyle": "solid",
+          "outlineWidth": "2px",
+          "outlineColor": "rgb(72, 107, 85)",
+          "boxShadow": "rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0.05) 0px 1px 2px 0px",
+          "borderColor": "rgba(23, 32, 27, 0.1)"
+        },
+        "url": "/"
+      },
+      {
+        "step": 16,
+        "tag": "input",
+        "type": null,
+        "role": null,
+        "id": null,
+        "href": null,
+        "name": "Search",
+        "visibleText": "",
+        "rect": {
+          "x": 123,
+          "y": 2106,
+          "width": 478,
+          "height": 36
+        },
+        "inViewport": false,
+        "obscured": false,
+        "focusStyle": {
+          "outlineStyle": "solid",
+          "outlineWidth": "2px",
+          "outlineColor": "rgba(0, 0, 0, 0)",
+          "boxShadow": "none",
+          "borderColor": "rgba(70, 104, 83, 0.725)"
+        },
+        "url": "/"
+      },
+      {
+        "step": 17,
+        "tag": "select",
+        "type": null,
+        "role": null,
+        "id": null,
+        "href": null,
+        "name": "CuisineAll cuisinesAmericanCaribbeanChineseCoffee/TeaFrozen DessertsFusionIndianKoreanMexicanNew FrenchSandwichesSpanishVegetarian",
+        "visibleText": "All cuisines American Caribbean Chinese Coffee/Tea Frozen Desserts Fusion Indian Korean Mexican New French Sandwiches Spanish Vegetarian",
+        "rect": {
+          "x": 609,
+          "y": 2106,
+          "width": 150,
+          "height": 36
+        },
+        "inViewport": false,
+        "obscured": false,
+        "focusStyle": {
+          "outlineStyle": "solid",
+          "outlineWidth": "2px",
+          "outlineColor": "rgba(0, 0, 0, 0)",
+          "boxShadow": "none",
+          "borderColor": "rgba(71, 106, 84, 0.855)"
+        },
+        "url": "/"
+      },
+      {
+        "step": 18,
+        "tag": "select",
+        "type": null,
+        "role": null,
+        "id": null,
+        "href": null,
+        "name": "TrajectoryAll trajectoriesImprovingStableVolatileDeclining",
+        "visibleText": "All trajectories Improving Stable Volatile Declining",
+        "rect": {
+          "x": 767,
+          "y": 2106,
+          "width": 144,
+          "height": 36
+        },
+        "inViewport": false,
+        "obscured": false,
+        "focusStyle": {
+          "outlineStyle": "solid",
+          "outlineWidth": "2px",
+          "outlineColor": "rgba(0, 0, 0, 0)",
+          "boxShadow": "none",
+          "borderColor": "rgba(70, 104, 83, 0.725)"
+        },
+        "url": "/"
+      },
+      {
+        "step": 19,
+        "tag": "select",
+        "type": null,
+        "role": null,
+        "id": null,
+        "href": null,
+        "name": "ConfidenceAll confidenceHighMediumLimited",
+        "visibleText": "All confidence High Medium Limited",
+        "rect": {
+          "x": 919,
+          "y": 2106,
+          "width": 144,
+          "height": 36
+        },
+        "inViewport": false,
+        "obscured": false,
+        "focusStyle": {
+          "outlineStyle": "solid",
+          "outlineWidth": "2px",
+          "outlineColor": "rgba(0, 0, 0, 0)",
+          "boxShadow": "none",
+          "borderColor": "rgba(70, 104, 83, 0.725)"
+        },
+        "url": "/"
+      },
+      {
+        "step": 20,
+        "tag": "input",
+        "type": "checkbox",
+        "role": null,
+        "id": null,
+        "href": null,
+        "name": "Recent criticals",
+        "visibleText": "",
+        "rect": {
+          "x": 1084,
+          "y": 2116,
+          "width": 16,
+          "height": 16
+        },
+        "inViewport": false,
+        "obscured": false,
+        "focusStyle": {
+          "outlineStyle": "auto",
+          "outlineWidth": "1px",
+          "outlineColor": "rgb(0, 95, 204)",
+          "boxShadow": "none",
+          "borderColor": "rgb(23, 32, 27)"
+        },
+        "url": "/"
+      },
+      {
+        "step": 21,
+        "tag": "button",
+        "type": "button",
+        "role": null,
+        "id": null,
+        "href": null,
+        "name": "Lucky Chix",
+        "visibleText": "Lucky Chix",
+        "rect": {
+          "x": 129,
+          "y": 912,
+          "width": 92,
+          "height": 30
+        },
+        "inViewport": true,
+        "obscured": false,
+        "focusStyle": {
+          "outlineStyle": "solid",
+          "outlineWidth": "2px",
+          "outlineColor": "rgb(72, 107, 85)",
+          "boxShadow": "none",
+          "borderColor": "rgb(23, 32, 27)"
+        },
+        "url": "/"
+      },
+      {
+        "step": 22,
+        "tag": "button",
+        "type": "button",
+        "role": null,
+        "id": null,
+        "href": null,
+        "name": "Current Coffee",
+        "visibleText": "Current Coffee",
+        "rect": {
+          "x": 229,
+          "y": 912,
+          "width": 116,
+          "height": 30
+        },
+        "inViewport": true,
+        "obscured": false,
+        "focusStyle": {
+          "outlineStyle": "solid",
+          "outlineWidth": "2px",
+          "outlineColor": "rgb(72, 107, 85)",
+          "boxShadow": "none",
+          "borderColor": "rgba(23, 32, 27, 0.1)"
+        },
+        "url": "/"
+      },
+      {
+        "step": 23,
+        "tag": "button",
+        "type": "button",
+        "role": null,
+        "id": null,
+        "href": null,
+        "name": "Roti Corner Restaurant",
+        "visibleText": "Roti Corner Restaurant",
+        "rect": {
+          "x": 353,
+          "y": 912,
+          "width": 164,
+          "height": 30
+        },
+        "inViewport": true,
+        "obscured": false,
+        "focusStyle": {
+          "outlineStyle": "solid",
+          "outlineWidth": "2px",
+          "outlineColor": "rgb(72, 107, 85)",
+          "boxShadow": "none",
+          "borderColor": "rgba(23, 32, 27, 0.1)"
+        },
+        "url": "/"
+      },
+      {
+        "step": 24,
+        "tag": "button",
+        "type": "button",
+        "role": null,
+        "id": null,
+        "href": null,
+        "name": "Raf'S",
+        "visibleText": "Raf'S",
+        "rect": {
+          "x": 525,
+          "y": 912,
+          "width": 59,
+          "height": 30
+        },
+        "inViewport": true,
+        "obscured": false,
+        "focusStyle": {
+          "outlineStyle": "solid",
+          "outlineWidth": "2px",
+          "outlineColor": "rgb(72, 107, 85)",
+          "boxShadow": "none",
+          "borderColor": "rgba(23, 32, 27, 0.1)"
+        },
+        "url": "/"
+      },
+      {
+        "step": 25,
+        "tag": "button",
+        "type": "button",
+        "role": null,
+        "id": null,
+        "href": null,
+        "name": "Selected",
+        "visibleText": "Selected",
+        "rect": {
+          "x": 1090,
+          "y": 1066,
+          "width": 93,
+          "height": 40
+        },
+        "inViewport": true,
+        "obscured": false,
+        "focusStyle": {
+          "outlineStyle": "solid",
+          "outlineWidth": "2px",
+          "outlineColor": "rgb(72, 107, 85)",
+          "boxShadow": "none",
+          "borderColor": "rgba(23, 32, 27, 0.15)"
+        },
+        "url": "/"
+      },
+      {
+        "step": 26,
+        "tag": "a",
+        "type": null,
+        "role": null,
+        "id": null,
+        "href": "/restaurants/50169790",
+        "name": "Open profile",
+        "visibleText": "Open profile",
+        "rect": {
+          "x": 1192,
+          "y": 1066,
+          "width": 115,
+          "height": 40
+        },
+        "inViewport": true,
+        "obscured": false,
+        "focusStyle": {
+          "outlineStyle": "solid",
+          "outlineWidth": "2px",
+          "outlineColor": "rgb(72, 107, 85)",
+          "boxShadow": "none",
+          "borderColor": "rgb(229, 231, 235)"
+        },
+        "url": "/"
+      }
+    ],
+    "profileSequence": [
+      {
+        "step": 1,
+        "tag": "a",
+        "type": null,
+        "role": null,
+        "id": null,
+        "href": "/",
+        "name": "S Sano",
+        "visibleText": "S Sano",
+        "rect": {
+          "x": 97,
+          "y": 23,
+          "width": 111,
+          "height": 36
+        },
+        "inViewport": true,
+        "obscured": false,
+        "focusStyle": {
+          "outlineStyle": "solid",
+          "outlineWidth": "2px",
+          "outlineColor": "rgb(111, 163, 224)",
+          "boxShadow": "none",
+          "borderColor": "rgb(229, 231, 235)"
+        },
+        "url": "/restaurants/50169790"
+      },
+      {
+        "step": 2,
+        "tag": "a",
+        "type": null,
+        "role": null,
+        "id": null,
+        "href": "/#how-it-works",
+        "name": "How it works",
+        "visibleText": "How it works",
+        "rect": {
+          "x": 868,
+          "y": 23,
+          "width": 113,
+          "height": 36
+        },
+        "inViewport": true,
+        "obscured": false,
+        "focusStyle": {
+          "outlineStyle": "solid",
+          "outlineWidth": "2px",
+          "outlineColor": "rgb(111, 163, 224)",
+          "boxShadow": "none",
+          "borderColor": "rgb(229, 231, 235)"
+        },
+        "url": "/restaurants/50169790"
+      },
+      {
+        "step": 3,
+        "tag": "a",
+        "type": null,
+        "role": null,
+        "id": null,
+        "href": "/#search",
+        "name": "Search",
+        "visibleText": "Search",
+        "rect": {
+          "x": 985,
+          "y": 23,
+          "width": 72,
+          "height": 36
+        },
+        "inViewport": true,
+        "obscured": false,
+        "focusStyle": {
+          "outlineStyle": "solid",
+          "outlineWidth": "2px",
+          "outlineColor": "rgb(111, 163, 224)",
+          "boxShadow": "none",
+          "borderColor": "rgb(229, 231, 235)"
+        },
+        "url": "/restaurants/50169790"
+      },
+      {
+        "step": 4,
+        "tag": "a",
+        "type": null,
+        "role": null,
+        "id": null,
+        "href": "/#demo",
+        "name": "Demo",
+        "visibleText": "Demo",
+        "rect": {
+          "x": 1061,
+          "y": 23,
+          "width": 64,
+          "height": 36
+        },
+        "inViewport": true,
+        "obscured": false,
+        "focusStyle": {
+          "outlineStyle": "solid",
+          "outlineWidth": "2px",
+          "outlineColor": "rgb(111, 163, 224)",
+          "boxShadow": "none",
+          "borderColor": "rgb(229, 231, 235)"
+        },
+        "url": "/restaurants/50169790"
+      },
+      {
+        "step": 5,
+        "tag": "a",
+        "type": null,
+        "role": null,
+        "id": null,
+        "href": "/methodology",
+        "name": "Methodology",
+        "visibleText": "Methodology",
+        "rect": {
+          "x": 1129,
+          "y": 23,
+          "width": 115,
+          "height": 36
+        },
+        "inViewport": true,
+        "obscured": false,
+        "focusStyle": {
+          "outlineStyle": "solid",
+          "outlineWidth": "2px",
+          "outlineColor": "rgb(111, 163, 224)",
+          "boxShadow": "none",
+          "borderColor": "rgb(229, 231, 235)"
+        },
+        "url": "/restaurants/50169790"
+      }
+    ],
+    "screenshots": [
+      "/Users/nicolerodriguez/Documents/Pursuit/Sano/docs/accessibility-audit/screenshots/phase1-keyboard/01-focus-nav-brand.png",
+      "/Users/nicolerodriguez/Documents/Pursuit/Sano/docs/accessibility-audit/screenshots/phase1-keyboard/02-focus-landing-search.png",
+      "/Users/nicolerodriguez/Documents/Pursuit/Sano/docs/accessibility-audit/screenshots/phase1-keyboard/03-enter-submits-landing-search.png",
+      "/Users/nicolerodriguez/Documents/Pursuit/Sano/docs/accessibility-audit/screenshots/phase1-keyboard/05-focus-recent-criticals.png",
+      "/Users/nicolerodriguez/Documents/Pursuit/Sano/docs/accessibility-audit/screenshots/phase1-keyboard/06-space-toggles-recent-criticals.png",
+      "/Users/nicolerodriguez/Documents/Pursuit/Sano/docs/accessibility-audit/screenshots/phase1-keyboard/07-focus-open-profile.png",
+      "/Users/nicolerodriguez/Documents/Pursuit/Sano/docs/accessibility-audit/screenshots/phase1-keyboard/08-enter-opens-profile.png",
+      "/Users/nicolerodriguez/Documents/Pursuit/Sano/docs/accessibility-audit/screenshots/phase1-keyboard/09-focus-profile-methodology-link.png",
+      "/Users/nicolerodriguez/Documents/Pursuit/Sano/docs/accessibility-audit/screenshots/phase1-keyboard/10-enter-opens-methodology.png"
+    ]
+  }
+}

@@ -14,7 +14,9 @@ const config: Config = {
         mint: "#eaf2ff",
         oat: "#f8f4eb",
         coral: "#c22f2f",
-        amber: "#8a6418"
+        amber: "#8a6418",
+        coralText: "#a62626",
+        amberText: "#7a5714"
       },
       boxShadow: {
         soft: "0 18px 50px rgba(23, 32, 27, 0.09)"

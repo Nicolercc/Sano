@@ -184,6 +184,27 @@ async function main() {
       home.includes("The story isn’t."),
     "Home page does not include the demo-ready hero message"
   );
+
+  const tryChipsMarkerIndex = home.indexOf(">Try:<");
+  assert(tryChipsMarkerIndex !== -1, "Home page is missing the hero 'Try:' chip row");
+  const tryChipsWindow = home.slice(tryChipsMarkerIndex, tryChipsMarkerIndex + 4000);
+  const chipLabels = [
+    ...tryChipsWindow.matchAll(/type="button"[^>]*>([^<]+)<\/button>/g)
+  ].map((match) => match[1]);
+  assert(
+    chipLabels.length > 0,
+    "Could not extract any hero 'Try:' chip labels from the home page"
+  );
+  for (const chipLabel of chipLabels) {
+    const chipPayload = await fetchJson(
+      baseUrl,
+      `/api/restaurants?q=${encodeURIComponent(chipLabel)}&limit=10`
+    );
+    assert(
+      chipPayload.count > 0,
+      `Hero 'Try:' chip "${chipLabel}" returns zero results against live data — a visitor clicking it hits a dead end`
+    );
+  }
   for (const forbidden of FORBIDDEN_HOME_STRINGS) {
     assert(
       !home.includes(forbidden),

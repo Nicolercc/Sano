@@ -48,7 +48,7 @@ export default function MapResults({ restaurants }: MapResultsProps) {
             <h2 className="mt-1 text-xl font-black text-ink">
               Coverage across boroughs and ZIP codes
             </h2>
-            <p className="mt-2 max-w-2xl text-sm leading-6 text-ink/60">
+            <p className="mt-2 max-w-2xl text-sm leading-6 text-ink/65">
               Sano is optimized for searchable official records: restaurant name,
               cuisine, borough, address, and ZIP code where DOHMH provides it.
               The snapshot below updates with your current search.
@@ -61,7 +61,7 @@ export default function MapResults({ restaurants }: MapResultsProps) {
 
         <div className="mt-4 grid gap-3 sm:grid-cols-2">
           <div className="rounded-xl bg-oat p-4">
-            <p className="text-xs font-bold uppercase tracking-wide text-ink/45">
+            <p className="text-xs font-bold uppercase tracking-wide text-ink/65">
               Borough mix
             </p>
             <div className="mt-3 flex flex-wrap gap-2">
@@ -75,7 +75,7 @@ export default function MapResults({ restaurants }: MapResultsProps) {
                   </span>
                 ))
               ) : (
-                <span className="text-sm font-semibold text-ink/50">
+                <span className="text-sm font-semibold text-ink/65">
                   No boroughs in this result set
                 </span>
               )}
@@ -83,7 +83,7 @@ export default function MapResults({ restaurants }: MapResultsProps) {
           </div>
 
           <div className="rounded-xl bg-oat p-4">
-            <p className="text-xs font-bold uppercase tracking-wide text-ink/45">
+            <p className="text-xs font-bold uppercase tracking-wide text-ink/65">
               ZIPs represented
             </p>
             <div className="mt-3 flex flex-wrap gap-2">
@@ -107,7 +107,7 @@ export default function MapResults({ restaurants }: MapResultsProps) {
                   );
                 })
               ) : (
-                <span className="text-sm font-semibold text-ink/50">
+                <span className="text-sm font-semibold text-ink/65">
                   ZIP metadata pending for this slice
                 </span>
               )}

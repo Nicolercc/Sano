@@ -39,7 +39,7 @@ export default function RestaurantCard({ restaurant }: RestaurantCardProps) {
           <h2 className="break-words font-serif text-xl font-bold leading-snug text-ink sm:text-[1.35rem] sm:leading-tight">
             {restaurant.name}
           </h2>
-          <p className="mt-1.5 break-words text-sm leading-5 text-ink/60">
+          <p className="mt-1.5 break-words text-sm leading-5 text-ink/65">
             {locationLine(restaurant)}
           </p>
         </div>
@@ -56,7 +56,7 @@ export default function RestaurantCard({ restaurant }: RestaurantCardProps) {
 
       <div className="mt-4 grid min-w-0 grid-cols-2 gap-3 border-t border-ink/8 pt-4 sm:max-w-md sm:gap-5">
         <div className="min-w-0">
-          <p className="text-[10px] font-bold uppercase tracking-wide text-ink/45">
+          <p className="text-[10px] font-bold uppercase tracking-wide text-ink/65">
             Grade
           </p>
           <MarkerGrade grade={restaurant.grade} size="md" className="mt-2" />
@@ -64,13 +64,13 @@ export default function RestaurantCard({ restaurant }: RestaurantCardProps) {
 
         <div className="min-w-0">
           <div className="flex items-baseline justify-between gap-2">
-            <p className="text-[10px] font-bold uppercase tracking-wide text-ink/45">
+            <p className="text-[10px] font-bold uppercase tracking-wide text-ink/65">
               Reliability
             </p>
             <p
               className={`shrink-0 text-sm font-black tabular-nums ${
                 lowInspectionSignal
-                  ? "text-coral"
+                  ? "text-coralText"
                   : scoreTone(restaurant.inspectionReliabilityScore)
               }`}
             >

@@ -89,7 +89,7 @@ export default function ReviewStars({
         <p className="text-[10px] font-black uppercase tracking-[0.14em] text-ink/42">
           Google review context
         </p>
-        <p className="mt-1 text-xs font-semibold leading-5 text-ink/50">
+        <p className="mt-1 text-xs font-semibold leading-5 text-ink/65">
           Review source not attached
         </p>
       </div>
@@ -113,7 +113,7 @@ export default function ReviewStars({
       >
         <div className="flex flex-wrap items-start justify-between gap-4">
           <div>
-            <p className="text-[11px] font-black uppercase tracking-[0.16em] text-ink/45">
+            <p className="text-[11px] font-black uppercase tracking-[0.16em] text-ink/65">
               Google review context
             </p>
             <div className="mt-2 flex flex-wrap items-end gap-3">
@@ -130,7 +130,7 @@ export default function ReviewStars({
                     <StarGlyph key={index} fill={fill} />
                   ))}
                 </div>
-                <p className="mt-1 text-xs font-bold text-ink/55">
+                <p className="mt-1 text-xs font-bold text-ink/65">
                   {formatNumber(numericReviewCount)} reviews
                 </p>
               </div>
@@ -156,7 +156,7 @@ export default function ReviewStars({
               style={{ width: weight.width }}
             />
           </div>
-          <div className="mt-2 flex flex-wrap gap-2 text-[11px] font-bold text-ink/55">
+          <div className="mt-2 flex flex-wrap gap-2 text-[11px] font-bold text-ink/65">
             <span>{weight.label}</span>
             <span>·</span>
             <span>{source}</span>
@@ -184,7 +184,7 @@ export default function ReviewStars({
           {numericRating.toFixed(1)}
         </span>
       </div>
-      <p className="mt-1 text-[11px] font-semibold leading-4 text-ink/50">
+      <p className="mt-1 text-[11px] font-semibold leading-4 text-ink/65">
         {source} · {formatNumber(numericReviewCount)} reviews
       </p>
     </div>

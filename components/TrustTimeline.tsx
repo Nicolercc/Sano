@@ -125,7 +125,7 @@ export default function TrustTimeline({ inspections }: TrustTimelineProps) {
     return (
       <section className="rounded-lg border border-ink/10 bg-white p-5 shadow-sm">
         <h2 className="text-lg font-bold text-ink">Inspection timeline</h2>
-        <p className="mt-2 text-sm text-ink/60">
+        <p className="mt-2 text-sm text-ink/65">
           No inspection cycles are available for this restaurant yet.
         </p>
       </section>
@@ -137,7 +137,7 @@ export default function TrustTimeline({ inspections }: TrustTimelineProps) {
       <div className="flex flex-wrap items-start justify-between gap-3">
         <div>
           <h2 className="text-lg font-bold text-ink">Inspection timeline</h2>
-          <p className="mt-1 text-sm text-ink/60">
+          <p className="mt-1 text-sm text-ink/65">
             Lower scores generally indicate fewer recorded inspection points.
           </p>
         </div>
@@ -151,25 +151,31 @@ export default function TrustTimeline({ inspections }: TrustTimelineProps) {
         </div>
       </div>
 
-      <div className="mt-4 flex flex-wrap gap-3 text-xs text-ink/60">
+      <div className="mt-4 flex flex-wrap gap-3 text-xs text-ink/65">
         <span className="inline-flex items-center gap-1.5">
           <span className="h-2.5 w-2.5 rounded-full bg-coral" aria-hidden />
           Critical flag
         </span>
         <span className="inline-flex items-center gap-1.5">
           <span
-            className="h-2.5 w-2.5 rounded-sm border-2 border-amber bg-amber/20"
+            className="h-2.5 w-2.5 rounded-sm border-2 border-amberText bg-amber/20"
             aria-hidden
           />
           Repeat pattern
         </span>
         <span className="inline-flex items-center gap-1.5">
-          <span className="h-0.5 w-4 rounded bg-ink/40" aria-hidden />
+          <span className="h-0.5 w-4 rounded bg-ink/60" aria-hidden />
           Score trend
         </span>
       </div>
 
-      <div className="-mx-1 mt-5 overflow-x-auto pb-1">
+      <div
+        // Scrolls horizontally on narrow screens, so keyboard users need to reach it.
+        tabIndex={0}
+        role="region"
+        aria-label="Inspection score chart, scrollable"
+        className="-mx-1 mt-5 overflow-x-auto rounded-md pb-1 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-moss"
+      >
         <div className="min-w-[30rem] px-1 sm:min-w-0">
           <svg
             viewBox={`0 0 ${VIEW_WIDTH} ${VIEW_HEIGHT}`}
@@ -213,7 +219,7 @@ export default function TrustTimeline({ inspections }: TrustTimelineProps) {
                 d={trendPath}
                 fill="none"
                 stroke="#17201b"
-                strokeOpacity="0.4"
+                strokeOpacity="0.6"
                 strokeWidth="0.7"
                 strokeLinecap="round"
                 strokeLinejoin="round"
@@ -281,7 +287,7 @@ export default function TrustTimeline({ inspections }: TrustTimelineProps) {
                     r="1.15"
                     fill="#ffffff"
                     stroke="#17201b"
-                    strokeOpacity="0.5"
+                    strokeOpacity="0.6"
                     strokeWidth="0.4"
                   />
                 </g>
@@ -293,7 +299,7 @@ export default function TrustTimeline({ inspections }: TrustTimelineProps) {
             {ordered.map((inspection) => (
               <li key={inspection.id} className="min-w-0 text-center">
                 <p className="text-sm font-black text-ink">{inspection.score}</p>
-                <p className="mt-0.5 text-[11px] font-semibold uppercase tracking-wide text-ink/45">
+                <p className="mt-0.5 text-[11px] font-semibold uppercase tracking-wide text-ink/65">
                   Raw score
                 </p>
                 <p className="mt-2 text-xs font-semibold text-ink/70">
@@ -304,17 +310,17 @@ export default function TrustTimeline({ inspections }: TrustTimelineProps) {
                     Grade {inspection.grade}
                   </span>
                   {inspection.criticalCount > 0 ? (
-                    <span className="rounded-full bg-coral/10 px-2 py-0.5 text-[11px] font-bold text-coral">
+                    <span className="rounded-full bg-coral/10 px-2 py-0.5 text-[11px] font-bold text-coralText">
                       {inspection.criticalCount} critical
                     </span>
                   ) : null}
                   {inspection.repeatPattern ? (
-                    <span className="rounded-full bg-amber/15 px-2 py-0.5 text-[11px] font-bold text-amber">
+                    <span className="rounded-full bg-amber/15 px-2 py-0.5 text-[11px] font-bold text-amberText">
                       Repeat
                     </span>
                   ) : null}
                 </div>
-                <p className="mt-2 hidden text-left text-xs leading-5 text-ink/60 lg:block">
+                <p className="mt-2 hidden text-left text-xs leading-5 text-ink/65 lg:block">
                   {inspection.note}
                 </p>
               </li>

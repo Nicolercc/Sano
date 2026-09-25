@@ -15,7 +15,6 @@ export default function HomeLoading() {
       <AppNav active="home" />
       <div
         role="status"
-        aria-live="polite"
         className="relative isolate overflow-hidden bg-[#1e2a38] text-white"
         style={{
           backgroundImage:
