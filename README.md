@@ -130,6 +130,8 @@ sano/
 - [Demo Presentation Guide](docs/DEMO_PRESENTATION_GUIDE.md): comprehensive app walkthrough, demo script, and Prezi prompts.
 - [Task Breakdown](docs/TASK_BREAKDOWN.md): assignable work for the three-person team.
 - [Quality Checklist](docs/QUALITY_CHECKLIST.md): final acceptance criteria.
+- [Presentation Guide](docs/PRESENTATION_GUIDE.md): product story, design intent, demo script, and Q&A.
+- [Accessibility Audit](docs/accessibility-audit/findings.md): scoped WCAG findings log, severity, evidence, and validation status for the critical journey.
 - [LLM Guide](docs/LLM_GUIDE.md): how contributors should use AI tools without breaking scope.
 - [Agent Orchestration](docs/AGENT_ORCHESTRATION.md): how to coordinate Codex, Cursor, and Claude.
 

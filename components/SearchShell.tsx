@@ -32,8 +32,10 @@ const defaultFilters: RestaurantFilters = {
 const INITIAL_VISIBLE_COUNT = 12;
 const VISIBLE_INCREMENT = 12;
 const API_RESULT_LIMIT = 80;
-/** Pursuit HQ area — Long Island City / Austell Place */
-const PRIMARY_DEMO_QUERY = "11101";
+const PRIMARY_DEMO_QUERY = "Brooklyn";
+// Verified against the live official seed: each returns 3+ records.
+const DEMO_QUERY_CHIPS = ["Manhattan", "Brooklyn", "Coffee"];
+const LIVE_STATUS_QUERY_DEBOUNCE_MS = 500;
 
 type DemoJourney = {
   id: string;
@@ -191,7 +193,16 @@ export default function SearchShell({
   const [loading, setLoading] = useState(false);
   const [loadError, setLoadError] = useState(false);
   const [heroSearchQuery, setHeroSearchQuery] = useState("");
+  const [announcedSearchStatusMessage, setAnnouncedSearchStatusMessage] =
+    useState(
+      () =>
+        `${restaurants.length} ${
+          restaurants.length === 1 ? "restaurant" : "restaurants"
+        } shown.`
+    );
   const searchSectionRef = useRef<HTMLElement | null>(null);
+  const searchRegionFocusRef = useRef<HTMLHeadingElement | null>(null);
+  const liveStatusQueryRef = useRef(defaultFilters.query);
 
   const cuisines = useMemo(
     () => Array.from(new Set(restaurants.map((restaurant) => restaurant.cuisine))).sort(),
@@ -265,6 +276,29 @@ export default function SearchShell({
   const visibleRestaurants = results.slice(0, visibleCount);
   const hiddenResultCount = Math.max(results.length - visibleRestaurants.length, 0);
   const zipSearchActive = /^\d{5}$/.test(filters.query.trim());
+  const searchStatusMessage = loadError
+    ? "Search failed. Try again or clear filters."
+    : loading
+      ? "Searching restaurants."
+      : results.length
+        ? `${results.length} ${
+            results.length === 1 ? "restaurant" : "restaurants"
+          } shown.`
+        : filtersActive
+          ? "No matching restaurants in the current index."
+          : "No restaurants available right now.";
+
+  useEffect(() => {
+    const queryChanged = filters.query !== liveStatusQueryRef.current;
+    const delay = queryChanged ? LIVE_STATUS_QUERY_DEBOUNCE_MS : 0;
+    const timeout = window.setTimeout(() => {
+      liveStatusQueryRef.current = filters.query;
+      setAnnouncedSearchStatusMessage(searchStatusMessage);
+    }, delay);
+
+    return () => window.clearTimeout(timeout);
+  }, [filters.query, searchStatusMessage]);
+
   const dataAsOfLabel = dataSummary.dataAsOf
     ? new Intl.DateTimeFormat("en", {
         month: "short",
@@ -298,10 +332,14 @@ export default function SearchShell({
     setFilters({ ...defaultFilters, query: nextQuery });
     setVisibleCount(INITIAL_VISIBLE_COUNT);
     window.requestAnimationFrame(() => {
+      const reduceMotion = window.matchMedia(
+        "(prefers-reduced-motion: reduce)"
+      ).matches;
       searchSectionRef.current?.scrollIntoView({
-        behavior: "smooth",
+        behavior: reduceMotion ? "auto" : "smooth",
         block: "start"
       });
+      searchRegionFocusRef.current?.focus({ preventScroll: true });
     });
   };
 
@@ -367,13 +405,13 @@ export default function SearchShell({
             >
               <label className="min-w-0 flex-1">
                 <span className="sr-only">
-                  Search by restaurant, ZIP, cuisine, or borough
+                  Search by restaurant, cuisine, neighborhood, or borough
                 </span>
                 <input
                   value={heroSearchQuery}
                   onChange={(event) => setHeroSearchQuery(event.target.value)}
-                  placeholder="Search by restaurant, ZIP, cuisine, or borough"
-                  className="min-h-14 w-full rounded-[1.05rem] border border-white/10 bg-white/10 px-5 text-base font-semibold text-white outline-none placeholder:text-white/40 focus:border-[#6fa3e0] focus:ring-4 focus:ring-[#2563c9]/25"
+                  placeholder="Restaurant, cuisine, neighborhood, borough"
+                  className="min-h-14 w-full rounded-[1.05rem] border border-white/10 bg-white/10 px-5 text-base font-semibold text-white outline-none placeholder:text-white/72 focus:border-[#6fa3e0] focus:ring-4 focus:ring-[#2563c9]/25"
                 />
               </label>
               <button
@@ -385,8 +423,8 @@ export default function SearchShell({
             </form>
 
             <div className="mx-auto mt-4 flex max-w-3xl flex-wrap items-center justify-center gap-2 text-sm lg:mx-0 lg:justify-start">
-              <span className="font-bold text-white/50">Try:</span>
-              {["11101", "Long Island City", "Thai", featuredRestaurant?.name ?? "Lucky Chix"].map(
+              <span className="font-bold text-white/72">Try:</span>
+              {[...DEMO_QUERY_CHIPS, featuredRestaurant?.name ?? "Lucky Chix"].map(
                 (example) => (
                   <button
                     key={example}
@@ -402,7 +440,7 @@ export default function SearchShell({
 
             <dl className="mx-auto mt-9 grid max-w-3xl grid-cols-2 gap-3 text-left sm:grid-cols-4 lg:mx-0">
               <div className="rounded-2xl border border-white/10 bg-white/10 p-4 backdrop-blur">
-                <dt className="text-[10px] font-black uppercase tracking-[0.16em] text-white/40">
+                <dt className="text-[10px] font-black uppercase tracking-[0.16em] text-white/72">
                   Restaurants
                 </dt>
                 <dd className="mt-2 text-2xl font-black text-white">
@@ -410,7 +448,7 @@ export default function SearchShell({
                 </dd>
               </div>
               <div className="rounded-2xl border border-white/10 bg-white/10 p-4 backdrop-blur">
-                <dt className="text-[10px] font-black uppercase tracking-[0.16em] text-white/40">
+                <dt className="text-[10px] font-black uppercase tracking-[0.16em] text-white/72">
                   Inspections
                 </dt>
                 <dd className="mt-2 text-2xl font-black text-white">
@@ -418,7 +456,7 @@ export default function SearchShell({
                 </dd>
               </div>
               <div className="rounded-2xl border border-white/10 bg-white/10 p-4 backdrop-blur">
-                <dt className="text-[10px] font-black uppercase tracking-[0.16em] text-white/40">
+                <dt className="text-[10px] font-black uppercase tracking-[0.16em] text-white/72">
                   Source
                 </dt>
                 <dd className="mt-2 text-sm font-black leading-6 text-white">
@@ -426,7 +464,7 @@ export default function SearchShell({
                 </dd>
               </div>
               <div className="rounded-2xl border border-white/10 bg-white/10 p-4 backdrop-blur">
-                <dt className="text-[10px] font-black uppercase tracking-[0.16em] text-white/40">
+                <dt className="text-[10px] font-black uppercase tracking-[0.16em] text-white/72">
                   Extract
                 </dt>
                 <dd className="mt-2 text-sm font-black leading-6 text-white">
@@ -435,7 +473,7 @@ export default function SearchShell({
               </div>
             </dl>
 
-            <p className="mx-auto mt-5 max-w-3xl text-sm font-semibold leading-6 text-white/52 lg:mx-0">
+            <p className="mx-auto mt-5 max-w-3xl text-sm font-semibold leading-6 text-white/72 lg:mx-0">
               Sano is not a safety verdict or official NYC rating — it is
               context from public inspection history.
             </p>
@@ -519,7 +557,7 @@ export default function SearchShell({
                 </div>
                 <div className="mt-5 flex items-center justify-between gap-3 rounded-2xl bg-[#1e2a38] p-3 text-white">
                   <div>
-                    <p className="text-[10px] font-black uppercase tracking-[0.16em] text-white/40">
+                    <p className="text-[10px] font-black uppercase tracking-[0.16em] text-white/72">
                       Inspection reliability
                     </p>
                     <p className="mt-1 text-2xl font-black">
@@ -527,7 +565,7 @@ export default function SearchShell({
                     </p>
                   </div>
                   <div className="text-right">
-                    <p className="text-[10px] font-black uppercase tracking-[0.16em] text-white/40">
+                    <p className="text-[10px] font-black uppercase tracking-[0.16em] text-white/72">
                       Trend
                     </p>
                     <p className="mt-1 text-lg font-black text-[#7fd88f]">
@@ -549,7 +587,7 @@ export default function SearchShell({
                   className="rounded-2xl border border-white/10 bg-white/10 p-3 text-center shadow-sm backdrop-blur"
                 >
                   <p className="text-xs font-black text-white">{borough}</p>
-                  <p className="mt-1 text-[10px] font-bold uppercase tracking-wide text-white/40">
+                  <p className="mt-1 text-[10px] font-bold uppercase tracking-wide text-white/72">
                     indexed
                   </p>
                 </div>
@@ -612,7 +650,7 @@ export default function SearchShell({
                 <h3 className="mt-5 text-lg font-black leading-tight text-ink">
                   {title}
                 </h3>
-                <p className="mt-3 text-sm leading-6 text-ink/60">{body}</p>
+                <p className="mt-3 text-sm leading-6 text-ink/65">{body}</p>
               </article>
             ))}
           </div>
@@ -635,7 +673,7 @@ export default function SearchShell({
                 Three steps, no invented certainty.
               </h2>
             </div>
-            <p className="max-w-2xl text-sm font-semibold leading-6 text-ink/55">
+            <p className="max-w-2xl text-sm font-semibold leading-6 text-ink/65">
               Sano translates records into context while keeping source limits
               visible.
             </p>
@@ -696,7 +734,7 @@ export default function SearchShell({
               >
                   Choose the story you want to show.
               </h2>
-              <p className="mt-1 text-sm leading-6 text-ink/60">
+              <p className="mt-1 text-sm leading-6 text-ink/65">
                 Real restaurant profiles from the current index — useful demo
                 paths, not invented ratings.
               </p>
@@ -718,7 +756,7 @@ export default function SearchShell({
                     <p className="mt-3 text-xl font-black leading-snug text-ink">
                       {copy.title}
                     </p>
-                    <p className="mt-2 text-sm font-semibold text-ink/55">
+                    <p className="mt-2 text-sm font-semibold text-ink/65">
                       {restaurant.name}
                       <span className="text-ink/30"> · </span>
                       Official grade {restaurant.grade}
@@ -748,19 +786,30 @@ export default function SearchShell({
                 Search app
               </p>
               <h2
+                ref={searchRegionFocusRef}
                 id="search-heading"
-                className="mt-2 text-3xl font-black leading-tight tracking-[-0.03em] text-ink sm:text-4xl"
+                tabIndex={-1}
+                className="mt-2 rounded-md text-3xl font-black leading-tight tracking-[-0.03em] text-ink focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-moss sm:text-4xl"
               >
                 Explore the current NYC inspection index.
               </h2>
-              <p className="mt-2 text-sm leading-6 text-ink/60">
-                Filter by name, cuisine, borough, ZIP, trajectory, or
+              <p className="mt-2 text-sm leading-6 text-ink/65">
+                Filter by name, cuisine, neighborhood, borough, trajectory, or
                 confidence. Coverage is growing and is not citywide yet.
               </p>
             </div>
-            <span className="w-fit rounded-full bg-oat px-4 py-2 text-sm font-black text-ink/60">
+            <span className="w-fit rounded-full bg-oat px-4 py-2 text-sm font-black text-ink/65">
               {dataSummary.restaurantCount.toLocaleString()} records indexed
             </span>
+            <p
+              id="search-status"
+              role="status"
+              aria-live="polite"
+              aria-atomic="true"
+              className="sr-only"
+            >
+              {announcedSearchStatusMessage}
+            </p>
           </div>
 
           <FilterBar
@@ -777,12 +826,12 @@ export default function SearchShell({
             <div className="flex flex-wrap items-end justify-between gap-3">
               <div className="min-w-0">
                 <h2 className="text-xl font-bold text-ink">Search results</h2>
-                <p className="mt-1 text-sm text-ink/55">
+                <p className="mt-1 text-sm text-ink/65">
                   Showing a focused slice first. Narrow with search or filters to
                   explore more of the current index.
                 </p>
               </div>
-              <span className="text-sm font-semibold text-ink/55">
+              <span className="text-sm font-semibold text-ink/65">
                 {loading ? "Searching…" : `${results.length} shown`}
               </span>
             </div>
@@ -844,10 +893,11 @@ export default function SearchShell({
                             </span>
                           </>
                         ) : null}
-                        . Try a nearby ZIP or borough, or check{" "}
+                        . ZIP-level records aren’t in this index yet — try a borough or
+                        neighborhood instead, or check{" "}
                         <Link
                           href="/methodology"
-                          className="font-semibold text-moss underline-offset-2 hover:underline"
+                          className="font-semibold text-moss underline underline-offset-2"
                         >
                           Methodology
                         </Link>{" "}
@@ -864,7 +914,7 @@ export default function SearchShell({
                             </span>
                           </>
                         ) : null}
-                        . Try a different ZIP, borough, or cuisine — or broaden
+                        . Try a different neighborhood, borough, or cuisine — or broaden
                         your search.
                       </>
                     )
@@ -889,7 +939,7 @@ export default function SearchShell({
           </div>
         </section>
 
-        <footer className="min-w-0 border-t border-ink/10 pt-6 text-sm leading-6 text-ink/60">
+        <footer className="min-w-0 border-t border-ink/10 pt-6 text-sm leading-6 text-ink/65">
           <p className="max-w-3xl">
             Sano is an independent tool built on NYC DOHMH’s public inspection
             dataset. It is not affiliated with or endorsed by the City of New
@@ -897,7 +947,7 @@ export default function SearchShell({
             real-time safety status.{" "}
             <Link
               href="/methodology"
-              className="font-semibold text-moss underline-offset-2 hover:underline"
+              className="font-semibold text-moss underline underline-offset-2"
             >
               Full methodology
             </Link>

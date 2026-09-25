@@ -30,7 +30,7 @@ export default function RestaurantError({
         </nav>
 
         <section className="my-auto rounded-xl border border-ink/10 bg-white p-8 text-center shadow-sm">
-          <p className="text-sm font-bold uppercase tracking-wide text-coral">
+          <p className="text-sm font-bold uppercase tracking-wide text-coralText">
             Something went wrong
           </p>
           <h1 className="mt-3 text-3xl font-black tracking-tight text-ink sm:text-4xl">

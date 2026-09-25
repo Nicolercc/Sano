@@ -164,7 +164,7 @@ export default function AppNav({
       {showCommandSearch ? (
         <form
           onSubmit={submitCommandSearch}
-          className={`mx-auto hidden min-w-0 flex-1 items-center gap-2 rounded-full border border-ink/10 bg-white p-1 pl-4 shadow-[inset_0_1px_0_rgba(255,255,255,0.72)] transition-all duration-500 motion-reduce:transition-none lg:flex ${
+          className={`mx-auto hidden min-w-0 flex-1 items-center gap-2 rounded-full border border-ink/10 bg-white p-1 pl-4 shadow-[inset_0_1px_0_rgba(255,255,255,0.72)] focus-within:outline focus-within:outline-2 focus-within:outline-offset-2 focus-within:outline-moss transition-all duration-500 motion-reduce:transition-none lg:flex ${
             showCommandSearch
               ? "max-w-xl translate-y-0 opacity-100"
               : "max-w-0 translate-y-1 opacity-0"
@@ -178,9 +178,9 @@ export default function AppNav({
             id="nav-command-search"
             value={query}
             onChange={(event) => setQuery(event.target.value)}
-            placeholder="Search NYC restaurants, ZIP, cuisine…"
+            placeholder="Search NYC restaurants, cuisine…"
             tabIndex={showCommandSearch ? 0 : -1}
-            className="min-w-0 flex-1 bg-transparent text-sm font-semibold text-ink outline-none placeholder:text-ink/42"
+            className="min-w-0 flex-1 bg-transparent text-sm font-semibold text-ink outline-none placeholder:text-ink/65"
           />
           <button
             type="submit"

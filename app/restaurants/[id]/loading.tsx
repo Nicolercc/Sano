@@ -15,7 +15,6 @@ export default function RestaurantLoading() {
       <AppNav />
       <div
         role="status"
-        aria-live="polite"
         className="mx-auto flex w-full max-w-6xl flex-col gap-5 px-4 py-6 sm:px-6 lg:px-8"
       >
         <span className="sr-only">Loading restaurant profile…</span>

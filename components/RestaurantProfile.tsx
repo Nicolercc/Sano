@@ -50,13 +50,13 @@ export default function RestaurantProfile({
               </p>
               <div className="mt-3 flex flex-wrap items-end gap-6">
                 <div>
-                  <p className="text-xs font-bold uppercase tracking-wide text-ink/50">
+                  <p className="text-xs font-bold uppercase tracking-wide text-ink/65">
                     Current grade
                   </p>
                   <MarkerGrade grade={restaurant.grade} size="lg" className="mt-2" />
                 </div>
                 <div>
-                  <p className="text-xs font-bold uppercase tracking-wide text-ink/50">
+                  <p className="text-xs font-bold uppercase tracking-wide text-ink/65">
                     Cycles on file
                   </p>
                   <p className="mt-1 text-lg font-black text-ink">
@@ -64,7 +64,7 @@ export default function RestaurantProfile({
                   </p>
                 </div>
                 <div>
-                  <p className="text-xs font-bold uppercase tracking-wide text-ink/50">
+                  <p className="text-xs font-bold uppercase tracking-wide text-ink/65">
                     Extract as of
                   </p>
                   <p className="mt-1 text-sm font-bold text-ink">
@@ -72,7 +72,7 @@ export default function RestaurantProfile({
                   </p>
                 </div>
               </div>
-              <p className="mt-3 text-xs leading-5 text-ink/60">
+              <p className="mt-3 text-xs leading-5 text-ink/65">
                 Sourced from NYC DOHMH public inspection records. Not real-time.
               </p>
             </section>
@@ -83,7 +83,7 @@ export default function RestaurantProfile({
             >
               <p
                 id="public-popularity-heading"
-                className="text-[11px] font-black uppercase tracking-[0.16em] text-ink/45"
+                className="text-[11px] font-black uppercase tracking-[0.16em] text-ink/65"
               >
                 Consumer review context
               </p>
@@ -94,7 +94,7 @@ export default function RestaurantProfile({
                 variant="profile"
                 className="mt-3"
               />
-              <p className="mt-3 text-xs leading-5 text-ink/60">
+              <p className="mt-3 text-xs leading-5 text-ink/65">
                 Google review context is shown only when a reviewed source is
                 attached. It is not part of the official NYC grade or Sano
                 inspection reliability.
@@ -113,7 +113,7 @@ export default function RestaurantProfile({
           >
             The story so far
           </h2>
-          <p className="mt-1 text-sm text-ink/55">
+          <p className="mt-1 text-sm text-ink/65">
             A plain-language read of this restaurant’s existing Sano fields —
             not a safety verdict.
           </p>
