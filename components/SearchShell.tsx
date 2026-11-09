@@ -505,7 +505,9 @@ export default function SearchShell({
                     {featuredRestaurant?.neighborhood ?? "official record"}
                   </p>
                 </div>
-                <MarkerGrade grade={featuredRestaurant?.grade ?? "A"} size="xl" />
+                {featuredRestaurant ? (
+                  <MarkerGrade grade={featuredRestaurant.grade} size="xl" />
+                ) : null}
               </div>
 
               <div className="mt-6 rounded-2xl border border-ink/10 bg-white/104 p-4">
@@ -522,39 +524,37 @@ export default function SearchShell({
                     Official grade
                   </span>
                 </div>
-                <div className="grid h-44 items-end gap-2 sm:grid-cols-5">
-                  {(previewInspections.length
-                    ? previewInspections
-                    : [
-                        { id: "preview-1", score: 12, grade: "A", criticalCount: 0 },
-                        { id: "preview-2", score: 24, grade: "B", criticalCount: 1 },
-                        { id: "preview-3", score: 9, grade: "A", criticalCount: 0 },
-                        { id: "preview-4", score: 31, grade: "C", criticalCount: 2 },
-                        { id: "preview-5", score: 13, grade: "A", criticalCount: 1 }
-                      ]).map((inspection) => (
-                    <div
-                      key={inspection.id}
-                      className="relative flex h-full items-end rounded-xl bg-[#2563c9]/8 p-2 pt-7"
-                    >
+                {previewInspections.length ? (
+                  <div className="grid h-44 items-end gap-2 sm:grid-cols-5">
+                    {previewInspections.map((inspection) => (
                       <div
-                        className="relative w-full rounded-lg bg-[#2563c9] shadow-[inset_0_1px_0_rgba(255,255,255,0.18)]"
-                        style={{
-                          height: `${Math.max(
-                            12,
-                            (inspection.score / maxPreviewInspectionScore) * 100
-                          )}%`
-                        }}
+                        key={inspection.id}
+                        className="relative flex h-full items-end rounded-xl bg-[#2563c9]/8 p-2 pt-7"
                       >
-                        <span className="absolute -top-6 left-1/2 -translate-x-1/2">
-                          <TimelineGradeMark
-                            grade={inspection.grade}
-                            rotation={inspection.grade === "A" ? 1 : -2}
-                          />
-                        </span>
+                        <div
+                          className="relative w-full rounded-lg bg-[#2563c9] shadow-[inset_0_1px_0_rgba(255,255,255,0.18)]"
+                          style={{
+                            height: `${Math.max(
+                              12,
+                              (inspection.score / maxPreviewInspectionScore) * 100
+                            )}%`
+                          }}
+                        >
+                          <span className="absolute -top-6 left-1/2 -translate-x-1/2">
+                            <TimelineGradeMark
+                              grade={inspection.grade}
+                              rotation={inspection.grade === "A" ? 1 : -2}
+                            />
+                          </span>
+                        </div>
                       </div>
-                    </div>
-                  ))}
-                </div>
+                    ))}
+                  </div>
+                ) : (
+                  <p className="flex h-44 items-center justify-center rounded-xl bg-[#2563c9]/8 p-4 text-center text-sm font-semibold text-[var(--text-secondary)]">
+                    No inspection records loaded.
+                  </p>
+                )}
                 <div className="mt-5 flex items-center justify-between gap-3 rounded-2xl bg-[#1e2a38] p-3 text-white">
                   <div>
                     <p className="text-[10px] font-black uppercase tracking-[0.16em] text-white/72">
@@ -569,7 +569,9 @@ export default function SearchShell({
                       Trend
                     </p>
                     <p className="mt-1 text-lg font-black text-[#7fd88f]">
-                      {trajectoryLabel(featuredRestaurant?.trajectory ?? "stable")}
+                      {featuredRestaurant
+                        ? trajectoryLabel(featuredRestaurant.trajectory)
+                        : "—"}
                     </p>
                   </div>
                 </div>
