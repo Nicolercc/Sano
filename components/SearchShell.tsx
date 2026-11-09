@@ -558,7 +558,7 @@ export default function SearchShell({
                 <div className="mt-5 flex items-center justify-between gap-3 rounded-2xl bg-[#1e2a38] p-3 text-white">
                   <div>
                     <p className="text-[10px] font-black uppercase tracking-[0.16em] text-white/72">
-                      Inspection reliability
+                      Sano inspection reliability
                     </p>
                     <p className="mt-1 text-2xl font-black">
                       {featuredRestaurant?.inspectionReliabilityScore ?? "—"}
