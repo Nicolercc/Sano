@@ -124,6 +124,9 @@ def trajectory(inspections: list[dict[str, Any]]) -> str:
     return "stable"
 
 
+# The weights, thresholds and label order below are published on the
+# methodology page (components/MethodologyPanel.tsx). Change both together;
+# tests/test_scoring.py pins the worked example shown there.
 def reliability_score(inspections: list[dict[str, Any]]) -> int:
     if not inspections:
         return 0
