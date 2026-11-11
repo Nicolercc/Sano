@@ -1,5 +1,7 @@
 # Sano
 
+![Lucky Chix’s four inspection cycles, including a March C and May A, beside Sano’s Volatile trajectory label](https://github.com/user-attachments/assets/4a9171f4-494b-4fa7-94b1-af6ebc0f3523)
+
 ## Try the live demo
 
 [Open the Lucky Chix demo](https://sano-nine.vercel.app/restaurants/50169790) and scroll to **Inspection timeline**. The July 25, 2026 extract shows a C on March 16 and an A on May 27. Compare those official grades with Sano’s separate **Volatile** trajectory label, which summarizes four inspection cycles.
