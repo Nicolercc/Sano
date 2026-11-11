@@ -1,5 +1,9 @@
 # Sano
 
+## Try the live demo
+
+[Open the Lucky Chix demo](https://sano-nine.vercel.app/restaurants/50169790) and scroll to **Inspection timeline**. The July 25, 2026 extract shows a C on March 16 and an A on May 27. Compare those official grades with Sano’s separate **Volatile** trajectory label, which summarizes four inspection cycles.
+
 **The grade is on the door. The story isn't.** Sano turns New York City's public restaurant inspection records into plain-language context next to the official letter grade.
 
 **Live demo:** https://sano-nine.vercel.app
