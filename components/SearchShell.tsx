@@ -189,9 +189,11 @@ export default function SearchShell({
 }: SearchShellProps) {
   const [filters, setFilters] = useState(defaultFilters);
   const [results, setResults] = useState(restaurants);
-  const [visibleCount, setVisibleCount] = useState(INITIAL_VISIBLE_COUNT);
-  const [loading, setLoading] = useState(false);
-  const [loadError, setLoadError] = useState(false);
+  // Search state is keyed by the request it belongs to, so a new search resets
+  // loading, error and paging by changing the key instead of by setState in an
+  // effect.
+  const [settled, setSettled] = useState<{ key: string; error: boolean } | null>(null);
+  const [paging, setPaging] = useState({ key: "", count: INITIAL_VISIBLE_COUNT });
   const [heroSearchQuery, setHeroSearchQuery] = useState("");
   const [announcedSearchStatusMessage, setAnnouncedSearchStatusMessage] =
     useState(
@@ -214,8 +216,7 @@ export default function SearchShell({
     [restaurants, dataSummary.mode]
   );
 
-  useEffect(() => {
-    const controller = new AbortController();
+  const requestKey = useMemo(() => {
     const params = new URLSearchParams({
       limit: String(API_RESULT_LIMIT)
     });
@@ -236,11 +237,23 @@ export default function SearchShell({
       params.set("recentCriticalOnly", "true");
     }
 
-    setLoading(true);
-    setLoadError(false);
-    setVisibleCount(INITIAL_VISIBLE_COUNT);
+    return params.toString();
+  }, [filters]);
 
-    fetch(`/api/restaurants?${params.toString()}`, {
+  const loading = settled?.key !== requestKey;
+  const loadError = !loading && Boolean(settled?.error);
+  const visibleCount =
+    paging.key === requestKey ? paging.count : INITIAL_VISIBLE_COUNT;
+  const setVisibleCount = (next: number | ((current: number) => number)) =>
+    setPaging({
+      key: requestKey,
+      count: typeof next === "function" ? next(visibleCount) : next
+    });
+
+  useEffect(() => {
+    const controller = new AbortController();
+
+    fetch(`/api/restaurants?${requestKey}`, {
       headers: { accept: "application/json" },
       signal: controller.signal
     })
@@ -255,21 +268,17 @@ export default function SearchShell({
           ? payload.restaurants
           : [];
         setResults(nextResults);
+        setSettled({ key: requestKey, error: false });
       })
       .catch((error) => {
         if (error.name !== "AbortError") {
-          setLoadError(true);
           setResults([]);
-        }
-      })
-      .finally(() => {
-        if (!controller.signal.aborted) {
-          setLoading(false);
+          setSettled({ key: requestKey, error: true });
         }
       });
 
     return () => controller.abort();
-  }, [filters]);
+  }, [requestKey]);
 
   const filtersActive = hasActiveFilters(filters);
   const filterParts = activeFilterSummary(filters);
@@ -342,8 +351,6 @@ export default function SearchShell({
       searchRegionFocusRef.current?.focus({ preventScroll: true });
     });
   };
-
-  const runPrimaryDemoSearch = () => runHeroSearch(PRIMARY_DEMO_QUERY);
 
   return (
     <main className="min-h-screen overflow-x-hidden bg-oat text-ink">

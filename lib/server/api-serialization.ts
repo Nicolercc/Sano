@@ -12,14 +12,6 @@ export type PublicRestaurant = Omit<
   metadataAvailability: MetadataAvailability;
 };
 
-function officialModeMetadataAvailability(): MetadataAvailability {
-  return {
-    popularity: false,
-    price: false,
-    trustGap: false
-  };
-}
-
 function syntheticModeMetadataAvailability(): MetadataAvailability {
   return {
     popularity: true,
