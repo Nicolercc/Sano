@@ -3,9 +3,9 @@ import RestaurantProfile from "@/components/RestaurantProfile";
 import { getRestaurantForApp, restaurants } from "@/lib/server/restaurants";
 
 type RestaurantPageProps = {
-  params: {
+  params: Promise<{
     id: string;
-  };
+  }>;
 };
 
 export function generateStaticParams() {
@@ -15,7 +15,8 @@ export function generateStaticParams() {
 export const dynamicParams = true;
 
 export default async function RestaurantPage({ params }: RestaurantPageProps) {
-  const restaurant = await getRestaurantForApp(params.id);
+  const { id } = await params;
+  const restaurant = await getRestaurantForApp(id);
 
   if (!restaurant) {
     notFound();
