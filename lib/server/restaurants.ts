@@ -248,8 +248,17 @@ function boundedLimit(value?: number | null) {
   return Math.min(Math.max(Math.floor(value), 1), MAX_SUPABASE_LIMIT);
 }
 
-function escapeSupabaseValue(value: string) {
-  return value.replace(/"/g, '\\"').replace(/\*/g, "\\*");
+const SUPABASE_TIMEOUT_MS = 4000;
+
+/**
+ * A user search term as a quoted PostgREST `ilike` pattern. Quoting keeps
+ * commas, parentheses and dots in the term from being read as filter syntax
+ * (an unquoted "a,b" split the `or` filter and the request failed). The
+ * user's own wildcards are dropped so a search can't widen itself.
+ */
+export function supabaseContainsPattern(value: string) {
+  const literal = value.replace(/[*%]/g, " ").replace(/[\\"]/g, (char) => `\\${char}`);
+  return `"*${literal}*"`;
 }
 
 function gradeRank(grade: string | null | undefined) {
@@ -295,7 +304,7 @@ function sortRestaurantsForDefaultView(records: Restaurant[]) {
   return [...records].sort(compareRestaurantsForDefaultView);
 }
 
-function buildSupabaseRestaurantUrl(
+export function buildSupabaseRestaurantUrl(
   config: { url: string },
   query: RestaurantQuery = {}
 ) {
@@ -317,10 +326,12 @@ function buildSupabaseRestaurantUrl(
 
   const textQuery = query.q?.trim();
   if (textQuery) {
-    const escaped = escapeSupabaseValue(textQuery);
+    const pattern = supabaseContainsPattern(textQuery);
     params.set(
       "or",
-      `(name.ilike.*${escaped}*,cuisine.ilike.*${escaped}*,neighborhood.ilike.*${escaped}*,borough.ilike.*${escaped}*,search_text.ilike.*${escaped}*)`
+      `(${["name", "cuisine", "neighborhood", "borough", "search_text"]
+        .map((column) => `${column}.ilike.${pattern}`)
+        .join(",")})`
     );
   }
 
@@ -359,7 +370,8 @@ async function fetchSupabaseRestaurants(query: RestaurantQuery = {}) {
   try {
     const response = await fetch(buildSupabaseRestaurantUrl(config, query), {
       headers: supabaseHeaders(config),
-      cache: "no-store"
+      cache: "no-store",
+      signal: AbortSignal.timeout(SUPABASE_TIMEOUT_MS)
     });
 
     if (!response.ok) {
@@ -404,7 +416,8 @@ async function fetchSupabaseRestaurant(id: string) {
       `${config.url}/rest/v1/restaurant_records?${params.toString()}`,
       {
         headers: supabaseHeaders(config),
-        cache: "no-store"
+        cache: "no-store",
+      signal: AbortSignal.timeout(SUPABASE_TIMEOUT_MS)
       }
     );
 
@@ -438,7 +451,8 @@ async function fetchSupabaseSummary(): Promise<RestaurantDataSummary | null> {
           ...supabaseHeaders(config),
           Prefer: "count=exact"
         },
-        cache: "no-store"
+        cache: "no-store",
+      signal: AbortSignal.timeout(SUPABASE_TIMEOUT_MS)
       }
     );
 
