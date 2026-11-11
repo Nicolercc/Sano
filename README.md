@@ -8,6 +8,14 @@
 
 ![Sano home page](docs/images/home.jpg)
 
+## Try it in a minute: Lucky Chix
+
+1. **Open [Lucky Chix](https://sano-nine.vercel.app/restaurants/50169790)** (Korean, Bushwick). The official grade on the door is **A**.
+2. **Read the inspection timeline.** The posted grades went from **C on Mar 16, 2026 to A on May 27, 2026**. The two earlier cycles were still grade-pending, and the first one (Feb 19, raw score 41) had 2 critical flags. This extract shows no repeat pattern for Lucky Chix.
+3. **Check the number.** The jump from 41 to 2 makes the trajectory *volatile*, and the reliability score is **60**. The [methodology page](https://sano-nine.vercel.app/methodology) uses this restaurant as its worked example: 100 − 1.7 × 11.25 − 0.6 × 2 − 2 × 4 − 12 = 59.7, rounded to 60.
+
+![Sano profile for Lucky Chix: inspection reliability 60 with a volatile trajectory, beside an inspection timeline of four cycles: Feb 19 grade pending with 2 critical flags (raw score 41), Mar 10 grade pending (2), Mar 16 grade C (0), and May 27 grade A (2), each noting no repeated pattern.](docs/images/sano-lucky-chix-timeline.jpg)
+
 ## The problem
 
 A posted letter grade is one snapshot. Behind it, NYC DOHMH publishes every inspection: scores, violation codes and critical flags. That data is public but too dense to read at a glance. Sano keeps the official grade first, then shows what the history says: recent critical flags, repeated violations, how much history there is, and whether the record is steady, improving or volatile.
