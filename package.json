@@ -12,7 +12,7 @@
     "a11y:regression": "node scripts/a11y-regression-check.mjs",
     "a11y:contrast": "node scripts/a11y-contrast-check.mjs",
     "a11y": "npm run a11y:regression && npm run a11y:contrast",
-    "check": "npm run validate:official && npm run validate:synthetic && npm run lint && npm run a11y && npm run build",
+    "check": "npm run validate:official && npm run validate:synthetic && npm run lint && npm run typecheck && npm test && npm run a11y && npm run build",
     "acceptance": "node scripts/acceptance.mjs",
     "enrich:google:dry-run": "python3 scripts/enrich_google_places.py --dry-run",
     "enrich:google": "python3 scripts/enrich_google_places.py",
@@ -20,7 +20,8 @@
     "load:supabase:dry-run": "python3 scripts/load_supabase_restaurants.py --dry-run",
     "load:supabase": "python3 scripts/load_supabase_restaurants.py",
     "test:scoring": "python3 -m unittest discover -s tests",
-    "test": "vitest run && npm run test:scoring"
+    "test": "vitest run && npm run test:scoring",
+    "typecheck": "tsc --noEmit"
   },
   "dependencies": {
     "next": "^16.4.6",
@@ -38,5 +39,8 @@
     "tailwindcss": "3.4.4",
     "typescript": "5.5.3",
     "vitest": "^3.2.7"
+  },
+  "engines": {
+    "node": ">=20.9"
   }
 }
