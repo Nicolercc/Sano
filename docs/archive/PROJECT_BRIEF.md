@@ -121,19 +121,19 @@ sano/
 
 ## Documentation Map
 
-- [Product Requirements](docs/PRD.md): what the product is and what must ship.
-- [Architecture](docs/ARCHITECTURE.md): how the app, data, and scoring fit together.
-- [Sprint Plan](docs/SPRINT_PLAN.md): seven-day execution plan for three contributors.
-- [Team Operating Model](docs/TEAM_OPERATING_MODEL.md): ownership, branch rules, and conflict avoidance.
-- [Contributing](docs/CONTRIBUTING.md): Git workflow, PR expectations, and coding rules.
-- [Data Plan](docs/DATA_PLAN.md): official data sources, seed strategy, and Supabase plan.
-- [Demo Presentation Guide](docs/DEMO_PRESENTATION_GUIDE.md): comprehensive app walkthrough, demo script, and Prezi prompts.
-- [Task Breakdown](docs/TASK_BREAKDOWN.md): assignable work for the three-person team.
-- [Quality Checklist](docs/QUALITY_CHECKLIST.md): final acceptance criteria.
-- [Presentation Guide](docs/PRESENTATION_GUIDE.md): product story, design intent, demo script, and Q&A.
-- [Accessibility Audit](docs/accessibility-audit/findings.md): scoped WCAG findings log, severity, evidence, and validation status for the critical journey.
-- [LLM Guide](docs/LLM_GUIDE.md): how contributors should use AI tools without breaking scope.
-- [Agent Orchestration](docs/AGENT_ORCHESTRATION.md): how to coordinate Codex, Cursor, and Claude.
+- [Product Requirements](PRD.md): what the product is and what must ship.
+- [Architecture](ARCHITECTURE.md): how the app, data, and scoring fit together.
+- [Sprint Plan](SPRINT_PLAN.md): seven-day execution plan for three contributors.
+- [Team Operating Model](TEAM_OPERATING_MODEL.md): ownership, branch rules, and conflict avoidance.
+- [Contributing](CONTRIBUTING.md): Git workflow, PR expectations, and coding rules.
+- [Data Plan](DATA_PLAN.md): official data sources, seed strategy, and Supabase plan.
+- [Demo Presentation Guide](DEMO_PRESENTATION_GUIDE.md): comprehensive app walkthrough, demo script, and Prezi prompts.
+- [Task Breakdown](TASK_BREAKDOWN.md): assignable work for the three-person team.
+- [Quality Checklist](QUALITY_CHECKLIST.md): final acceptance criteria.
+- [Presentation Guide](PRESENTATION_GUIDE.md): product story, design intent, demo script, and Q&A.
+- [Accessibility Audit](accessibility-audit/findings.md): scoped WCAG findings log, severity, evidence, and validation status for the critical journey.
+- [LLM Guide](LLM_GUIDE.md): how contributors should use AI tools without breaking scope.
+- [Agent Orchestration](AGENT_ORCHESTRATION.md): how to coordinate Codex, Cursor, and Claude.
 
 ## Team Principle
 
