@@ -171,16 +171,15 @@ def label(score: int, trend: str, confidence_value: str, recent_critical: bool) 
 
 
 def repeat_patterns(inspections: list[dict[str, Any]]) -> None:
+    """Mark an inspection as a repeat when it cites a violation code that an
+    EARLIER inspection already cited. The first time a code appears is not a
+    repeat, even if it shows up again later."""
     seen: set[str] = set()
-    repeated: set[str] = set()
-    for inspection in inspections:
-        for code in inspection.get("violationCodes", []):
-            if code in seen:
-                repeated.add(code)
-            seen.add(code)
-    for inspection in inspections:
+    for inspection in sorted(inspections, key=lambda item: item["date"]):
         codes = set(inspection.get("violationCodes", []))
-        inspection["repeatPattern"] = bool(codes & repeated)
+        inspection["repeatPattern"] = bool(codes & seen)
+        seen |= codes
+    for inspection in inspections:
         inspection["note"] = (
             "Inspection cycle includes a repeated violation-code pattern."
             if inspection["repeatPattern"]
@@ -206,18 +205,43 @@ def coordinates(record: dict[str, Any]) -> tuple[float, float, str]:
     return fallback[0], fallback[1], "borough-centroid-fallback"
 
 
-def build_app_record(record: dict[str, Any], data_as_of: str) -> dict[str, Any]:
-    inspections = record.get("inspections", [])
-    repeat_patterns(inspections)
-    for inspection in inspections:
-        inspection["grade"] = normalize_grade(inspection.get("grade"))
-    score = reliability_score(inspections)
-    trend = trajectory(inspections)
-    conf = confidence(inspections)
-    recent_critical = any(
+def has_recent_critical(inspections: list[dict[str, Any]]) -> bool:
+    """True when either of the two most recent inspections has a critical flag."""
+    return any(
         int(item.get("criticalCount") or 0) > 0
         for item in sorted(inspections, key=lambda item: item["date"], reverse=True)[:2]
     )
+
+
+def derived_fields(inspections: list[dict[str, Any]]) -> dict[str, Any]:
+    """Every Sano-derived field, computed only from the inspection history.
+    Marks repeat patterns on the inspections in place."""
+    repeat_patterns(inspections)
+    score = reliability_score(inspections)
+    trend = trajectory(inspections)
+    conf = confidence(inspections)
+    return {
+        "inspectionReliabilityScore": score,
+        "trajectory": trend,
+        "confidence": conf,
+        "sanoLabel": label(score, trend, conf, has_recent_critical(inspections)),
+    }
+
+
+def rescore_record(record: dict[str, Any]) -> dict[str, Any]:
+    """Recompute the derived fields of an existing app record, keeping
+    everything else (identity, provenance, alternatives) unchanged."""
+    return {**record, **derived_fields(record.get("inspections", []))}
+
+
+def build_app_record(record: dict[str, Any], data_as_of: str) -> dict[str, Any]:
+    inspections = record.get("inspections", [])
+    for inspection in inspections:
+        inspection["grade"] = normalize_grade(inspection.get("grade"))
+    derived = derived_fields(inspections)
+    score = derived["inspectionReliabilityScore"]
+    trend = derived["trajectory"]
+    conf = derived["confidence"]
     current_grade = (
         normalize_grade(
             sorted(inspections, key=lambda item: item["date"], reverse=True)[0].get("grade")
@@ -249,7 +273,7 @@ def build_app_record(record: dict[str, Any], data_as_of: str) -> dict[str, Any]:
         "trajectory": trend,
         "trustGap": None,
         "confidence": conf,
-        "sanoLabel": label(score, trend, conf, recent_critical),
+        "sanoLabel": derived["sanoLabel"],
         "explanation": "Derived from inspection score burden, critical flags, repeat patterns, volatility, and trend.",
         "dataAsOf": data_as_of,
         "inspections": inspections,
@@ -441,7 +465,19 @@ def main() -> int:
     parser.add_argument("--min-inspections", type=int, default=2)
     parser.add_argument("--limit", type=int, default=25)
     parser.add_argument("--data-as-of", default=date.today().isoformat())
+    parser.add_argument(
+        "--rescore-seed",
+        type=Path,
+        help="Recompute derived fields of an existing app seed in place, then exit",
+    )
     args = parser.parse_args()
+
+    if args.rescore_seed:
+        seed = json.loads(args.rescore_seed.read_text(encoding="utf-8"))
+        rescored = [rescore_record(record) for record in seed]
+        args.rescore_seed.write_text(json.dumps(rescored, indent=2), encoding="utf-8")
+        print(f"Rescored {len(rescored)} restaurants in {args.rescore_seed}")
+        return 0
 
     records = json.loads(args.input.read_text(encoding="utf-8"))
     eligible_records = [

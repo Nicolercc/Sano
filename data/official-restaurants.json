@@ -42,8 +42,8 @@
           "Food, supplies, or equipment not protected from potential source of contamination during storage, preparation, transportation, display, service or from customer\u2019s refillable, reusable container. Condiments not in single-service containers or dispensed directly by the vendor.",
           "Hot TCS food item not held at or above 140 \u00b0F."
         ],
-        "repeatPattern": true,
-        "note": "Inspection cycle includes a repeated violation-code pattern."
+        "repeatPattern": false,
+        "note": "Inspection cycle has no repeated pattern in this prepared extract."
       },
       {
         "id": "50114980-2026-03-18",
@@ -149,7 +149,7 @@
     "reviewCount": 0,
     "priceLevel": "$$",
     "grade": "A",
-    "inspectionReliabilityScore": 42,
+    "inspectionReliabilityScore": 47,
     "trajectory": "volatile",
     "trustGap": 0,
     "confidence": "medium",
@@ -186,8 +186,8 @@
         "violationDescriptions": [
           "Anti-siphonage or back-flow prevention device not provided where required; equipment or floor not properly drained; sewage disposal system in disrepair or not functioning properly. Condensation or liquid waste improperly disposed of."
         ],
-        "repeatPattern": true,
-        "note": "Inspection cycle includes a repeated violation-code pattern."
+        "repeatPattern": false,
+        "note": "Inspection cycle has no repeated pattern in this prepared extract."
       },
       {
         "id": "50171997-2026-04-28",
@@ -369,8 +369,8 @@
           "Establishment is not free of harborage or conditions conducive to rodents, insects or other pests.",
           "Raw, cooked or prepared food is adulterated, contaminated, cross-contaminated, or not discarded in accordance with HACCP plan."
         ],
-        "repeatPattern": true,
-        "note": "Inspection cycle includes a repeated violation-code pattern."
+        "repeatPattern": false,
+        "note": "Inspection cycle has no repeated pattern in this prepared extract."
       },
       {
         "id": "50102562-2026-03-19",
@@ -477,8 +477,8 @@
           "Evidence of mice or live mice in establishment's food or non-food areas.",
           "Non-food contact surface or equipment made of unacceptable material, not kept clean, or not properly sealed, raised, spaced or movable to allow accessibility for cleaning on all sides, above and underneath the unit."
         ],
-        "repeatPattern": true,
-        "note": "Inspection cycle includes a repeated violation-code pattern."
+        "repeatPattern": false,
+        "note": "Inspection cycle has no repeated pattern in this prepared extract."
       },
       {
         "id": "50161777-2026-04-04",
@@ -595,8 +595,8 @@
           "Evidence of rats or live rats in establishment's food or non-food areas.",
           "Non-food contact surface or equipment made of unacceptable material, not kept clean, or not properly sealed, raised, spaced or movable to allow accessibility for cleaning on all sides, above and underneath the unit."
         ],
-        "repeatPattern": true,
-        "note": "Inspection cycle includes a repeated violation-code pattern."
+        "repeatPattern": false,
+        "note": "Inspection cycle has no repeated pattern in this prepared extract."
       },
       {
         "id": "41627217-2026-02-24",
@@ -675,7 +675,7 @@
     "reviewCount": 0,
     "priceLevel": "$$",
     "grade": "A",
-    "inspectionReliabilityScore": 23,
+    "inspectionReliabilityScore": 28,
     "trajectory": "improving",
     "trustGap": 0,
     "confidence": "medium",
@@ -724,8 +724,8 @@
           "Anti-siphonage or back-flow prevention device not provided where required; equipment or floor not properly drained; sewage disposal system in disrepair or not functioning properly. Condensation or liquid waste improperly disposed of.",
           "Evidence of mice or live mice in establishment's food or non-food areas."
         ],
-        "repeatPattern": true,
-        "note": "Inspection cycle includes a repeated violation-code pattern."
+        "repeatPattern": false,
+        "note": "Inspection cycle has no repeated pattern in this prepared extract."
       },
       {
         "id": "50131593-2026-06-30",
@@ -764,7 +764,7 @@
     "reviewCount": 0,
     "priceLevel": "$$",
     "grade": "B",
-    "inspectionReliabilityScore": 34,
+    "inspectionReliabilityScore": 39,
     "trajectory": "stable",
     "trustGap": 0,
     "confidence": "medium",
@@ -788,8 +788,8 @@
           "Establishment is not free of harborage or conditions conducive to rodents, insects or other pests.",
           "Filth flies or food/refuse/sewage associated with (FRSA) flies or other nuisance pests in establishment\u2019s food and/or non-food areas. FRSA flies include house flies, blow flies, bottle flies, flesh flies, drain flies, Phorid flies and fruit flies."
         ],
-        "repeatPattern": true,
-        "note": "Inspection cycle includes a repeated violation-code pattern."
+        "repeatPattern": false,
+        "note": "Inspection cycle has no repeated pattern in this prepared extract."
       },
       {
         "id": "50000233-2026-05-04",
@@ -851,7 +851,7 @@
     "reviewCount": 0,
     "priceLevel": "$$",
     "grade": "Pending",
-    "inspectionReliabilityScore": 4,
+    "inspectionReliabilityScore": 9,
     "trajectory": "stable",
     "trustGap": 0,
     "confidence": "medium",
@@ -873,8 +873,8 @@
           "No hand washing facility in or adjacent to toilet room or within 25 feet of a food preparation, food service or ware washing area. Hand washing facility not accessible, obstructed or used for non-hand washing purposes. No hot and cold running water or water at inadequate pressure. No soap or acceptable hand-drying device.",
           "Anti-siphonage or back-flow prevention device not provided where required; equipment or floor not properly drained; sewage disposal system in disrepair or not functioning properly. Condensation or liquid waste improperly disposed of."
         ],
-        "repeatPattern": true,
-        "note": "Inspection cycle includes a repeated violation-code pattern."
+        "repeatPattern": false,
+        "note": "Inspection cycle has no repeated pattern in this prepared extract."
       },
       {
         "id": "50179973-2026-02-02",
@@ -1019,8 +1019,8 @@
           "Pesticide not properly labeled or used by unlicensed individual. Pesticide, other toxic chemical improperly used/stored. Unprotected, unlocked bait station used.",
           "Establishment is not free of harborage or conditions conducive to rodents, insects or other pests."
         ],
-        "repeatPattern": true,
-        "note": "Inspection cycle includes a repeated violation-code pattern."
+        "repeatPattern": false,
+        "note": "Inspection cycle has no repeated pattern in this prepared extract."
       },
       {
         "id": "41627341-2026-03-23",
@@ -1279,7 +1279,7 @@
     "reviewCount": 0,
     "priceLevel": "$$",
     "grade": "A",
-    "inspectionReliabilityScore": 41,
+    "inspectionReliabilityScore": 46,
     "trajectory": "volatile",
     "trustGap": 0,
     "confidence": "medium",
@@ -1320,8 +1320,8 @@
         "violationDescriptions": [
           "Non-food contact surface or equipment made of unacceptable material, not kept clean, or not properly sealed, raised, spaced or movable to allow accessibility for cleaning on all sides, above and underneath the unit."
         ],
-        "repeatPattern": true,
-        "note": "Inspection cycle includes a repeated violation-code pattern."
+        "repeatPattern": false,
+        "note": "Inspection cycle has no repeated pattern in this prepared extract."
       },
       {
         "id": "40510647-2026-04-14",
@@ -1388,8 +1388,8 @@
           "Wiping cloths not stored clean and dry, or in a sanitizing solution, between uses.",
           "Evidence of mice or live mice in establishment's food or non-food areas."
         ],
-        "repeatPattern": true,
-        "note": "Inspection cycle includes a repeated violation-code pattern."
+        "repeatPattern": false,
+        "note": "Inspection cycle has no repeated pattern in this prepared extract."
       },
       {
         "id": "50142455-2026-02-24",
