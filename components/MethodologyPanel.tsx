@@ -44,23 +44,41 @@ export default function MethodologyPanel() {
         <section className="rounded-md bg-oat p-4">
           <h2 className="text-lg font-bold text-ink">Reliability score</h2>
           <p className="mt-2 text-sm leading-6 text-ink/70">
-            A rules-based 0–100 signal derived from average and recent inspection
-            burden, critical flags, repeat patterns, volatility, and improvement.
-            Lower official inspection scores (fewer points against the restaurant)
-            generally raise the derived reliability number. Example: a place with
-            a recent critical flag and a repeat pattern scores lower than one with
-            a clean recent cycle and a steady trajectory.
+            A rules-based 0–100 signal computed from the inspection history.
+            Official inspection scores count points against a restaurant, so
+            lower inspection scores raise it. It starts at 100 and subtracts:
+          </p>
+          <ul className="mt-2 list-disc pl-5 text-sm leading-6 text-ink/70">
+            <li>1.7 × the average inspection score</li>
+            <li>0.6 × the most recent inspection score</li>
+            <li>4 for every critical flag in the history</li>
+            <li>5 for every inspection that repeats a violation code cited at an earlier inspection</li>
+            <li>12 if the trajectory is volatile</li>
+          </ul>
+          <p className="mt-2 text-sm leading-6 text-ink/70">
+            It adds 7 if the trajectory is improving, then rounds and keeps the
+            result between 0 and 100. A long or troubled history can reach 0
+            even when the current letter grade is an A; the grade on the door
+            is shown alongside so the two are never confused.
           </p>
         </section>
 
         <section className="rounded-md bg-oat p-4">
-          <h2 className="text-lg font-bold text-ink">Confidence</h2>
+          <h2 className="text-lg font-bold text-ink">Trajectory and confidence</h2>
           <p className="mt-2 text-sm leading-6 text-ink/70">
-            Confidence tracks history depth in this demo: more inspections mean
-            higher confidence. Limited history gets restrained labels (often
-            &ldquo;Limited data&rdquo;) so thin records are not over-interpreted.
-            Confidence is not proof the data is complete, current, or
-            error-free — only a cue about how much timeline we have to work with.
+            <strong className="text-ink">Trajectory</strong> needs at least
+            three inspections (otherwise it reads as stable). Any jump of 12 or
+            more points between consecutive inspections makes it volatile.
+            Otherwise Sano compares the average of the earlier half of the
+            history with the later half: 4 or more points lower is improving,
+            4 or more points higher is declining, anything in between is
+            stable.
+          </p>
+          <p className="mt-2 text-sm leading-6 text-ink/70">
+            <strong className="text-ink">Confidence</strong> is history depth:
+            five or more inspections is high, three or four is medium, fewer is
+            limited. It is not proof the data is complete, current, or
+            error-free — only a cue about how much timeline there is.
           </p>
         </section>
 
@@ -74,6 +92,29 @@ export default function MethodologyPanel() {
           </p>
         </section>
       </div>
+
+      <section className="mt-6 rounded-md bg-oat p-4">
+        <h2 className="text-lg font-bold text-ink">Labels</h2>
+        <p className="mt-2 text-sm leading-6 text-ink/70">
+          Each restaurant gets the first label that applies, in this order:
+        </p>
+        <ol className="mt-2 list-decimal pl-5 text-sm leading-6 text-ink/70">
+          <li><strong className="text-ink">Recent critical flag</strong>: either of the two latest inspections has a critical flag.</li>
+          <li><strong className="text-ink">Limited data</strong>: fewer than three inspections.</li>
+          <li><strong className="text-ink">Volatile history</strong>: a volatile trajectory or a reliability score below 62.</li>
+          <li><strong className="text-ink">Improving record</strong>: an improving trajectory.</li>
+          <li><strong className="text-ink">Consistent record</strong>: everything else.</li>
+        </ol>
+        <p className="mt-3 text-sm leading-6 text-ink/70">
+          <strong className="text-ink">Worked example.</strong> Inspection
+          scores of 41, 2, 0 and 2 (oldest first), with two critical flags at
+          the first inspection and no repeats. The jump from 41 to 2 makes it
+          volatile. 100 − 1.7 × 11.25 − 0.6 × 2 − 2 × 4 − 12 = 59.7, which
+          rounds to 60. The latest two inspections have no critical flags and
+          there are four inspections, so the label is Volatile history (volatile
+          trajectory).
+        </p>
+      </section>
 
       <section className="mt-6 rounded-md bg-oat p-4">
         <h2 className="text-lg font-bold text-ink">How to read alternatives</h2>
