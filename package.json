@@ -18,7 +18,8 @@
     "enrich:google": "python3 scripts/enrich_google_places.py",
     "generate:supabase-seed": "python3 scripts/score_restaurants.py --input data/generated/normalized-inspections.json --output data/generated/supabase-restaurants.json --provenance-output data/generated/supabase-provenance.json --limit 1000 --min-inspections 2",
     "load:supabase:dry-run": "python3 scripts/load_supabase_restaurants.py --dry-run",
-    "load:supabase": "python3 scripts/load_supabase_restaurants.py"
+    "load:supabase": "python3 scripts/load_supabase_restaurants.py",
+    "test:scoring": "python3 -m unittest discover -s tests"
   },
   "dependencies": {
     "next": "^16.4.6",
