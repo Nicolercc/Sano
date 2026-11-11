@@ -1,31 +1,15 @@
-import type {
-  ConfidenceLevel,
-  Inspection,
-  Restaurant,
-  SanoLabel,
-  Trajectory
-} from "./types";
+import type { Inspection, Restaurant, Trajectory } from "./types";
 
-function clamp(value: number, min = 0, max = 100) {
-  return Math.min(max, Math.max(min, value));
-}
+// The scoring rules themselves live in scripts/score_restaurants.py, which
+// computes every derived field stored in the seed. This file only holds the
+// two rules the UI applies to an inspection list at render time, and must
+// match the Python versions (see lib/scoring.test.ts).
 
 export function hasRecentCriticalFlag(restaurant: Restaurant) {
   const sorted = [...restaurant.inspections].sort((a, b) =>
     b.date.localeCompare(a.date)
   );
   return sorted.slice(0, 2).some((inspection) => inspection.criticalCount > 0);
-}
-
-export function averageInspectionScore(inspections: Inspection[]) {
-  if (!inspections.length) {
-    return 0;
-  }
-
-  return (
-    inspections.reduce((total, inspection) => total + inspection.score, 0) /
-    inspections.length
-  );
 }
 
 export function deriveTrajectory(inspections: Inspection[]): Trajectory {
@@ -61,77 +45,6 @@ export function deriveTrajectory(inspections: Inspection[]): Trajectory {
   return "stable";
 }
 
-export function calculateInspectionReliabilityScore(
-  inspections: Inspection[]
-) {
-  if (!inspections.length) {
-    return 0;
-  }
-
-  const ordered = [...inspections].sort((a, b) => b.date.localeCompare(a.date));
-  const recent = ordered[0];
-  const averageScore = averageInspectionScore(ordered);
-  const criticalPenalty = ordered.reduce(
-    (total, inspection) => total + inspection.criticalCount * 4,
-    0
-  );
-  const repeatPenalty = ordered.filter((inspection) => inspection.repeatPattern)
-    .length * 5;
-  const volatilityPenalty =
-    deriveTrajectory(ordered) === "volatile" ? 12 : 0;
-  const improvementBonus =
-    deriveTrajectory(ordered) === "improving" ? 7 : 0;
-
-  return Math.round(
-    clamp(
-      100 -
-        averageScore * 1.7 -
-        recent.score * 0.6 -
-        criticalPenalty -
-        repeatPenalty -
-        volatilityPenalty +
-        improvementBonus
-    )
-  );
-}
-
-export function deriveConfidence(restaurant: Pick<Restaurant, "inspections">) {
-  if (restaurant.inspections.length >= 5) {
-    return "high";
-  }
-
-  if (restaurant.inspections.length >= 3) {
-    return "medium";
-  }
-
-  return "limited";
-}
-
-export function labelForRestaurant(
-  score: number,
-  trajectory: Trajectory,
-  confidence: ConfidenceLevel,
-  recentCritical: boolean
-): SanoLabel {
-  if (confidence === "limited") {
-    return "Limited data";
-  }
-
-  if (recentCritical) {
-    return "Recent critical flag";
-  }
-
-  if (trajectory === "volatile" || score < 62) {
-    return "Volatile history";
-  }
-
-  if (trajectory === "improving") {
-    return "Improving record";
-  }
-
-  return "Consistent record";
-}
-
 export function scoreTone(score: number) {
   if (score >= 78) {
     return "text-moss";
@@ -154,14 +67,4 @@ export function scoreMeterTone(score: number) {
   }
 
   return "bg-coral";
-}
-
-export function confidenceTone(confidence: ConfidenceLevel) {
-  const tones: Record<ConfidenceLevel, string> = {
-    high: "bg-mint text-moss",
-    medium: "bg-amber/15 text-amberText",
-    limited: "bg-coral/10 text-coralText"
-  };
-
-  return tones[confidence];
 }

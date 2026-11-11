@@ -19,7 +19,8 @@
     "generate:supabase-seed": "python3 scripts/score_restaurants.py --input data/generated/normalized-inspections.json --output data/generated/supabase-restaurants.json --provenance-output data/generated/supabase-provenance.json --limit 1000 --min-inspections 2",
     "load:supabase:dry-run": "python3 scripts/load_supabase_restaurants.py --dry-run",
     "load:supabase": "python3 scripts/load_supabase_restaurants.py",
-    "test:scoring": "python3 -m unittest discover -s tests"
+    "test:scoring": "python3 -m unittest discover -s tests",
+    "test": "vitest run && npm run test:scoring"
   },
   "dependencies": {
     "next": "^16.4.6",
@@ -35,6 +36,7 @@
     "eslint-config-next": "^16.4.6",
     "postcss": "8.4.39",
     "tailwindcss": "3.4.4",
-    "typescript": "5.5.3"
+    "typescript": "5.5.3",
+    "vitest": "^3.2.7"
   }
 }
